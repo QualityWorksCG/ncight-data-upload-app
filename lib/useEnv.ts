@@ -18,14 +18,15 @@ export default function useEnv() {
     revalidateOnReconnect: false,
   })
 
-  if (dev) {
+
+  //if (dev) {
     return {
       env: Object.freeze({
         cognitoUserPoolId: process.env.NEXT_PUBLIC_AUTH_USER_POOL_ID,
         cognitoUserPoolWebClientId: process.env.NEXT_PUBLIC_AUTH_WEB_CLIENT_ID,
       }) as Env,
     }
-  }
+  //}
 
   return { env: Object.freeze(env) }
 }
