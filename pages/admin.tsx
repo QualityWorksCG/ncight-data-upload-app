@@ -8,7 +8,6 @@ const Admin: NextPage = () => {
   if (loading) return <>Loading...</>
   if (loggedOut) return <>Redirect...</>
 
-  console.log(user.signInUserSession?.idToken?.jwtToken)
 
   return (
     <>

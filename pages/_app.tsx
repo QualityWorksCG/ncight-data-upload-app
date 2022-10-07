@@ -7,8 +7,7 @@ import useEnv from '../lib/useEnv'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { env } = useEnv()
-  console.log(env);
-  if (!env) return <>No envLoading...</>
+  if (!env) return <>No Env Loading...</>
 
   Amplify.configure({
     Auth: {
