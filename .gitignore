@@ -1,3 +1,7 @@
+#Other
+out
+next.config.js
+
 #Environment Variables
 .env.*
 
