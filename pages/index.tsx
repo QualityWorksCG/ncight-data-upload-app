@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
+        Welcome to Development<a href="https://nextjs.org">Next.js!</a>
       </h1>
 
       <p className={styles.description}>
