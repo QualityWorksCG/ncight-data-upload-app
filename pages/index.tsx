@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>
-        Welcome to the nCight Development Environment
+        Welcome to the nCight QA Environment
       </h1>
 
       <p className={styles.description}>
