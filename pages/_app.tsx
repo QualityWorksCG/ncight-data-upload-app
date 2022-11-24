@@ -2,7 +2,6 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Amplify } from 'aws-amplify'
-import '@aws-amplify/ui-react/styles.css'
 import useEnv from '../lib/useEnv'
 import { ChakraProvider } from '@chakra-ui/react'
 import {customTheme} from "../styles/theme";
