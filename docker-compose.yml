@@ -12,6 +12,8 @@ services:
       - ./public:/app/public
       - ./styles:/app/styles
       - ./lib:/app/lib
+      - ./data:/app/data
+      - ./components:/app/components
   nginx:
     build:
       context: ./nginx/
