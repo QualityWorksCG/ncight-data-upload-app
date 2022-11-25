@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Router from 'next/router'
-import styles from '../styles/page.module.css'
 import LoginForm from '../components/auth/LoginForm';
 import SignUpForm from '../components/auth/SignUpForm';
 import {
