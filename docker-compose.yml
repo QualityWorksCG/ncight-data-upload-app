@@ -14,6 +14,7 @@ services:
       - ./lib:/app/lib
       - ./data:/app/data
       - ./components:/app/components
+      - .env.development.local:/app/.env.development.local
   nginx:
     build:
       context: ./nginx/

@@ -5,7 +5,6 @@ import SignUpForm from '../components/auth/SignUpForm';
 import {
   Flex,
   Stack,
-  VStack,
   HStack,
   Image,
   Show,
@@ -15,7 +14,8 @@ import {
   Tab,
   TabPanel,
   Heading,
-  Box
+  Hide,
+  Center
 } from '@chakra-ui/react';
 
 const Home: NextPage = () => {
@@ -25,40 +25,53 @@ const Home: NextPage = () => {
 
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} bg='background.main'>
-    <Show above='lg'>
-    <Flex flex={1}>
-        <Image
+      <Show above='md'>
+      <Flex flex={1}>
+      <Image
           alt={'Sign up Image'}
           objectFit={'cover'}
           src={
             'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
           }
         />
-    </Flex>
-    </Show>
-    <Flex flex={1} align={'center'} justify={'center'} bg='background.main'>
-      <VStack spacing={8} color="primary.gray">
-          <Heading>Welcome to nCight!</Heading>
-      <Tabs variant='unstyled' size='lg' >
-          <TabList w={'2xl'}>
-            <HStack borderTopRadius='6px' bg='background.tabs'>
-              <Tab w={'10rem'} _selected={{ bg: 'secondary.yellow', borderTopLeftRadius:'md' }}>Login</Tab>
-              <Tab w={'10rem'} _selected={{ bg: 'secondary.yellow', borderTopRightRadius:'md' }}>Sign Up</Tab>
-            </HStack>
-          </TabList>
-        <TabPanels bg='background.tabs'>
-          <TabPanel>
-            <LoginForm/>
-          </TabPanel>
-          <TabPanel>
-            <SignUpForm/>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-      </VStack>
-    </Flex>
-  </Stack>
-  )
+      </Flex>
+      </Show>
+      <Flex p={8} flex={1} align={'center'} justify={'center'} bg='background.main'>
+        <Stack spacing={4} w={'full'} maxW={'lg'} color="primary.gray">
+        <Hide above='sm'>
+            <Show below='md'>
+                <Center>
+                    <Image
+                        alt={'nCight Logo'}
+                        src={
+                            'https://drive.google.com/uc?id=1KhpLDZ7pTBmUh2_h3TWkvA1mkrI4OXwL'
+                        }
+                        boxSize='100px'
+                    />
+                </Center>
+            </Show>
+        </Hide>
+          <Heading textAlign={'center'}>Welcome to nCight!</Heading>
+          <Tabs variant='unstyled' size='lg' >
+            <TabList>
+                <HStack borderTopRadius='6px' bg='background.tabs'>
+                  <Tab  _selected={{ bg: 'secondary.yellow', borderTopLeftRadius:'md' }}>Login</Tab>
+                  <Tab  _selected={{ bg: 'secondary.yellow', borderTopRightRadius:'md' }}>Sign Up</Tab>
+                </HStack>
+            </TabList>
+            <TabPanels bg='background.tabs'>
+              <TabPanel>
+                <LoginForm/>
+              </TabPanel>
+              <TabPanel>
+                <SignUpForm/>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Stack>
+      </Flex>
+    </Stack>
+  );
 }
 
 export default Home

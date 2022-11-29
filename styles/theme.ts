@@ -1,11 +1,17 @@
-import { extendTheme, StyleFunctionProps, theme } from "@chakra-ui/react";
+import { extendTheme, type ThemeConfig, theme, StyleFunctionProps } from "@chakra-ui/react";
 import { League_Spartan } from '@next/font/google'
 
 const leagueSpartan = League_Spartan({
     subsets: ['latin'],
 })
 
+const config: ThemeConfig = {
+    initialColorMode: 'light',
+    useSystemColorMode: false,
+  }
+
 export const customTheme = extendTheme({
+    config,
     fonts:{
         body: leagueSpartan,
     },
@@ -23,7 +29,7 @@ export const customTheme = extendTheme({
           },
           defaultProps:{
             focusBorderColor: "#F09E28"
-        }
+        },
         },
         Select: {
             defaultProps:{
@@ -38,7 +44,7 @@ export const customTheme = extendTheme({
         Checkbox: {
             color: '#F09E28'
         }
-      },
+    },
     fontSizes:{
         sm: '0.875rem'
     },

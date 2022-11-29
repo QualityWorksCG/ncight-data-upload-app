@@ -4,23 +4,24 @@ import {
     FormControl,
     FormLabel,
     FormHelperText,
-    Heading,
     Input,
     Link,
     Stack,
-    Flex,
     Grid,
     GridItem,
     Text,
     Container,
     FormErrorMessage,
-    chakra
+    chakra,
 } from '@chakra-ui/react';
 import { Select } from "chakra-react-select";
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { useForm, Controller } from "react-hook-form";
 import * as stateData from '../../data/us-states-and-regions';
 import { Auth } from 'aws-amplify';
+import VerificationModalEmailContent from './VerificationModalEmailContent';
+import BaseModal from '../general/BaseModal';
+import React,{ useState }from 'react';
 
 
 interface StateObject {
@@ -34,35 +35,41 @@ function formatPhoneNumber(phone_number:string){
     return finalPhoneNumber;
 }
 
-async function signUp(username:string,password:string,email:string,
-    phone_number:string,family_name:string,given_name:string,orthopedic_practice:string,
-    stateObject:StateObject,city:string,
-    ) {
-    try {
-        const { user } = await Auth.signUp({
-            username,
-            password,
-            attributes: {
-                email,          
-                phone_number,
-                family_name,
-                given_name,
-                "custom:orthopedicPractice": orthopedic_practice,
-                "custom:state": stateObject.state,
-                "custom:city": city,
-                "custom:region": stateObject.region,
-            },
-        });
-        console.log(user);
-    } catch (error) {
-        console.log('error signing up:', error);
-    }
-}
-
 export default function SignUpForm() {
     const { register, control, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+    const [modal, showModal] = useState<boolean>(false);
+
+    async function signUp(username:string,password:string,email:string,
+        phone_number:string,family_name:string,given_name:string,orthopedic_practice:string,
+        stateObject:StateObject,city:string,
+        ) {
+        try {
+            const user = await Auth.signUp({
+                username,
+                password,
+                attributes: {
+                    email,          
+                    phone_number,
+                    family_name,
+                    given_name,
+                    "custom:orthopedicPractice": orthopedic_practice,
+                    "custom:state": stateObject.state,
+                    "custom:city": city,
+                    "custom:region": stateObject.region,
+                },
+            });
+    
+            if(user){
+                showModal(true);
+            }
+        } catch (error) {
+            console.log('error signing up:', error);
+        }
+    }
+
+
     const onSubmit = (data:any) => {
-        console.log(data);
+        console.log(`"${data.state.value}"`);
         signUp(
             data.signup_email,
             data.password,
@@ -71,15 +78,15 @@ export default function SignUpForm() {
             data.last_name,
             data.first_name,
             data.orthopedic_practice,
-            data.state.value,
+            JSON.parse(`"${data.state.value}"`),
             data.city,
         )
     };
     
     return (
         <Container maxW='lg' centerContent>
-            <chakra.form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2} w={'full'} maxW={'md'}>
+            <chakra.form onSubmit={handleSubmit(onSubmit)} w={'full'}>
+            <Stack spacing={2} maxW={'md'}>
                 <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         <GridItem>
                             <FormControl id="first_name" isInvalid={Boolean(errors.first_name)}>
@@ -131,7 +138,7 @@ export default function SignUpForm() {
                                             }),
                                             option: (provided,state)=>({
                                                 ...provided,
-                                                bg: state.isSelected ? 'secondary.yellow' : 'background.tabs'
+                                                bg: state.isSelected ? 'secondary.yellow' : 'background.tabs',
                                             }),
                                             placeholder: (provided) => ({
                                                 ...provided,
@@ -181,6 +188,7 @@ export default function SignUpForm() {
 
                     <Text color="secondary.yellow" ><InfoOutlineIcon/> <Link href="https://www.ncight.com" target="_blank" rel="noopener noreferrer">Learn More about nCight</Link></Text>
                     <Button isLoading={isSubmitting} type="submit" borderRadius= '3xl' _hover={{ bg:'primary.white', borderColor:'secondary.yellow', color:'secondary.yellow'}}  bg='secondary.yellow' color="primary.white">Sign Up</Button>
+                    <BaseModal ChildComponent={VerificationModalEmailContent} modal={modal} showModal={showModal}/>
             </Stack>
             </chakra.form>
         </Container>
