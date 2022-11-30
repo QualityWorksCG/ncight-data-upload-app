@@ -3,6 +3,9 @@
   "scripts": {
     "dev": "npm run build:config && next dev",
     "build": "npm run build:config && next build && next export",
+    "build:qa": "env-cmd -f .env.qa.local yarn build",
+    "build:development": "env-cmd -f .env.development.local yarn build",
+    "build:staging": "env-cmd -f .env.staging.local yarn build",
     "build:config": "esbuild next.config.ts --bundle --outfile=next.config.js --platform=node --target=es2020",
     "start": "next start",
     "lint": "next lint"
@@ -15,6 +18,7 @@
     "@next/font": "^13.0.4",
     "aws-amplify": "^4.3.14",
     "chakra-react-select": "^4.4.0",
+    "env-cmd": "^10.1.0",
     "framer-motion": "^7.6.7",
     "next": "^13.0.5",
     "react": "^18.0.0",
