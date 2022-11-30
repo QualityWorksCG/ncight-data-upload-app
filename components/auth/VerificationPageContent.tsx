@@ -44,7 +44,7 @@ export default function VerificationPageContent(props:any) {
 
     const onSubmit = (data:any) => {
         confirmSignUp(
-            new URLSearchParams(window.location.search).get("email")|| "",
+            decodeURIComponent(new URLSearchParams(window.location.search).get("email")|| ""),
             data.confirmation_code
         )
     };

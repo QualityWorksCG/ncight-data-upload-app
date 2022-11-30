@@ -69,7 +69,6 @@ export default function SignUpForm() {
 
 
     const onSubmit = (data:any) => {
-        console.log(`"${data.state.value}"`);
         signUp(
             data.signup_email,
             data.password,
