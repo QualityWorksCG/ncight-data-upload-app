@@ -52,16 +52,18 @@ export default function VerificationPageContent(props:any) {
     return (<Flex
         align={'center'}
         justify={'center'}
-        bg={'background.main'}>
+        bg={'background.main'}
+        overflow={'auto'}
+        >
     <Stack
         maxW={'full'}
         bg={'background.main'}
         direction={{ base: 'column'}}
         color={'primary.gray'}
     >
-         <Hide above='sm'>
-            <Show below='md'>
-                <Center>
+         {/* <Hide above='sm'>
+            <Show below='md'> */}
+                {/* <Center>
                     <Image
                         alt={'nCight Logo'}
                         src={
@@ -69,15 +71,17 @@ export default function VerificationPageContent(props:any) {
                         }
                         boxSize='100px'
                     />
-                </Center>
-            </Show>
-        </Hide>
+                </Center> */}
+            {/* </Show>
+        </Hide> */}
 
         <Image
             alt={'Verify Email Image'}
             src={
-                'https://drive.google.com/uc?id=1gLWzKn-0r8T-c9jbocRcyNY1A1LJzXEl'
+                //'https://drive.google.com/uc?id=1gLWzKn-0r8T-c9jbocRcyNY1A1LJzXEl'
+                '/images/Email_Verification_Code_Image.png'
             }
+            sizes={'sm'}
         />
 
     <Center>
@@ -122,10 +126,10 @@ export default function VerificationPageContent(props:any) {
 
     <Center>
         <Stack spacing={6} pt={'10'} >
-        <Button type="submit" w={'xs'} borderRadius= '3xl'  bg='secondary.yellow' color="primary.white">
+        <Button w={['xs', 'md', 'lg']} type="submit" borderRadius= '3xl'  bg='secondary.yellow' color="primary.white">
             Verify
         </Button>
-        <Button w={'xs'} variant='outline' borderRadius= '3xl'  borderColor={'secondary.yellow'} bg='transparent' color="secondary.yellow">
+        <Button variant='outline' borderRadius= '3xl'  borderColor={'secondary.yellow'} bg='transparent' color="secondary.yellow">
             Cancel
         </Button>
         <BaseModal ChildComponent={FailedVerificationModalContent} modal={errorModal} showModal={showErrorModal}/>

@@ -26,18 +26,19 @@ const Home: NextPage = () => {
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} bg='background.main'>
       <Show above='md'>
-      <Flex flex={1}>
+      <Flex >
       <Image
           alt={'Sign up Image'}
           objectFit={'cover'}
           src={
-            'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
+            //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
+            '/images/Welcome_Image.png'
           }
         />
       </Flex>
       </Show>
       <Flex p={8} flex={1} align={'center'} justify={'center'} bg='background.main'>
-        <Stack spacing={4} w={'full'} maxW={'lg'} color="primary.gray">
+        <Stack spacing={4} w={'xl'} maxW={'full'} color="primary.gray">
         <Hide above='sm'>
             <Show below='md'>
                 <Center>

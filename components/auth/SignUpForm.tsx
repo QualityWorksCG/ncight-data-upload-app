@@ -15,7 +15,7 @@ import {
     chakra,
 } from '@chakra-ui/react';
 import { Select } from "chakra-react-select";
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { InfoOutlineIcon, CheckIcon } from '@chakra-ui/icons';
 import { useForm, Controller } from "react-hook-form";
 import * as stateData from '../../data/us-states-and-regions';
 import { Auth } from 'aws-amplify';
@@ -84,8 +84,8 @@ export default function SignUpForm() {
     
     return (
         <Container maxW='lg' centerContent>
-            <chakra.form onSubmit={handleSubmit(onSubmit)} w={'full'}>
-            <Stack spacing={2} maxW={'md'}>
+            <chakra.form onSubmit={handleSubmit(onSubmit)} w={'lg'}>
+            <Stack spacing={4} maxW={'lg'}>
                 <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         <GridItem>
                             <FormControl id="first_name" isInvalid={Boolean(errors.first_name)}>
@@ -106,6 +106,21 @@ export default function SignUpForm() {
                         <FormLabel htmlFor='signup_email'>Email address</FormLabel>
                         <Input type="email" size='lg' {...register("signup_email", { required: 'Email is required'})}/>
                         <FormErrorMessage>{errors.signup_email && errors.signup_email.message}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl id="signup-password">
+                        <FormLabel>Password</FormLabel>
+                        <Input type="password" size='lg' {...register("password")}/>
+                        <FormErrorMessage>Password is required.</FormErrorMessage>
+                        <FormHelperText fontWeight="700" color="secondary.yellow"><CheckIcon  color={"primary.gray"}/> 8 characters</FormHelperText>
+                        <FormHelperText fontWeight="700" color="secondary.yellow"><CheckIcon color={"primary.gray"}/>  at least 1 uppercase letter</FormHelperText>
+                        <FormHelperText fontWeight="700" color="secondary.yellow"><CheckIcon color={"primary.gray"}/> at least 1 lowercase letter</FormHelperText>
+                        <FormHelperText fontWeight="700" color="secondary.yellow"><CheckIcon color={"primary.gray"}/> at least 1 special character</FormHelperText>
+                        <FormHelperText fontWeight="700" color="secondary.yellow"><CheckIcon color={"primary.gray"}/> at least 1 number</FormHelperText>
+                    </FormControl>
+                    <FormControl id="orthopedic_practice" isInvalid={Boolean(errors.orthopedic_practice)}>
+                        <FormLabel htmlFor='orthopedic_practice'>Name of Orthopedic Practice</FormLabel>
+                        <Input type="text" placeholder="Practice Name" _placeholder={{ color: 'primary.gray' }} size='lg' {...register("orthopedic_practice",{ required: 'Orthopedic Practice is required'})}/>
+                        <FormErrorMessage>{errors.orthopedic_practice && errors.orthopedic_practice.message}</FormErrorMessage>
                     </FormControl>
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         <GridItem>
@@ -159,17 +174,6 @@ export default function SignUpForm() {
                             </FormControl>
                         </GridItem>
                     </Grid>
-                    <FormControl id="signup-password">
-                        <FormLabel>Password</FormLabel>
-                        <Input type="password" size='lg' {...register("password")}/>
-                        <FormErrorMessage>Password is required.</FormErrorMessage>
-                        <FormHelperText fontWeight="700" color="secondary.yellow">Minimum length of 8 characters, at least 1 uppercase letter, at least 1 lowercase letter, at least 1 special character, at least 1 number</FormHelperText>
-                    </FormControl>
-                    <FormControl id="orthopedic_practice" isInvalid={Boolean(errors.orthopedic_practice)}>
-                        <FormLabel htmlFor='orthopedic_practice'>Name of Orthopedic Practice</FormLabel>
-                        <Input type="text" placeholder="Practice Name" _placeholder={{ color: 'primary.gray' }} size='lg' {...register("orthopedic_practice",{ required: 'Orthopedic Practice is required'})}/>
-                        <FormErrorMessage>{errors.orthopedic_practice && errors.orthopedic_practice.message}</FormErrorMessage>
-                    </FormControl>
                     <FormControl id="mobile_phone_number" isInvalid={Boolean(errors.mobile_phone_number)}>
                         <FormLabel htmlFor='mobile_phone_number'>Mobile Phone Number</FormLabel>
                         <Input type="tel" placeholder="(XXX) XXX - XXXX" _placeholder={{ color: 'primary.gray' }} size='lg' {...register("mobile_phone_number", { required: 'Mobile Phone Number is required'})}/>
@@ -185,8 +189,8 @@ export default function SignUpForm() {
                         <FormErrorMessage>{errors.terms_and_conditions && errors.terms_and_conditions.message}</FormErrorMessage>
                     </FormControl>
 
-                    <Text color="secondary.yellow" ><InfoOutlineIcon/> <Link href="https://www.ncight.com" target="_blank" rel="noopener noreferrer">Learn More about nCight</Link></Text>
-                    <Button isLoading={isSubmitting} type="submit" borderRadius= '3xl' _hover={{ bg:'primary.white', borderColor:'secondary.yellow', color:'secondary.yellow'}}  bg='secondary.yellow' color="primary.white">Sign Up</Button>
+                    {/*<Text color="secondary.yellow" ><InfoOutlineIcon/> <Link href="https://www.ncight.com" target="_blank" rel="noopener noreferrer">Learn More about nCight</Link></Text>*/}
+                    <Button variant='outline' isLoading={isSubmitting} type="submit" borderRadius= '3xl' _hover={{ bg:'primary.white', borderColor:'secondary.yellow', color:'secondary.yellow'}}  bg='secondary.yellow' color="primary.white">Sign Up</Button>
                     <BaseModal ChildComponent={VerificationModalEmailContent} modal={modal} showModal={showModal}/>
             </Stack>
             </chakra.form>

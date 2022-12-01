@@ -31,8 +31,8 @@ export default function LoginForm() {
               <Checkbox>Remember me</Checkbox>
               <Link color={'blue.500'}>Forgot password?</Link>
             </Stack>
-            <Button colorScheme={'blue'} variant={'solid'}>
-              Sign in
+            <Button variant='outline' type="submit" borderRadius= '3xl' _hover={{ bg:'primary.white', borderColor:'secondary.yellow', color:'secondary.yellow'}}  bg='secondary.yellow' color="primary.white">
+              Login in
             </Button>
           </Stack>
         </Stack>

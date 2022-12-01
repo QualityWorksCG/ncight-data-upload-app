@@ -15,6 +15,7 @@
     "@chakra-ui/react": "^2.4.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/roboto-condensed": "^4.5.9",
     "@next/font": "^13.0.4",
     "aws-amplify": "^4.3.14",
     "chakra-react-select": "^4.4.0",

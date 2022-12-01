@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Amplify } from 'aws-amplify'
 import useEnv from '../lib/useEnv'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+import "@fontsource/roboto-condensed/700.css"
 import {customTheme} from "../styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {

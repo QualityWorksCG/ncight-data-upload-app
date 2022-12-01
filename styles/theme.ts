@@ -1,35 +1,41 @@
-import { extendTheme, type ThemeConfig, theme, StyleFunctionProps } from "@chakra-ui/react";
-import { League_Spartan } from '@next/font/google'
+import { extendTheme, type ThemeConfig, theme, StyleFunctionProps} from "@chakra-ui/react";
 
-const leagueSpartan = League_Spartan({
-    subsets: ['latin'],
-})
 
-const config: ThemeConfig = {
-    initialColorMode: 'light',
-    useSystemColorMode: false,
-  }
 
 export const customTheme = extendTheme({
-    config,
+
     fonts:{
-        body: leagueSpartan,
+        body: `'Roboto Condensed', sans-serif`,
+        heading: `'Roboto Condensed', sans-serif`
     },
     components: {
         Input: {
-          variants: {
-            outline: (props: StyleFunctionProps) => ({
-              ...theme.components.Input.variants!.outline(props),
-              field: {
-                ...theme.components.Input.variants!.outline(props).field,
-                borderRadius: "6px",
-                color: "#D8DADA",
-              },
-            })
-          },
-          defaultProps:{
-            focusBorderColor: "#F09E28"
+            variants: {
+                outline: (props: StyleFunctionProps) => ({
+                    ...theme.components.Input.variants!.outline(props),
+                    field: {
+                        ...theme.components.Input.variants!.outline(props).field,
+                        borderRadius: "6px",
+                        color: "#D8DADA",
+                    },
+                })
+            },
+            defaultProps:{
+                focusBorderColor: "#F09E28"
+            },
         },
+        Button: {
+            defaultProps:{
+                _hover:{
+                    bg: "transparent",
+                    color: "#F09E28",
+                }
+            }
+        },
+        Heading: {
+            defaultProps:{
+                fontWeight: '700'
+            }
         },
         Select: {
             defaultProps:{
@@ -44,9 +50,6 @@ export const customTheme = extendTheme({
         Checkbox: {
             color: '#F09E28'
         }
-    },
-    fontSizes:{
-        sm: '0.875rem'
     },
     colors:{
         background: {

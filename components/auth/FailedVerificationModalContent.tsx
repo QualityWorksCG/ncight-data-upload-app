@@ -3,7 +3,7 @@ import {
     Image,
     Center,
     Heading,
-    Button
+    Button,
   } from '@chakra-ui/react';
 import { Auth } from 'aws-amplify';
 import { useRouter } from 'next/navigation'
