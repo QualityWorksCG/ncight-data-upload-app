@@ -1,22 +1,19 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Amplify } from 'aws-amplify'
-import useEnv from '../lib/useEnv'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import "@fontsource/roboto-condensed/700.css"
 import {customTheme} from "../styles/theme";
 
+Amplify.configure({
+  Auth: {
+    userPoolId: process.env.NEXT_PUBLIC_AUTH_USER_POOL_ID,
+    userPoolWebClientId: process.env.NEXT_PUBLIC_AUTH_WEB_CLIENT_ID,
+    ssr: true,
+  }
+})
+
 function MyApp({ Component, pageProps }: AppProps) {
-  const { env } = useEnv()
-  if (!env) return <>No Env Loading...</>
-
-  Amplify.configure({
-    Auth: {
-      userPoolId: env.cognitoUserPoolId,
-      userPoolWebClientId: env.cognitoUserPoolWebClientId,
-    },
-  })
-
   return (
     <>
       <ChakraProvider theme={customTheme}>
@@ -26,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
-        <Component {...pageProps} />
+          <Component {...pageProps} />
       </ChakraProvider>
     </>
   )
