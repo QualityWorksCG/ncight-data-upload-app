@@ -11,13 +11,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^4.1.0",
     "@chakra-ui/icons": "^2.0.12",
     "@chakra-ui/react": "^2.4.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto-condensed": "^4.5.9",
     "@next/font": "^13.0.4",
-    "aws-amplify": "^4.3.14",
+    "aws-amplify": "^5.0.5",
     "chakra-react-select": "^4.4.0",
     "env-cmd": "^10.1.0",
     "framer-motion": "^7.6.7",
