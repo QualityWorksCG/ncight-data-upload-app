@@ -58,7 +58,7 @@ export default function LoginForm(props:any) {
 
   return (
     <Container maxW='lg'>
-      <chakra.form onSubmit={handleSubmit(onSubmit)} w={'lg'}>
+      <chakra.form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={10} w={'full'} maxW={'lg'}>
           <FormControl id="login-email" isInvalid={Boolean(errors.email)}>
             <FormLabel htmlFor='email'>Email address</FormLabel>

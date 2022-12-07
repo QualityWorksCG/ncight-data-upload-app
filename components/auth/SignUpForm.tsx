@@ -84,7 +84,7 @@ export default function SignUpForm() {
     
     return (
         <Container maxW='lg' centerContent>
-            <chakra.form onSubmit={handleSubmit(onSubmit)} w={'lg'}>
+            <chakra.form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4} maxW={'lg'}>
                 <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         <GridItem>
