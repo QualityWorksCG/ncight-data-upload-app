@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
-import LoginForm from '../components/auth/LoginForm';
-import SignUpForm from '../components/auth/SignUpForm';
+import type { NextPage } from "next";
+import LoginForm from "../components/auth/LoginForm";
+import SignUpForm from "../components/auth/SignUpForm";
 import {
   Flex,
   Stack,
@@ -18,60 +18,88 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-} from '@chakra-ui/react';
-import React,{ useState }from 'react';
+} from "@chakra-ui/react";
+import React, { useState } from "react";
 
 const Home: NextPage = () => {
-
-  const [loginErrorObject, showLoginError] = useState({isError:false, errorMessage:''});
+  const [loginErrorObject, showLoginError] = useState({
+    isError: false,
+    errorMessage: "",
+  });
 
   return (
-    <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} bg='background.main'>
-      <Show above='md'>
-      <Flex >
-      <Image
-          alt={'Sign up Image'}
-          objectFit={'cover'}
-          src={
-            //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
-            '/images/Welcome_Image.png'
-          }
-        />
-      </Flex>
+    <Stack
+      minH={"100vh"}
+      direction={{ base: "column", md: "row" }}
+      bg="background.main"
+    >
+      <Show above="md">
+        <Flex>
+          <Image
+            alt={"Sign up Image"}
+            objectFit={"cover"}
+            src={
+              //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
+              "/images/Welcome_Image.png"
+            }
+          />
+        </Flex>
       </Show>
-      <Flex p={8} flex={1} align={'center'} justify={'center'} bg='background.main'>
-        <Stack spacing={4} w={'xl'} maxW={'full'} color="primary.gray">
-        <Hide above='sm'>
-            <Show below='md'>
-                <Center>
-                    <Image
-                        alt={'nCight Logo'}
-                        src={
-                            'https://drive.google.com/uc?id=1KhpLDZ7pTBmUh2_h3TWkvA1mkrI4OXwL'
-                        }
-                        boxSize='100px'
-                    />
-                </Center>
+      <Flex p={8} flex={1} justify={"center"} bg="background.main">
+        <Stack spacing={4} w={"xl"} maxW={"full"} color="primary.gray">
+          <Hide above="sm">
+            <Show below="md">
+              <Center>
+                <Image
+                  alt={"nCight Logo"}
+                  src={
+                    "https://drive.google.com/uc?id=1KhpLDZ7pTBmUh2_h3TWkvA1mkrI4OXwL"
+                  }
+                  boxSize="100px"
+                />
+              </Center>
             </Show>
-        </Hide>
-          <Heading textAlign={'center'}>Welcome to nCight!</Heading>
-          {loginErrorObject.isError ? <Alert variant="solid" status="error" justifyContent={'center'}>
+          </Hide>
+          <Heading textAlign={"center"}>Welcome to nCight!</Heading>
+          {loginErrorObject.isError ? (
+            <Alert variant="solid" status="error" justifyContent={"center"}>
               <AlertIcon />
               <AlertTitle>{loginErrorObject.errorMessage}</AlertTitle>
-          </Alert> : null}
-          <Tabs variant='unstyled' size='lg' onChange={(index:number)=>{showLoginError({isError:false, errorMessage:''})}}>
+            </Alert>
+          ) : null}
+          <Tabs
+            variant="unstyled"
+            size="lg"
+            onChange={(index: number) => {
+              showLoginError({ isError: false, errorMessage: "" });
+            }}
+          >
             <TabList>
-                <HStack borderTopRadius='6px' bg='background.tabs'>
-                  <Tab  _selected={{ bg: 'secondary.yellow', borderTopLeftRadius:'md' }}>Login</Tab>
-                  <Tab  _selected={{ bg: 'secondary.yellow', borderTopRightRadius:'md' }}>Sign Up</Tab>
-                </HStack>
+              <HStack borderTopRadius="6px" bg="background.tabs">
+                <Tab
+                  _selected={{
+                    bg: "secondary.yellow",
+                    borderTopLeftRadius: "md",
+                  }}
+                >
+                  Login
+                </Tab>
+                <Tab
+                  _selected={{
+                    bg: "secondary.yellow",
+                    borderTopRightRadius: "md",
+                  }}
+                >
+                  Sign Up
+                </Tab>
+              </HStack>
             </TabList>
-            <TabPanels bg='background.tabs'>
+            <TabPanels bg="background.tabs">
               <TabPanel>
-                <LoginForm showLoginError={showLoginError!}/>
+                <LoginForm showLoginError={showLoginError!} />
               </TabPanel>
               <TabPanel>
-                <SignUpForm/>
+                <SignUpForm />
               </TabPanel>
             </TabPanels>
           </Tabs>
@@ -79,6 +107,6 @@ const Home: NextPage = () => {
       </Flex>
     </Stack>
   );
-}
+};
 
-export default Home
+export default Home;

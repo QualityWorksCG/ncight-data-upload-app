@@ -1,25 +1,24 @@
+import useUser from "../lib/useUser";
 
+function Dashboard() {
+  const { user, loading, loggedOut, signOut } = useUser({ redirect: "/" });
 
-import useUser from '../lib/useUser'
-
-function Dashboard () {
-  const { user, loading, loggedOut, signOut } = useUser({ redirect: '/' })
-
-  if (loading) return <>Loading...</>
-  if (loggedOut) return <>Redirect...</>
+  if (loading) return <>Loading...</>;
+  if (loggedOut) return <>Redirect...</>;
 
   //console.log(user.signInUserSession?.idToken?.jwtToken)
 
   return (
     <>
-      <main >
-        <h1 >Welcome, {user.attributes?.email}!</h1>
+      <main>
+        <h1>Welcome, {user.attributes?.email}!</h1>
         <p>
-          Sign out and redirect to home: <button onClick={() => signOut({ redirect: '/' })}>SignOut</button>
+          Sign out and redirect to home:{" "}
+          <button onClick={() => signOut({ redirect: "/" })}>SignOut</button>
         </p>
       </main>
     </>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

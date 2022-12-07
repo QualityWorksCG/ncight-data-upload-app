@@ -11,7 +11,8 @@ import Head from "next/head";
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
-
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import { withSSRContext } from "aws-amplify";
 type Props = {};
 
 const Home: PageWithLayout = () => {
@@ -56,4 +57,5 @@ const Home: PageWithLayout = () => {
 Home.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
+
 export default Home;

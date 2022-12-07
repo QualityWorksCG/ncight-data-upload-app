@@ -8,16 +8,22 @@ import {
   Flex,
   HStack,
   Image,
+  Spinner,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 
 import Sidebar from "./Sidebar";
 import { FiLogOut } from "react-icons/fi";
+import useUser from "../../lib/useUser";
 
 const Layout = ({ children }: any) => {
   const sidebar = useDisclosure();
+  const { user, loading, loggedOut, signOut } = useUser({ redirect: "/" });
 
+  if (loading || !user) {
+    return <Spinner />;
+  }
   const SidebarContent = (props: any) => (
     <Box
       as="nav"
@@ -57,7 +63,13 @@ const Layout = ({ children }: any) => {
         <Box>
           <Sidebar />
         </Box>
-        <HStack pl={6}>
+        <HStack
+          pl={6}
+          _hover={{ cursor: "pointer" }}
+          onClick={() => {
+            signOut({ redirect: "/" });
+          }}
+        >
           <FiLogOut color="#F09E28" fontSize={"25"} />
           <Text color={"white"} fontSize={"lg"}>
             Logout
