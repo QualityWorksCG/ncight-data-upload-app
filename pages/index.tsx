@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Router from 'next/router'
 import LoginForm from '../components/auth/LoginForm';
 import SignUpForm from '../components/auth/SignUpForm';
 import {
@@ -15,13 +14,16 @@ import {
   TabPanel,
   Heading,
   Hide,
-  Center
+  Center,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from '@chakra-ui/react';
+import React,{ useState }from 'react';
 
 const Home: NextPage = () => {
-  const moveToRequireAuthenticationPage = () => {
-    Router.push('/admin')
-  }
+
+  const [loginErrorObject, showLoginError] = useState({isError:false, errorMessage:''});
 
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} bg='background.main'>
@@ -53,7 +55,11 @@ const Home: NextPage = () => {
             </Show>
         </Hide>
           <Heading textAlign={'center'}>Welcome to nCight!</Heading>
-          <Tabs variant='unstyled' size='lg' >
+          {loginErrorObject.isError ? <Alert variant="solid" status="error" justifyContent={'center'}>
+              <AlertIcon />
+              <AlertTitle>{loginErrorObject.errorMessage}</AlertTitle>
+          </Alert> : null}
+          <Tabs variant='unstyled' size='lg' onChange={(index:number)=>{showLoginError({isError:false, errorMessage:''})}}>
             <TabList>
                 <HStack borderTopRadius='6px' bg='background.tabs'>
                   <Tab  _selected={{ bg: 'secondary.yellow', borderTopLeftRadius:'md' }}>Login</Tab>
@@ -62,7 +68,7 @@ const Home: NextPage = () => {
             </TabList>
             <TabPanels bg='background.tabs'>
               <TabPanel>
-                <LoginForm/>
+                <LoginForm showLoginError={showLoginError!}/>
               </TabPanel>
               <TabPanel>
                 <SignUpForm/>
