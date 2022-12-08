@@ -1,5 +1,4 @@
 import type { AppProps } from "next/app";
-import Head from "next/head";
 import { Amplify } from "aws-amplify";
 import useEnv from "../lib/useEnv";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
@@ -8,7 +7,6 @@ import { customTheme } from "../styles/theme";
 import { PageWithLayout } from "../modules/Layout";
 import "../styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { MantineProvider } from "@mantine/core";
 type AppPropsWithLayout = AppProps & {
   Component: PageWithLayout;
 };
