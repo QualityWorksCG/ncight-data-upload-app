@@ -7,6 +7,7 @@ import {
   DrawerOverlay,
   Flex,
   HStack,
+  IconButton,
   Image,
   Spinner,
   Text,
@@ -15,12 +16,12 @@ import {
 
 import Sidebar from "./Sidebar";
 import { FiLogOut } from "react-icons/fi";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import useUser from "../../lib/useUser";
 
 const Layout = ({ children }: any) => {
   const sidebar = useDisclosure();
   const { user, loading, loggedOut, signOut } = useUser({ redirect: "/" });
-
   if (loading || !user) {
     return <Spinner />;
   }
@@ -96,13 +97,31 @@ const Layout = ({ children }: any) => {
         <HStack
           as="header"
           align="center"
-          justify="end"
+          justifyContent={"space-between"}
           w="full"
           px="4"
           bg="#343334"
           h="14"
         >
+          <IconButton
+            // bg={"secondary.yellow"}
+            display={{ base: "inline-flex", md: "none" }}
+            aria-label={""}
+            onClick={sidebar.onOpen}
+            variant={"unstyled"}
+            color={"secondary.yellow"}
+            icon={<HiOutlineMenuAlt1 fontSize={30} />}
+          />
+          <Box pt={4}>
+            <Image
+              display={{ base: "inline-flex", md: "none" }}
+              w={"80px"}
+              src="/images/logo.png"
+            />
+          </Box>
+
           <Button
+            marginLeft={"auto"}
             borderRadius={"full"}
             bg={"secondary.yellow"}
             color={"white"}

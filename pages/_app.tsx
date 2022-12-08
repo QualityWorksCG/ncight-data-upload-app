@@ -8,6 +8,7 @@ import { customTheme } from "../styles/theme";
 import { PageWithLayout } from "../modules/Layout";
 import "../styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { MantineProvider } from "@mantine/core";
 type AppPropsWithLayout = AppProps & {
   Component: PageWithLayout;
 };

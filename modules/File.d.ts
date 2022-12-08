@@ -1,5 +1,6 @@
 export interface File {
   path: string;
+  fileName: string;
   preview: string;
   lastModified: number;
   lastModifiedDate: string;

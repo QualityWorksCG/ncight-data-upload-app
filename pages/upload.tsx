@@ -4,8 +4,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
-  HStack,
   IconButton,
   Image,
   Input,
@@ -24,7 +22,6 @@ import { PageWithLayout } from "../modules/Layout";
 import DatePicker from "react-datepicker";
 import { useDropzone } from "react-dropzone";
 import { FaFileUpload } from "react-icons/fa";
-import { ST } from "next/dist/shared/lib/utils";
 import { File } from "../modules/File";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -32,13 +29,17 @@ const Upload: PageWithLayout = () => {
   const {
     handleSubmit,
     control,
+    unregister,
+    watch,
     getValues,
     formState: { errors },
   } = useForm();
 
   const onSubmit = handleSubmit((values) => {
+    values.files = files;
     console.log(values);
   });
+  const watchFiles = watch("numberOfFiles");
   const [files, setFiles] = useState<File[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -50,6 +51,7 @@ const Upload: PageWithLayout = () => {
         acceptedFiles.map((file, index) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
+            fileName: `image-${index}`,
           })
         )
       );
@@ -89,26 +91,46 @@ const Upload: PageWithLayout = () => {
                   onChange(value);
                 }}
                 id="radio-group"
-                colorScheme={"orange"}
+                colorScheme={"yellow"}
                 value={value}
               >
                 <Stack spacing={4} direction={["column", "column", "row"]}>
-                  <Box p={2} borderWidth={1} borderRadius={"lg"}>
+                  <Box
+                    p={2}
+                    borderWidth={1}
+                    borderRadius={"lg"}
+                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                  >
                     <Radio value="knee" id="radio-2">
                       <Text color={"white"}>Knee</Text>
                     </Radio>
                   </Box>
-                  <Box p={2} borderWidth={1} borderRadius={"lg"}>
+                  <Box
+                    p={2}
+                    borderWidth={1}
+                    borderRadius={"lg"}
+                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                  >
                     <Radio value="shoulder" id="radio-2">
                       <Text color={"white"}>Shoulder</Text>
                     </Radio>
                   </Box>
-                  <Box p={2} borderWidth={1} borderRadius={"lg"}>
+                  <Box
+                    p={2}
+                    borderWidth={1}
+                    borderRadius={"lg"}
+                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                  >
                     <Radio value="hip-admin" id="radio-2">
                       <Text color={"white"}>Hip</Text>
                     </Radio>
                   </Box>
-                  <Box p={2} borderWidth={1} borderRadius={"lg"}>
+                  <Box
+                    p={2}
+                    borderWidth={1}
+                    borderRadius={"lg"}
+                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                  >
                     <Radio value="elbow" id="radio-2">
                       <Text color={"white"}>Elbow</Text>
                     </Radio>
@@ -136,7 +158,7 @@ const Upload: PageWithLayout = () => {
                 showYearDropdown
                 dropdownMode="select"
                 selected={
-                  getValues("dob")
+                  getValues("dateOfSurgery")
                     ? new Date(getValues("dob") as string)
                     : new Date()
                 }
@@ -162,16 +184,26 @@ const Upload: PageWithLayout = () => {
                   onChange(value);
                 }}
                 id="radio-group"
-                colorScheme={"orange"}
+                colorScheme={"yellow"}
                 value={value}
               >
                 <Stack spacing={4} direction={["column", "column", "row"]}>
-                  <Box p={2} borderWidth={1} borderRadius={"lg"}>
+                  <Box
+                    p={2}
+                    borderWidth={1}
+                    borderRadius={"lg"}
+                    borderColor={errors.isImplant != null ? "red.500" : ""}
+                  >
                     <Radio value="Yes" id="radio-2">
                       <Text color={"white"}>Yes</Text>
                     </Radio>
                   </Box>
-                  <Box p={2} borderWidth={1} borderRadius={"lg"}>
+                  <Box
+                    p={2}
+                    borderWidth={1}
+                    borderRadius={"lg"}
+                    borderColor={errors.isImplant != null ? "red.500" : ""}
+                  >
                     <Radio value="No" id="radio-2">
                       <Text color={"white"}>No</Text>
                     </Radio>
@@ -192,12 +224,7 @@ const Upload: PageWithLayout = () => {
             name="numberOfImplants"
             rules={{ required: { value: true, message: "Field is required!" } }}
             render={({ field: { onChange, value } }) => (
-              <Input
-                // borderColor={errors.numberOfImplants?.message ? "red" : ""}
-                // color={"white"}
-                value={value}
-                onChange={onChange}
-              />
+              <Input value={value} onChange={onChange} />
             )}
           />
           <FormErrorMessage>
@@ -205,28 +232,40 @@ const Upload: PageWithLayout = () => {
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl>
+        <FormControl isInvalid={errors?.numberOfFiles != null}>
           <FormLabel color={"white"} fontSize={"lg"}>
             Upload and attach images
           </FormLabel>
           <Controller
             control={control}
-            name="files"
+            name="numberOfFiles"
             rules={{
-              validate: (d) => {
-                return "";
+              validate: () => {
+                {
+                  if (files.length <= 0) {
+                    return "Please upload at least 1 image";
+                  }
+                }
               },
             }}
-            render={({}) => (
+            render={({ field: { onChange, value } }) => (
               <VStack
                 p={6}
                 borderWidth={2}
                 borderRadius={"lg"}
                 borderStyle={"dashed"}
                 textAlign={"center"}
+                borderColor={errors?.numberOfFiles != null ? "red" : "white"}
                 {...getRootProps({ className: "dropzone" })}
               >
-                <input {...getInputProps()} />
+                <input
+                  onChange={() => {
+                    unregister("numberOfFiles");
+                    onChange(files.length);
+                  }}
+                  value={value}
+                  {...getInputProps()}
+                />
                 <FaFileUpload fontSize={60} color="orange" />
                 <Text color={"white"}>
                   Click to upload or drag and drop files here
@@ -235,7 +274,8 @@ const Upload: PageWithLayout = () => {
               </VStack>
             )}
           />
-          <FormErrorMessage>{errors.files?.message}</FormErrorMessage>
+          {console.log(errors.numberOfFiles)}
+          <FormErrorMessage>{errors?.numberOfFiles?.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel color={"white"} fontSize={"lg"}>
@@ -244,41 +284,38 @@ const Upload: PageWithLayout = () => {
           <SimpleGrid spacing={2} columns={[1, 2, 3, 4]}>
             {files.map((file) => {
               return (
-                <Box>
-                  <HStack
+                <Box position={"relative"}>
+                  <IconButton
+                    zIndex={10}
                     position={"absolute"}
-                    p={1}
-                    ml={["255px", "230px", "235px"]}
-                  >
-                    <IconButton
-                      size={"sm"}
-                      colorScheme={"red"}
-                      aria-label="Search database"
-                      icon={<AiFillDelete />}
-                      onClick={removeFile(file)}
-                    />
-                  </HStack>
+                    m={2}
+                    size={"sm"}
+                    colorScheme={"red"}
+                    aria-label="Search database"
+                    icon={<AiFillDelete />}
+                    onClick={removeFile(file)}
+                  />
+
                   <Box
                     borderTopRadius={"lg"}
                     opacity={0.6}
-                    w={"278px"}
-                    mt={250}
+                    w={"100%"}
                     bg={"white"}
+                    bottom={0}
                     position={"absolute"}
                     h={"50px"}
                     p={2}
                   >
                     <Text color={"black"} noOfLines={1}>
-                      {file.name}
+                      {file.fileName}
                     </Text>
                     <Text color={"black"} fontSize={"sm"}>
                       {(file.size / (1024 * 1024)).toFixed(2)} mb
                     </Text>
                   </Box>
+
                   <Image
                     borderRadius={"lg"}
-                    h={300}
-                    w={300}
                     src={file.preview}
                     alt="Dan Abramov"
                   />
