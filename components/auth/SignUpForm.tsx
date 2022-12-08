@@ -151,9 +151,18 @@ export default function SignUpForm() {
               {errors.signup_email && errors.signup_email.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl id="signup-password">
+          <FormControl
+            id="signup-password"
+            isInvalid={Boolean(errors.password)}
+          >
             <FormLabel>Password</FormLabel>
-            <Input type="password" size="lg" {...register("password")} />
+            <Input
+              type="password"
+              size="lg"
+              {...register("password", {
+                required: { value: true, message: "Password is required" },
+              })}
+            />
             <FormErrorMessage>Password is required.</FormErrorMessage>
             <FormHelperText fontWeight="700" color="secondary.yellow">
               <HStack>

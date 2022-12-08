@@ -30,6 +30,7 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.39.5",
     "react-icons": "^4.7.1",
+    "react-paginate": "^8.1.4",
     "swr": "^1.2.2"
   },
   "devDependencies": {

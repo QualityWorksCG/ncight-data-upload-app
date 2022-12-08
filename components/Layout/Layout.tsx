@@ -65,7 +65,9 @@ const Layout = ({ children }: any) => {
           <Sidebar />
         </Box>
         <HStack
-          pl={6}
+          position={"absolute"}
+          bottom={0}
+          p={6}
           _hover={{ cursor: "pointer" }}
           onClick={() => {
             signOut({ redirect: "/" });
@@ -104,7 +106,6 @@ const Layout = ({ children }: any) => {
           h="14"
         >
           <IconButton
-            // bg={"secondary.yellow"}
             display={{ base: "inline-flex", md: "none" }}
             aria-label={""}
             onClick={sidebar.onOpen}
@@ -115,8 +116,9 @@ const Layout = ({ children }: any) => {
           <Box pt={4}>
             <Image
               display={{ base: "inline-flex", md: "none" }}
-              w={"80px"}
-              src="/images/logo.png"
+              w={"40px"}
+              pb={2}
+              src="/images/logo-only.png"
             />
           </Box>
 

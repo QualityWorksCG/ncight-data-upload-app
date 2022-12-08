@@ -4,12 +4,14 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   IconButton,
   Image,
   Input,
   Radio,
   RadioGroup,
   SimpleGrid,
+  Spacer,
   Stack,
   Text,
   VStack,
@@ -23,7 +25,8 @@ import DatePicker from "react-datepicker";
 import { useDropzone } from "react-dropzone";
 import { FaFileUpload } from "react-icons/fa";
 import { File } from "../modules/File";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import ReactPaginate from "react-paginate";
 
 const Upload: PageWithLayout = () => {
   const {
@@ -65,6 +68,27 @@ const Upload: PageWithLayout = () => {
 
   const removeAll = () => {
     setFiles([]);
+  };
+
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+
+  // Simulate fetching items from another resources.
+  // (This could be items from props; or items loaded in a local state
+  // from an API endpoint with useEffect and useState)
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = files.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(files.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % files.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
   };
 
   return (
@@ -281,8 +305,8 @@ const Upload: PageWithLayout = () => {
           <FormLabel color={"white"} fontSize={"lg"}>
             Attached Files
           </FormLabel>
-          <SimpleGrid spacing={2} columns={[1, 2, 3, 4]}>
-            {files.map((file) => {
+          <SimpleGrid spacing={2} columns={[2, 2, 3, 4]}>
+            {currentItems.map((file) => {
               return (
                 <Box position={"relative"}>
                   <IconButton
@@ -323,6 +347,33 @@ const Upload: PageWithLayout = () => {
               );
             })}
           </SimpleGrid>
+          <Spacer py={4} />
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={
+              <IconButton
+                color={"orange"}
+                variant={"unstyled"}
+                icon={<AiOutlineRight />}
+                aria-label={""}
+              />
+            }
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={2}
+            pageCount={pageCount}
+            previousLabel={
+              <IconButton
+                pl={6}
+                color={"orange"}
+                variant={"unstyled"}
+                icon={<AiOutlineLeft />}
+                aria-label={""}
+              />
+            }
+            containerClassName={"pagination"}
+            pageLinkClassName={"page-num"}
+            activeLinkClassName={"active"}
+          />
         </FormControl>
         <Button
           borderRadius={"full"}
