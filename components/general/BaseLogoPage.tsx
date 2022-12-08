@@ -2,13 +2,15 @@ import {
     Container,
     Image,
     Show,
+    Flex
 } from '@chakra-ui/react';
 import React from 'react';
 
 export default function BaseLogoPage({ ChildComponent }: { ChildComponent: React.FC }) {
     return (
-        <Container bg={'background.main'} minW={'100vw'} minH={'100vh'}>
-        <Show above='sm'>
+        <Container bg={'background.main'} minW={'100vw'} minH={'100vh'} >
+        {/* <Show above='sm'> */}
+            <Flex flex={1} justifyContent={'center'} p={6}>
                 <Image
                     alt={'nCight Logo'}
                     src={
@@ -16,7 +18,8 @@ export default function BaseLogoPage({ ChildComponent }: { ChildComponent: React
                     }
                     boxSize='100px'
                 />
-        </Show>
+            </Flex>
+        {/* </Show> */}
         <ChildComponent/>
         </Container>
     );

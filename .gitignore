@@ -4,7 +4,7 @@ next.config.js
 
 #Environment Variables
 .env.*
-
+.env
 # Logs
 logs
 *.log

@@ -10,11 +10,12 @@ export default function VerificationModalEmailContent(props:any) {
     const Router = useRouter();
     return (
       <>
-        <Flex flex={1}>
+        <Flex flex={1} justifyContent={'center'}>
           <Image
               alt={'Verification Success Image'}
               src={
-                'https://drive.google.com/uc?id=19rAQF9rH3J-NwuC6AJWi7W9k33eLePiN'
+                //'https://drive.google.com/uc?id=19rAQF9rH3J-NwuC6AJWi7W9k33eLePiN'
+                '/images/Email_Verification_Modal_Image.png'
               }
               sizes={'sm'}
             />
