@@ -174,13 +174,14 @@ const Upload: PageWithLayout = () => {
             control={control}
             name="dateOfSurgery"
             rules={{ required: { value: true, message: "Field is required!" } }}
-            render={({ field: { onChange } }) => (
+            render={({ field: { onChange, value } }) => (
               <DatePicker
                 maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
+                value={value}
                 selected={
                   getValues("dateOfSurgery")
                     ? new Date(getValues("dob") as string)
