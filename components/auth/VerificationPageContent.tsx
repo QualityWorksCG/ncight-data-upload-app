@@ -13,6 +13,7 @@ import {
   Heading,
   chakra,
   Text,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import React, { useState } from "react";
@@ -23,23 +24,31 @@ import BaseModal from "../general/BaseModal";
 import { useRouter } from "next/router";
 
 export default function VerificationPageContent(props: any) {
-  const { handleSubmit, control } = useForm();
+  const {
+    handleSubmit,
+    control,
+    unregister,
+    formState: { errors },
+  } = useForm();
   const router = useRouter();
   const { email } = router.query;
   const [successModal, showSuccessModal] = useState<boolean>(false);
   const [errorModal, showErrorModal] = useState<boolean>(false);
-
+  const [loading, isLoading] = useState(false);
   async function confirmSignUp(username: string, confirmationCode: string) {
+    isLoading(true);
     try {
       const confirmUser = await Auth.confirmSignUp(username, confirmationCode);
-
       if (confirmUser) {
         showSuccessModal(true);
       }
+      unregister("confirmation_code");
     } catch (error) {
       showErrorModal(true);
       console.log("error signing up:", error);
+      unregister("confirmation_code");
     }
+    isLoading(false);
   }
 
   const onSubmit = (data: any) => {
@@ -102,19 +111,54 @@ export default function VerificationPageContent(props: any) {
           <Controller
             control={control}
             name="confirmation_code"
+            rules={{
+              required: {
+                value: true,
+                message: "Please enter your verification code",
+              },
+            }}
             render={({ field: { ref, ...rest } }) => (
-              <FormControl>
+              <FormControl isInvalid={errors.confirmation_code != null}>
                 <Center>
                   <HStack>
                     <PinInput otp {...rest} size={"lg"}>
-                      <PinInputField />
-                      <PinInputField />
-                      <PinInputField />
-                      <PinInputField />
-                      <PinInputField />
-                      <PinInputField />
+                      <PinInputField
+                        borderColor={
+                          errors.confirmation_code != null ? "red" : ""
+                        }
+                      />
+                      <PinInputField
+                        borderColor={
+                          errors.confirmation_code != null ? "red" : ""
+                        }
+                      />
+                      <PinInputField
+                        borderColor={
+                          errors.confirmation_code != null ? "red" : ""
+                        }
+                      />
+                      <PinInputField
+                        borderColor={
+                          errors.confirmation_code != null ? "red" : ""
+                        }
+                      />
+                      <PinInputField
+                        borderColor={
+                          errors.confirmation_code != null ? "red" : ""
+                        }
+                      />
+                      <PinInputField
+                        borderColor={
+                          errors.confirmation_code != null ? "red" : ""
+                        }
+                      />
                     </PinInput>
                   </HStack>
+                </Center>
+                <Center>
+                  <FormErrorMessage>
+                    {errors.confirmation_code?.message}
+                  </FormErrorMessage>
                 </Center>
               </FormControl>
             )}
@@ -128,20 +172,9 @@ export default function VerificationPageContent(props: any) {
                 borderRadius="3xl"
                 bg="secondary.yellow"
                 color="primary.white"
+                isLoading={loading}
               >
                 Verify
-              </Button>
-              <Button
-                variant="outline"
-                borderRadius="3xl"
-                borderColor={"secondary.yellow"}
-                bg="transparent"
-                color="secondary.yellow"
-                onClick={() => {
-                  router.push("/");
-                }}
-              >
-                Cancel
               </Button>
               <BaseModal
                 ChildComponent={FailedVerificationModalContent}

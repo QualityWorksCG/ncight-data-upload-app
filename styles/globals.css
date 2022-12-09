@@ -88,6 +88,16 @@ a {
   background-color: #fff !important;
 }
 
+.react-datepicker__navigation {
+  margin: 8px;
+  background-color: orange !important;
+  color: aqua;
+  border-radius: 8px;
+}
+.react-datepicker__navigation-icon
+  .react-datepicker__navigation-icon--previous {
+  background-color: aqua !important;
+}
 .pagination {
   list-style: none;
   display: flex;

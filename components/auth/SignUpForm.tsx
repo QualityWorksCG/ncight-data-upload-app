@@ -14,6 +14,7 @@ import {
   FormErrorMessage,
   chakra,
   HStack,
+  useToast,
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import { InfoOutlineIcon, CheckIcon } from "@chakra-ui/icons";
@@ -46,8 +47,8 @@ export default function SignUpForm() {
   } = useForm();
   const [modal, showModal] = useState<boolean>(false);
   const watchPassword = watch("password");
-
-  console.log(watchPassword);
+  const [loading, isLoading] = useState(false);
+  const toast = useToast();
   async function signUp(
     username: string,
     password: string,
@@ -59,6 +60,7 @@ export default function SignUpForm() {
     stateObject: StateObject,
     city: string
   ) {
+    isLoading(true);
     try {
       const user = await Auth.signUp({
         username,
@@ -78,9 +80,22 @@ export default function SignUpForm() {
       if (user) {
         showModal(true);
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
+
+      if (error.message === "An account with the given email already exists.") {
+        toast({
+          title: "Email already in use!",
+          description: "An account with the given email already exists.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
+      }
       console.log("error signing up:", error);
     }
+    isLoading(false);
   }
 
   const onSubmit = (data: any) => {
@@ -366,7 +381,7 @@ export default function SignUpForm() {
           {/*<Text color="secondary.yellow" ><InfoOutlineIcon/> <Link href="https://www.ncight.com" target="_blank" rel="noopener noreferrer">Learn More about nCight</Link></Text>*/}
           <Button
             variant="outline"
-            isLoading={isSubmitting}
+            isLoading={loading}
             type="submit"
             borderRadius="3xl"
             _hover={{
