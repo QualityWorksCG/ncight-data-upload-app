@@ -19,6 +19,7 @@
     "@fontsource/roboto-condensed": "^4.5.9",
     "@next/font": "^13.0.4",
     "aws-amplify": "^5.0.5",
+    "axios": "^1.2.1",
     "chakra-react-select": "^4.4.0",
     "dayjs": "^1.11.7",
     "env-cmd": "^10.1.0",

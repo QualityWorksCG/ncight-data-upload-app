@@ -4,7 +4,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
   IconButton,
   Image,
   Input,
@@ -27,22 +26,33 @@ import { FaFileUpload } from "react-icons/fa";
 import { File } from "../modules/File";
 import { AiFillDelete, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import ReactPaginate from "react-paginate";
+import { GetUrlsAndUpload } from "../local-api/Upload";
 
 const Upload: PageWithLayout = () => {
   const {
     handleSubmit,
     control,
     unregister,
-    watch,
     getValues,
     formState: { errors },
   } = useForm();
 
   const onSubmit = handleSubmit((values) => {
     values.files = files;
-    console.log(values);
+    let uploadList: any = [];
+    files.map((file) => {
+      uploadList.push({
+        fileName: file.fileName,
+        imageType: values.bodyPart,
+        surgeryDate: values.dateOfSurgery,
+        isImplantCase: values.isImplant,
+        implantCount: values.numberOfImplants,
+        contentType: file.type,
+      });
+    });
+
+    GetUrlsAndUpload(uploadList, files);
   });
-  const watchFiles = watch("numberOfFiles");
   const [files, setFiles] = useState<File[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -100,13 +110,13 @@ const Upload: PageWithLayout = () => {
       </Head>
 
       <Stack spacing={6} borderRadius={"lg"} p={4} bg={"background.tabs"}>
-        <FormControl isInvalid={errors.bodyParts != null} isRequired>
+        <FormControl isInvalid={errors.bodyPart != null} isRequired>
           <FormLabel color={"white"} fontSize={"lg"}>
             What body part are you uploading images for?
           </FormLabel>
           <Controller
             control={control}
-            name="bodyParts"
+            name="bodyPart"
             rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <RadioGroup
@@ -123,7 +133,7 @@ const Upload: PageWithLayout = () => {
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
-                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                    borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
                     <Radio value="knee" id="radio-2">
                       <Text color={"white"}>Knee</Text>
@@ -153,7 +163,7 @@ const Upload: PageWithLayout = () => {
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
-                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                    borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
                     <Radio value="elbow" id="radio-2">
                       <Text color={"white"}>Elbow</Text>
@@ -163,7 +173,7 @@ const Upload: PageWithLayout = () => {
               </RadioGroup>
             )}
           />
-          <FormErrorMessage>{errors.dateOfSurgery?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.bodyPart?.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
@@ -183,11 +193,11 @@ const Upload: PageWithLayout = () => {
                 dropdownMode="select"
                 selected={
                   getValues("dateOfSurgery")
-                    ? new Date(getValues("dob") as string)
+                    ? new Date(getValues("dateOfSurgery") as string)
                     : new Date()
                 }
                 onChange={onChange}
-                dateFormat="MMMM d, yyyy"
+                dateFormat="MM/d/yyyy"
               />
             )}
           />
