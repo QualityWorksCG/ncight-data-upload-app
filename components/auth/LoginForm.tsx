@@ -13,6 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginForm(props: any) {
   const {
@@ -22,8 +23,9 @@ export default function LoginForm(props: any) {
   } = useForm();
   const showLoginError = props.showLoginError;
   const Router = useRouter();
-
+  const [loading, isLoading] = useState(false);
   async function signIn(username: string, password: string) {
+    isLoading(true);
     try {
       const user = await Auth.signIn(username, password);
       if (user) {
@@ -57,6 +59,7 @@ export default function LoginForm(props: any) {
         });
       }
     }
+    isLoading(false);
   }
 
   const onSubmit = (data: any) => {
@@ -106,6 +109,7 @@ export default function LoginForm(props: any) {
             </Stack>
             <Button
               size="lg"
+              isLoading={loading}
               variant="outline"
               type="submit"
               borderRadius="3xl"
