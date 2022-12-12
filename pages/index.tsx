@@ -18,9 +18,11 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  Spinner,
+  Link,
+  Container
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 import { withSSRContext } from "aws-amplify";
 import { redirect } from "next/navigation";
 import useUser from "../lib/useUser";
@@ -38,22 +40,55 @@ const Home: NextPage = () => {
       direction={{ base: "column", md: "row" }}
       bg="background.main"
     >
-      <Show above="md">
-        <Flex>
-          <Image
-            alt={"Sign up Image"}
-            objectFit={"cover"}
-            src={
-              //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
-              "/images/Welcome_Image.png"
-            }
-          />
+      <Show above="lg">
+        <Flex flexDirection={'column'}>
+            <Container minW={'100%'}  bg='secondary.yellow' centerContent={true}>
+              <Flex>          
+              <Link
+                pt={'2.5'}
+                pb={'2.5'} 
+                color="white"
+                href="https://www.ncight.com"
+                target="_blank"
+                rel="noopener noreferrer">              <InfoOutlineIcon             
+                color="white" marginRight={'2.5'}/>  Learn More About nCight</Link> 
+              </Flex> 
+            </Container>
+            {/* <Alert status='warning' colorScheme={"secondary.yellow"} justifyContent={'center'}>
+            <AlertIcon />
+            <Link 
+              color="white"
+              href="https://www.ncight.com"
+              target="_blank"
+              rel="noopener noreferrer">Learn More About nCight</Link>
+          </Alert> */}
+            <Image
+              alt={"Sign up Image"}
+              objectFit={"cover"}
+              src={
+                //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
+                "/images/Welcome_Image.png"
+              }
+              margin={'0px'}
+            />
         </Flex>
       </Show>
       <Flex p={8} flex={1} justify={"center"} bg="background.main">
         <Stack spacing={4} w={"xl"} maxW={"full"} color="primary.gray">
-          <Hide above="sm">
-            <Show below="md">
+          <Hide above="lg">
+            <Show below="lg">
+            <Container minW={'100%'}  bg='secondary.yellow' centerContent={true}>
+              <Flex>          
+              <Link
+                pt={'2.5'}
+                pb={'2.5'} 
+                color="white"
+                href="https://www.ncight.com"
+                target="_blank"
+                rel="noopener noreferrer">              <InfoOutlineIcon             
+                color="white" marginRight={'2.5'}/>  Learn More About nCight</Link> 
+              </Flex> 
+            </Container>
               <Center>
                 <Image
                   alt={"nCight Logo"}

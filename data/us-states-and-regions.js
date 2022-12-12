@@ -1,194 +1,137 @@
 module.exports=[
-    {
-      label: 'Alabama (AL)',
-      value: `{ 'state': 'Alabama', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Alaska (AK)', 
-      value: `{ 'state': 'Alaska', 'region': 'West' }` },
-    {
-      label: 'Arizona (AZ)',
-      value: `{ 'state': 'Arizona', 'region': 'Southwest' }`
-    },
-    {
-      label: 'Arkansas (AR)',
-      value: `{ 'state': 'Arkansas', 'region': 'Southeast' }`
-    },
-    {
-      label: 'California (CA)',
-      value: `{ 'state': 'California', 'region': 'West' }`
-    },
-    {
-      label: 'Colorado (CO)',
-      value: `{ 'state': 'Colorado', 'region': 'West' }`
-    },
-    {
-      label: 'Connecticut (CT)',
-      value: `{ 'state': 'Connecticut', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Delaware (DE)',
-      value: `{ 'state': 'Delaware', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Florida (FL)',
-      value: `{ 'state': 'Florida', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Georgia (GA)',
-      value: `{ 'state': 'Georgia', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Hawaii (HI)',
-      value: `{ 'state': 'Hawaii', 'region': 'West' }` 
-    },
-    { 
-      label: 'Idaho (ID)',
-      value: `{ 'state': 'Idaho', 'region': 'West' }` 
-    },
-    {
-      label: 'Illinois (IL)',
-      value: `{ 'state': 'Illinois', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Indiana (IN)',
-      value: `{ 'state': 'Indiana', 'region': 'Midwest' }`
-    },
-    { 
-      label: 'Iowa (IA)', 
-      value: `{ 'state': 'Iowa', 'region': 'Midwest' }` },
-    {
-      label: 'Kansas (KS)',
-      value: `{ 'state': 'Kansas', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Kentucky (KY)',
-      value: `{ 'state': 'Kentucky', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Louisiana (LA)',
-      value: `{ 'state': 'Louisiana', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Maine (ME)',
-      value: `{ 'state': 'Maine', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Maryland (MD)',
-      value: `{ 'state': 'Maryland', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Massachusetts (MA)',
-      value: `{ 'state': 'Massachusetts', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Michigan (MI)',
-      value: `{ 'state': 'Michigan', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Minnesota (MN)',
-      value: `{ 'state': 'Minnesota', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Mississippi (MS)',
-      value: `{ 'state': 'Mississippi', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Missouri (MO)',
-      value: `{ 'state': 'Missouri', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Montana (MT)',
-      value: `{ 'state': 'Montana', 'region': 'West' }`
-    },
-    {
-      label: 'Nebraska (NE)',
-      value: `{ 'state': 'Nebraska', 'region': 'Midwest' }`
-    },
-    { label: 'Nevada (NV)', value: { 'state': 'Nevada', 'region': 'West' } },
-    {
-      label: 'New Hampshire (NH)',
-      value: `{ 'state': 'New Hampshire', 'region': 'Northeast' }`
-    },
-    {
-      label: 'New Jersey (NJ)',
-      value: `{ 'state': 'New Jersey', 'region': 'Northeast' }`
-    },
-    {
-      label: 'New Mexico (NM)',
-      value: `{ 'state': 'New Mexico', 'region': 'Southwest' }`
-    },
-    {
-      label: 'New York (NY)',
-      value: `{ 'state': 'New York', 'region': 'Northeast' }`
-    },
-    {
-      label: 'North Carolina (NC)',
-      value: `{ 'state': 'North Carolina', 'region': 'Southeast' }`
-    },
-    {
-      label: 'North Dakota (ND)',
-      value: `{ 'state': 'North Dakota', 'region': 'Midwest' }`
-    },
-    { 
-      label: 'Ohio (OH)', 
-      value: `{ 'state': 'Ohio', 'region': 'Midwest' }` },
-    {
-      label: 'Oklahoma (OK)',
-      value: `{ 'state': 'Oklahoma', 'region': 'Southwest' }`
-    },
-    { label: 'Oregon (OR)', 
-    value: `{ 'state': 'Oregon', 'region': 'West' }` },
-    {
-      label: 'Pennsylvania (PA)',
-      value: `{ 'state': 'Pennsylvania', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Rhode Island (RI)',
-      value: `{ 'state': 'Rhode Island', 'region': 'Northeast' }`
-    },
-    {
-      label: 'South Carolina (SC)',
-      value: `{ 'state': 'South Carolina', 'region': 'Southeast' }`
-    },
-    {
-      label: 'South Dakota (SD)',
-      value: `{ 'state': 'South Dakota', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Tennessee (TN)',
-      value: `{ 'state': 'Tennessee', 'region': 'Southeast' }`
-    },
-    {
-      label: 'Texas (TX)',
-      value: `{ 'state': 'Texas', 'region': 'Southwest' }`
-    },
-    { 
-      label: 'Utah (UT)', 
-      value: `{ 'state': 'Utah', 'region': 'West' } }`
-    },
-    {
-      label: 'Vermont (VT)',
-      value: `{ 'state': 'Vermont', 'region': 'Northeast' }`
-    },
-    {
-      label: 'Virginia (VA)',
-      value: `{ 'state': 'Virginia', 'region': 'Southwest' }`
-    },
-    {
-      label: 'Washington (WA)',
-      value: `{ 'state': 'Washington', 'region': 'West' }`
-    },
-    {
-      label: 'West Virginia (WV)',
-      value: `{ 'state': 'West Virginia', 'region': 'Southwest' }`
-    },
-    {
-      label: 'Wisconsin (WI)',
-      value: `{ 'state': 'Wisconsin', 'region': 'Midwest' }`
-    },
-    {
-      label: 'Wyoming (WY)',
-      value: `{ 'state': 'Wyoming', 'region': 'West' }`
-    }
-  ]
+  {
+    label: 'Connecticut',
+    value: { state: 'Connecticut', region: 'New England' }
+  },
+  { label: 'Maine', value: { state: 'Maine', region: 'New England' } },
+  {
+    label: 'Massachusetts',
+    value: { state: 'Massachusetts', region: 'New England' }
+  },
+  {
+    label: 'New Hampshire',
+    value: { state: 'New Hampshire', region: 'New England' }
+  },
+  {
+    label: 'Rhode Island',
+    value: { state: 'Rhode Island', region: 'New England' }
+  },
+  {
+    label: 'Vermont',
+    value: { state: 'Vermont', region: 'New England' }
+  },
+  {
+    label: 'Delaware',
+    value: { state: 'Delaware', region: 'Middle Atlantic' }
+  },
+  {
+    label: 'Maryland',
+    value: { state: 'Maryland', region: 'Middle Atlantic' }
+  },
+  {
+    label: 'New Jersey',
+    value: { state: 'New Jersey', region: 'Middle Atlantic' }
+  },
+  {
+    label: 'New York',
+    value: { state: 'New York', region: 'Middle Atlantic' }
+  },
+  {
+    label: 'Pennsylvania',
+    value: { state: 'Pennsylvania', region: 'Middle Atlantic' }
+  },
+  { label: 'Alabama', value: { state: 'Alabama', region: 'South' } },
+  { label: 'Arkansas', value: { state: 'Arkansas', region: 'South' } },
+  { label: 'Florida', value: { state: 'Florida', region: 'South' } },
+  { label: 'Georgia', value: { state: 'Georgia', region: 'South' } },
+  { label: 'Kentucky', value: { state: 'Kentucky', region: 'South' } },
+  {
+    label: 'Louisiana',
+    value: { state: 'Louisiana', region: 'South' }
+  },
+  {
+    label: 'Mississippi',
+    value: { state: 'Mississippi', region: 'South' }
+  },
+  { label: 'Missouri', value: { state: 'Missouri', region: 'South' } },
+  {
+    label: 'North Carolina',
+    value: { state: 'North Carolina', region: 'South' }
+  },
+  {
+    label: 'South Carolina',
+    value: { state: 'South Carolina', region: 'South' }
+  },
+  {
+    label: 'Tennessee',
+    value: { state: 'Tennessee', region: 'South' }
+  },
+  { label: 'Virginia', value: { state: 'Virginia', region: 'South' } },
+  {
+    label: 'West Virginia',
+    value: { state: 'West Virginia', region: 'South' }
+  },
+  {
+    label: 'Illinois',
+    value: { state: 'Illinois', region: 'Midwest' }
+  },
+  { label: 'Indiana', value: { state: 'Indiana', region: 'Midwest' } },
+  { label: 'Iowa', value: { state: 'Iowa', region: 'Midwest' } },
+  { label: 'Kansas', value: { state: 'Kansas', region: 'Midwest' } },
+  {
+    label: 'Michigan',
+    value: { state: 'Michigan', region: 'Midwest' }
+  },
+  {
+    label: 'Minnesota',
+    value: { state: 'Minnesota', region: 'Midwest' }
+  },
+  {
+    label: 'Nebraska',
+    value: { state: 'Nebraska', region: 'Midwest' }
+  },
+  {
+    label: 'North Dakota',
+    value: { state: 'North Dakota', region: 'Midwest' }
+  },
+  { label: 'Ohio', value: { state: 'Ohio', region: 'Midwest' } },
+  {
+    label: 'South Dakota',
+    value: { state: 'South Dakota', region: 'Midwest' }
+  },
+  {
+    label: 'Wisconsin',
+    value: { state: 'Wisconsin', region: 'Midwest' }
+  },
+  {
+    label: 'Arizona',
+    value: { state: 'Arizona', region: 'Southwest' }
+  },
+  {
+    label: 'New Mexico',
+    value: { state: 'New Mexico', region: 'Southwest' }
+  },
+  {
+    label: 'Oklahoma',
+    value: { state: 'Oklahoma', region: 'Southwest' }
+  },
+  { label: 'Texas', value: { state: 'Texas', region: 'Southwest' } },
+  { label: 'Alaska', value: { state: 'Alaska', region: 'West' } },
+  {
+    label: 'California',
+    value: { state: 'California', region: 'West' }
+  },
+  { label: 'Colorado', value: { state: 'Colorado', region: 'West' } },
+  { label: 'Hawaii', value: { state: 'Hawaii', region: 'West' } },
+  { label: 'Idaho', value: { state: 'Idaho', region: 'West' } },
+  { label: 'Montana', value: { state: 'Montana', region: 'West' } },
+  { label: 'Nevada', value: { state: 'Nevada', region: 'West' } },
+  { label: 'Oregon', value: { state: 'Oregon', region: 'West' } },
+  { label: 'Utah', value: { state: 'Utah', region: 'West' } },
+  {
+    label: 'Washington',
+    value: { state: 'Washington', region: 'West' }
+  },
+  { label: 'Wyoming', value: { state: 'Wyoming', region: 'West' } }
+
+]

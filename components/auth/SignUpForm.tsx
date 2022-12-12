@@ -107,7 +107,7 @@ export default function SignUpForm() {
       data.last_name,
       data.first_name,
       data.orthopedic_practice,
-      JSON.parse(`"${data.state.value}"`),
+      data.state.value,
       data.city
     );
   };
@@ -160,7 +160,11 @@ export default function SignUpForm() {
             <Input
               type="email"
               size="lg"
-              {...register("signup_email", { required: "Email is required" })}
+              {...register("signup_email", { required: "Email is required", pattern: {
+                value:
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "Email format is incorrect",
+              }, })}
             />
             <FormErrorMessage>
               {errors.signup_email && errors.signup_email.message}
