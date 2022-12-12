@@ -287,6 +287,8 @@ export default function SignUpForm() {
                           bg: state.isSelected
                             ? "secondary.yellow"
                             : "background.tabs",
+                          color: "white",
+                          _hover: { backgroundColor: "orange" },
                         }),
                         placeholder: (provided) => ({
                           ...provided,

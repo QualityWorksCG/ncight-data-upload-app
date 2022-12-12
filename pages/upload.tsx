@@ -4,6 +4,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   IconButton,
   Image,
   Input,
@@ -27,7 +28,9 @@ import { File } from "../modules/File";
 import { AiFillDelete, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import ReactPaginate from "react-paginate";
 import { GetUrlsAndUpload } from "../local-api/Upload";
-
+import useUser from "../lib/useUser";
+import { v4 as uuidv4 } from "uuid";
+import { Select } from "chakra-react-select";
 const Upload: PageWithLayout = () => {
   const {
     handleSubmit,
@@ -35,14 +38,17 @@ const Upload: PageWithLayout = () => {
     unregister,
     getValues,
     formState: { errors },
-  } = useForm();
-
-  const onSubmit = handleSubmit((values) => {
-    values.files = files;
+  } = useForm<any>({
+    defaultValues: {
+      dateOfSurgery: new Date(),
+    },
+  });
+  const { user } = useUser();
+  const onSubmit = handleSubmit(async (values) => {
     let uploadList: any = [];
     files.map((file) => {
       uploadList.push({
-        fileName: file.fileName,
+        fileName: file.name,
         imageType: values.bodyPart,
         surgeryDate: values.dateOfSurgery,
         isImplantCase: values.isImplant,
@@ -51,7 +57,8 @@ const Upload: PageWithLayout = () => {
       });
     });
 
-    GetUrlsAndUpload(uploadList, files);
+    console.log(uploadList);
+    await GetUrlsAndUpload({ uploadList: uploadList }, files, user);
   });
   const [files, setFiles] = useState<File[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
@@ -64,7 +71,7 @@ const Upload: PageWithLayout = () => {
         acceptedFiles.map((file, index) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-            fileName: `image-${index}`,
+            // fileName: uuidv4(),
           })
         )
       );
@@ -80,6 +87,49 @@ const Upload: PageWithLayout = () => {
     setFiles([]);
   };
 
+  let selectValues = [
+    {
+      label: "1",
+      value: "1",
+      color: "white",
+    },
+    {
+      label: "2",
+      value: "2",
+    },
+    {
+      label: "3",
+      value: "3",
+    },
+    {
+      label: "4",
+      value: "4",
+    },
+    {
+      label: "5",
+      value: "5",
+    },
+    {
+      label: "6",
+      value: "6",
+    },
+    {
+      label: "7",
+      value: "7",
+    },
+    {
+      label: "8",
+      value: "8",
+    },
+    {
+      label: "9",
+      value: "9",
+    },
+    {
+      label: "10",
+      value: "10",
+    },
+  ];
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
@@ -183,19 +233,27 @@ const Upload: PageWithLayout = () => {
           <Controller
             control={control}
             name="dateOfSurgery"
-            rules={{ required: { value: true, message: "Field is required!" } }}
-            render={({ field: { onChange } }) => (
+            rules={{ required: { value: true, message: "Date is required!" } }}
+            render={({ field: { onChange, value } }) => (
               <DatePicker
-                maxDate={new Date()}
+                // maxDate={new Date()}
+                // peekNextMonth
+                // showMonthDropdown
+                // showYearDropdown
+                // dropdownMode="select"
+                // value={value}
+                // selected={
+                //   getValues("dateOfSurgery")
+                //     ? new Date(getValues("dateOfSurgery") as string)
+                //     : new Date()
+                // }
+                // onChange={onChange}
+                minDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                selected={
-                  getValues("dateOfSurgery")
-                    ? new Date(getValues("dateOfSurgery") as string)
-                    : new Date()
-                }
+                selected={new Date(getValues("dateOfSurgery") as string)}
                 onChange={onChange}
                 dateFormat="MM/d/yyyy"
               />
@@ -258,7 +316,32 @@ const Upload: PageWithLayout = () => {
             name="numberOfImplants"
             rules={{ required: { value: true, message: "Field is required!" } }}
             render={({ field: { onChange, value } }) => (
-              <Input value={value} onChange={onChange} />
+              // <Input value={value} onChange={onChange} />
+              <Select
+                value={value}
+                onChange={onChange}
+                useBasicStyles
+                options={selectValues}
+                colorScheme={"orange"}
+                chakraStyles={{
+                  menuList: (provided) => ({
+                    ...provided,
+                    bg: "background.tabs",
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    bg: state.isSelected
+                      ? "secondary.yellow"
+                      : "background.tabs",
+                    color: "white",
+                    _hover: { backgroundColor: "orange" },
+                  }),
+                  placeholder: (provided) => ({
+                    ...provided,
+                    color: "primary.gray",
+                  }),
+                }}
+              ></Select>
             )}
           />
           <FormErrorMessage>
@@ -308,13 +391,25 @@ const Upload: PageWithLayout = () => {
               </VStack>
             )}
           />
-          {console.log(errors.numberOfFiles)}
+
           <FormErrorMessage>{errors?.numberOfFiles?.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
-          <FormLabel color={"white"} fontSize={"lg"}>
-            Attached Files
-          </FormLabel>
+          <HStack pb={4} justifyContent={"space-between"} alignItems={"center"}>
+            <FormLabel color={"white"} fontSize={"lg"}>
+              Attached Files
+            </FormLabel>
+            <Button
+              onClick={() => {
+                removeAll();
+              }}
+              size={"sm"}
+              colorScheme={"red"}
+            >
+              Delete All
+            </Button>
+          </HStack>
+
           <SimpleGrid spacing={2} columns={[2, 2, 3, 4]}>
             {currentItems.map((file) => {
               return (
@@ -341,7 +436,7 @@ const Upload: PageWithLayout = () => {
                     p={2}
                   >
                     <Text color={"black"} noOfLines={1}>
-                      {file.fileName}
+                      {file.name}
                     </Text>
                     <Text color={"black"} fontSize={"sm"}>
                       {(file.size / (1024 * 1024)).toFixed(2)} mb

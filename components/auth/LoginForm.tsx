@@ -121,7 +121,7 @@ export default function LoginForm(props: any) {
               bg="secondary.yellow"
               color="primary.white"
             >
-              Login in
+              Login
             </Button>
           </Stack>
         </Stack>

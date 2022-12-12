@@ -23,7 +23,11 @@ const Layout = ({ children }: any) => {
   const sidebar = useDisclosure();
   const { user, loading, loggedOut, signOut } = useUser({ redirect: "/" });
   if (loading || !user) {
-    return <Spinner />;
+    return (
+      <Center h={"100vh"}>
+        <Spinner />
+      </Center>
+    );
   }
   const SidebarContent = (props: any) => (
     <Box
