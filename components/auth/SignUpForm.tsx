@@ -221,7 +221,7 @@ export default function SignUpForm() {
             </FormHelperText>
             <FormHelperText fontWeight="700" color="secondary.yellow">
               <HStack>
-                {!RegExp("(.*d.*)").test(watchPassword) ? (
+                {!RegExp(".*[0-9].*").test(watchPassword) ? (
                   <AiOutlineClose />
                 ) : (
                   <CheckIcon color={"green"} />
