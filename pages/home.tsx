@@ -13,6 +13,7 @@ import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { withSSRContext } from "aws-amplify";
+import Router from "next/router";
 type Props = {};
 
 const Home: PageWithLayout = () => {
@@ -45,6 +46,9 @@ const Home: PageWithLayout = () => {
             bg={"secondary.yellow"}
             color={"white"}
             _hover={{ backgroundColor: "secondary.yellow_light" }}
+            onClick={() => {
+              Router.push("/upload");
+            }}
           >
             Upload Images
           </Button>

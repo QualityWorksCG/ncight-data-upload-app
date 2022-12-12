@@ -7,6 +7,7 @@ export const GetUrlsAndUpload = async (
 ) => {
   let { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/uploads/get-signed-url`,
+
     uploadList,
     {
       headers: {

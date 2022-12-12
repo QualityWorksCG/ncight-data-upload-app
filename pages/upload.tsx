@@ -7,13 +7,19 @@ import {
   HStack,
   IconButton,
   Image,
-  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Radio,
   RadioGroup,
   SimpleGrid,
   Spacer,
   Stack,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import Head from "next/head";
@@ -23,28 +29,44 @@ import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
 import DatePicker from "react-datepicker";
 import { useDropzone } from "react-dropzone";
-import { FaFileUpload } from "react-icons/fa";
-import { File } from "../modules/File";
+import { FaFileUpload, FaRegThumbsUp } from "react-icons/fa";
+import { FileModule } from "../modules/File";
 import { AiFillDelete, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { MdHideImage } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import { GetUrlsAndUpload } from "../local-api/Upload";
 import useUser from "../lib/useUser";
 import { v4 as uuidv4 } from "uuid";
 import { Select } from "chakra-react-select";
+import Router from "next/router";
+
 const Upload: PageWithLayout = () => {
   const {
     handleSubmit,
     control,
     unregister,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
       dateOfSurgery: new Date(),
     },
   });
+  const [loading, isLoading] = useState(false);
+  const {
+    isOpen: isSuccessOpen,
+    onOpen: onSuccessOpen,
+    onClose: onSuccessClose,
+  } = useDisclosure();
+  const {
+    isOpen: isErrorOpen,
+    onOpen: onErrorOpen,
+    onClose: onErrorClose,
+  } = useDisclosure();
   const { user } = useUser();
   const onSubmit = handleSubmit(async (values) => {
+    isLoading(true);
     let uploadList: any = [];
     files.map((file) => {
       uploadList.push({
@@ -57,27 +79,44 @@ const Upload: PageWithLayout = () => {
       });
     });
 
-    console.log(uploadList);
-    await GetUrlsAndUpload({ uploadList: uploadList }, files, user);
+    try {
+      await GetUrlsAndUpload(
+        { uploadList: uploadList, patientId: uuidv4() },
+        files,
+        user
+      );
+      onSuccessOpen();
+    } catch (error) {
+      onErrorOpen();
+    }
+    isLoading(false);
   });
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileModule[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [],
     },
     onDrop: (acceptedFiles) => {
+      let oldFiles = files;
       setFiles(
-        //@ts-ignore
-        acceptedFiles.map((file, index) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-            // fileName: uuidv4(),
+        oldFiles.concat(
+          //@ts-ignore
+          acceptedFiles.map((file, index) => {
+            const newFile = new File(
+              [file],
+              `${uuidv4()}.${file.type.split("/")[1]}`,
+              { type: file.type }
+            );
+            Object.assign(newFile, {
+              preview: URL.createObjectURL(file),
+            });
+            return newFile;
           })
         )
       );
     },
   });
-  const removeFile = (file: File) => () => {
+  const removeFile = (file: FileModule) => () => {
     const newFiles = [...files];
     newFiles.splice(newFiles.indexOf(file), 1);
     setFiles(newFiles);
@@ -236,19 +275,7 @@ const Upload: PageWithLayout = () => {
             rules={{ required: { value: true, message: "Date is required!" } }}
             render={({ field: { onChange, value } }) => (
               <DatePicker
-                // maxDate={new Date()}
-                // peekNextMonth
-                // showMonthDropdown
-                // showYearDropdown
-                // dropdownMode="select"
-                // value={value}
-                // selected={
-                //   getValues("dateOfSurgery")
-                //     ? new Date(getValues("dateOfSurgery") as string)
-                //     : new Date()
-                // }
-                // onChange={onChange}
-                minDate={new Date()}
+                maxDate={new Date()}
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -487,9 +514,92 @@ const Upload: PageWithLayout = () => {
           onClick={() => {
             onSubmit();
           }}
+          isLoading={loading}
         >
-          Confirm
+          {loading ? "Upload files, please wait....." : "Confirm"}
         </Button>
+
+        <Modal size={"lg"} isOpen={isSuccessOpen} onClose={onSuccessClose}>
+          <ModalOverlay />
+          <ModalContent w={"100vw"} bg="background.tabs">
+            <ModalHeader></ModalHeader>
+            <ModalCloseButton color={"#D8DADA"} fontSize={20} />
+            <ModalBody>
+              <VStack spacing={6}>
+                <FaRegThumbsUp fontSize={150} color={"#F09E28"} />
+                <Text fontSize={"larger"} color={"#D8DADA"}>
+                  Your upload was successful!
+                </Text>
+                <Button
+                  borderRadius={"full"}
+                  bg={"secondary.yellow"}
+                  _hover={{ bg: "secondary.yellow_light" }}
+                  w={"full"}
+                  color={"white"}
+                  onClick={() => {
+                    reset({
+                      bodyPart: null,
+                      dateOfSurgery: new Date(),
+                      isImplant: null,
+                      numberOfImplants: null,
+                      numberOfFiles: null,
+                    });
+                    removeAll();
+                    onSuccessClose();
+                  }}
+                >
+                  Upload another case
+                </Button>
+                <Button
+                  borderRadius={"full"}
+                  borderColor={"secondary.yellow_light"}
+                  _hover={{ bg: "" }}
+                  w={"full"}
+                  variant="outline"
+                  color={"secondary.yellow_light"}
+                  onClick={() => {
+                    reset({
+                      bodyPart: null,
+                      dateOfSurgery: new Date(),
+                      isImplant: null,
+                      numberOfImplants: null,
+                      numberOfFiles: null,
+                    });
+                    removeAll();
+                    Router.push("/home");
+                  }}
+                >
+                  Go back to home
+                </Button>
+              </VStack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal size={"lg"} isOpen={isErrorOpen} onClose={onErrorClose}>
+          <ModalOverlay />
+          <ModalContent w={"100vw"} bg="background.tabs">
+            <ModalHeader></ModalHeader>
+            <ModalCloseButton color={"#D8DADA"} fontSize={20} />
+            <ModalBody>
+              <VStack spacing={6}>
+                <MdHideImage fontSize={150} color={"#F09E28"} />
+                <Text fontSize={"larger"} color={"#D8DADA"}>
+                  Your upload was unsuccessful! Please try again
+                </Text>
+                <Button
+                  borderRadius={"full"}
+                  bg={"secondary.yellow"}
+                  _hover={{ bg: "secondary.yellow_light" }}
+                  w={"full"}
+                  color={"white"}
+                  onClick={onErrorClose}
+                >
+                  Try again
+                </Button>
+              </VStack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Stack>
     </>
   );

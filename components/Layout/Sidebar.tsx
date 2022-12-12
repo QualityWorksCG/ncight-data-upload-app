@@ -34,7 +34,7 @@ function Sidebar(props: any) {
               icon={AiOutlineCloudUpload}
               isActive={router.pathname.includes("upload") ? true : false}
             >
-              Upload File
+              Upload Images
             </NavItem>
           </Box>
         </Link>

@@ -337,11 +337,11 @@ export default function SignUpForm() {
                 required: "Mobile Phone Number is required",
                 minLength: {
                   value: 10,
-                  message: "Phone number can't be less than 10",
+                  message: "Phone number can't be less than 10 digits",
                 },
                 maxLength: {
                   value: 15,
-                  message: "Phone number can't be greater than 15",
+                  message: "Phone number can't be greater than 15 digits",
                 },
               })}
             />

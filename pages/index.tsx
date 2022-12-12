@@ -24,27 +24,14 @@ import React, { useEffect, useState } from "react";
 import { withSSRContext } from "aws-amplify";
 import { redirect } from "next/navigation";
 import useUser from "../lib/useUser";
+import Router from "next/router";
 
 const Home: NextPage = () => {
-  const { user, loading } = useUser();
-  useEffect(() => {
-    if (user) {
-      console.log("USER ✅");
-    }
-  }, [user]);
-
   const [loginErrorObject, showLoginError] = useState({
     isError: false,
     errorMessage: "",
   });
 
-  if (loading) {
-    return (
-      <Center h={"100vh"}>
-        <Spinner />
-      </Center>
-    );
-  }
   return (
     <Stack
       minH={"100vh"}

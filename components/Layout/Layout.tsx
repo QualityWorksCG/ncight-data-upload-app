@@ -25,7 +25,7 @@ const Layout = ({ children }: any) => {
   if (loading || !user) {
     return (
       <Center h={"100vh"}>
-        <Spinner />
+        <Spinner color="yellow" />
       </Center>
     );
   }

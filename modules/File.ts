@@ -1,4 +1,4 @@
-export interface File {
+export interface FileModule {
   path: string;
   fileName: string;
   preview: string;
