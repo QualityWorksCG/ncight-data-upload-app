@@ -230,7 +230,7 @@ const Upload: PageWithLayout = () => {
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
-                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                    borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
                     <Radio value="shoulder" id="radio-2">
                       <Text color={"white"}>Shoulder</Text>
@@ -240,7 +240,7 @@ const Upload: PageWithLayout = () => {
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
-                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                    borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
                     <Radio value="hip-admin" id="radio-2">
                       <Text color={"white"}>Hip</Text>
