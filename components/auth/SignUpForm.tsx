@@ -81,8 +81,6 @@ export default function SignUpForm() {
         showModal(true);
       }
     } catch (error: any) {
-      console.log(error);
-
       if (error.message === "An account with the given email already exists.") {
         toast({
           title: "Email already in use!",
@@ -93,7 +91,6 @@ export default function SignUpForm() {
           position: "top-right",
         });
       }
-      console.log("error signing up:", error);
     }
     isLoading(false);
   }
@@ -160,11 +157,14 @@ export default function SignUpForm() {
             <Input
               type="email"
               size="lg"
-              {...register("signup_email", { required: "Email is required", pattern: {
-                value:
-                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Email format is incorrect",
-              }, })}
+              {...register("signup_email", {
+                required: "Email is required",
+                pattern: {
+                  value:
+                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "Email format is incorrect",
+                },
+              })}
             />
             <FormErrorMessage>
               {errors.signup_email && errors.signup_email.message}

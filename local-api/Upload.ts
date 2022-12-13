@@ -19,7 +19,6 @@ export const GetUrlsAndUpload = async (
 
   let promiseList: any = [];
   data.signedUrlList.forEach((element: any, index: number) => {
-    // console.log(element, files[index]);
     let putPromise = axios.put(element, files[index], {
       headers: {
         "Content-Type": files[index].type,
@@ -30,7 +29,5 @@ export const GetUrlsAndUpload = async (
 
   try {
     Promise.all(promiseList).then((val) => {});
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };

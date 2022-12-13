@@ -45,7 +45,7 @@ export default function VerificationPageContent(props: any) {
       unregister("confirmation_code");
     } catch (error) {
       showErrorModal(true);
-      console.log("error signing up:", error);
+
       unregister("confirmation_code");
     }
     isLoading(false);

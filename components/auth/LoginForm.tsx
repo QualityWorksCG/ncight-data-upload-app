@@ -30,7 +30,6 @@ export default function LoginForm(props: any) {
       const user = await Auth.signIn(username, password);
       if (user) {
         Router.push("/home");
-        console.log("Success", user);
       }
     } catch (error: any) {
       if (error.message === "User does not exist.") {

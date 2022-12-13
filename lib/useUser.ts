@@ -9,7 +9,6 @@ const fetcher = async () => {
 export default function useUser({ redirect = "" } = {}) {
   const { cache } = useSWRConfig();
   const { data: user, error } = useSWR("user", fetcher);
-  // console.log(user);
   const loading = !user && !error;
   const loggedOut = error && error === "The user is not authenticated";
 

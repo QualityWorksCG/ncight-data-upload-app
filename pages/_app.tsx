@@ -7,6 +7,7 @@ import { customTheme } from "../styles/theme";
 import { PageWithLayout } from "../modules/Layout";
 import "../styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
+import AuthContext from "../context/AuthContext";
 type AppPropsWithLayout = AppProps & {
   Component: PageWithLayout;
 };
