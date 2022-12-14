@@ -33,7 +33,7 @@ a {
 }
 
 .react-datepicker__input-container input:focus {
-  border: 2px solid #3b3b3b;
+  border: 2px solid #454545;
 }
 
 .react-datepicker__triangle {
@@ -44,7 +44,7 @@ a {
   background-color: #f09e28 !important;
 }
 .react-datepicker__time-list-item--selected {
-  background-color: #3b3b3b !important;
+  background-color: #454545 !important;
   border-radius: 6px;
   margin: 0 2px;
   display: flex;
@@ -85,7 +85,7 @@ a {
 
 .react-datepicker__header {
   border-bottom: 1px solid rgb(0 0 0 / 5%) !important;
-  background-color: #1a202c !important;
+  background-color: #2b2b2b !important;
 }
 .react-datepicker__current-month {
   color: #e2e8f0 !important;
@@ -96,14 +96,14 @@ a {
 }
 .react-datepicker__month-select {
   color: #e2e8f0 !important;
-  background-color: #1a202c !important;
+  background-color: #2b2b2b !important;
 }
 .react-datepicker__year-select {
   color: #e2e8f0 !important;
-  background-color: #1a202c !important;
+  background-color: #2b2b2b !important;
 }
 .react-datepicker__month-container {
-  background-color: #2d3748 !important;
+  background-color: #454545 !important;
 }
 
 .react-datepicker__day {

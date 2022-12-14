@@ -127,7 +127,9 @@ const Home: NextPage = () => {
                   </Center>
                 </Show>
               </Hide>
-              <Heading textAlign={"center"}>Welcome to nCight!</Heading>
+              <Heading pb={6} textAlign={"center"}>
+                Welcome to nCight!
+              </Heading>
               {loginErrorObject.isError ? (
                 <Alert variant="solid" status="error" justifyContent={"center"}>
                   <AlertIcon />
