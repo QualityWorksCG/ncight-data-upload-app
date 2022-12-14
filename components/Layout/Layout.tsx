@@ -127,9 +127,9 @@ const Layout = ({ children }: any) => {
             />
           </Box>
 
-          <Button marginLeft={"auto"} borderRadius={"full"} variant={"custom"}>
+          {/* <Button marginLeft={"auto"} borderRadius={"full"} variant={"custom"}>
             Check my wallet
-          </Button>
+          </Button> */}
         </HStack>
         <Box as="main" p="4">
           {children}

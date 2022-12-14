@@ -17,11 +17,13 @@ interface Attributes {
   email_verified: boolean;
   phone_number_verified: boolean;
   phone_number: string;
-  "custom:orthopedicPractice": string;
   given_name: string;
   family_name: string;
   email: string;
+  "custom:orthopedicPractice": string;
   "custom:city": string;
+  "custom:state": string;
+  "custom:region": string;
 }
 
 interface SignInUserSession {

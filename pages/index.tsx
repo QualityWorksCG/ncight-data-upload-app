@@ -19,10 +19,15 @@ import {
   AlertIcon,
   AlertTitle,
   Spinner,
+  Box,
+  Text,
+  Container,
+  Link,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import useUser from "../lib/useUser";
 import Router from "next/router";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 const Home: NextPage = () => {
   const { user, loading }: any = useUser();
@@ -46,23 +51,66 @@ const Home: NextPage = () => {
   }
   return (
     <>
+      <Show below="lg">
+        <Container minW={"100%"} bg="secondary.yellow" centerContent={true}>
+          <Flex>
+            <Link
+              pt={"2.5"}
+              pb={"2.5"}
+              color="white"
+              href="https://www.ncight.com/how-it-works"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <InfoOutlineIcon color="white" marginRight={"2.5"} /> Learn More
+              About nCight
+            </Link>
+          </Flex>
+        </Container>
+      </Show>
       {!user && !loading && (
         <Stack
           minH={"100vh"}
           direction={{ base: "column", md: "row" }}
           bg="background.main"
         >
-          <Show above="md">
-            <Flex>
-              <Image
-                alt={"Sign up Image"}
-                objectFit={"cover"}
-                src={
-                  //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
-                  "/images/Welcome_Image.png"
-                }
-              />
-            </Flex>
+          <Show above="lg">
+            <Stack>
+              <Container
+                height={"50px"}
+                minW={"100%"}
+                bg="secondary.yellow"
+                mb={-3}
+                centerContent={true}
+              >
+                <Flex>
+                  <Link
+                    pt={"2.5"}
+                    pb={"2.5"}
+                    color="white"
+                    href="https://www.ncight.com/how-it-works"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {" "}
+                    <InfoOutlineIcon color="white" marginRight={"2.5"} /> Learn
+                    More About nCight
+                  </Link>
+                </Flex>
+              </Container>
+              <Flex flex={1}>
+                <Image
+                  alt={"Sign up Image"}
+                  objectFit={"cover"}
+                  height={"100%"}
+                  src={
+                    //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
+                    "/images/Welcome_Image.jpeg"
+                  }
+                />
+              </Flex>
+            </Stack>
           </Show>
           <Flex p={8} flex={1} justify={"center"} bg="background.main">
             <Stack spacing={4} w={"xl"} maxW={"full"} color="primary.gray">

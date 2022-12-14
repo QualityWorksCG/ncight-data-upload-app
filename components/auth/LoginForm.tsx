@@ -97,13 +97,13 @@ export default function LoginForm(props: any) {
               align={"start"}
               justify={"space-between"}
             >
-              <Checkbox
+              {/* <Checkbox
                 size="lg"
                 colorScheme="secondary.yellow"
                 iconColor="secondary.yellow"
               >
                 Remember me
-              </Checkbox>
+              </Checkbox> */}
               <Link>Forgot password?</Link>
             </Stack>
             <Button
