@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosAdapter, AxiosDefaults, AxiosError } from "axios";
 
 export const GetUrlsAndUpload = async (
   uploadList: any,
@@ -18,6 +18,7 @@ export const GetUrlsAndUpload = async (
   );
 
   let promiseList: any = [];
+
   data.signedUrlList.forEach((element: any, index: number) => {
     let putPromise = axios.put(element, files[index], {
       headers: {
@@ -27,7 +28,5 @@ export const GetUrlsAndUpload = async (
     promiseList.push(putPromise);
   });
 
-  try {
-    Promise.all(promiseList).then((val) => {});
-  } catch (error) {}
+  return Promise.all(promiseList);
 };

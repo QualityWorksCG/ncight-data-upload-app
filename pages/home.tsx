@@ -42,10 +42,7 @@ const Home: PageWithLayout = () => {
             Get paid to share scope images.
           </Heading>
           <Button
-            borderRadius={"full"}
-            bg={"secondary.yellow"}
-            color={"white"}
-            _hover={{ backgroundColor: "secondary.yellow_light" }}
+            variant={"custom"}
             onClick={() => {
               Router.push("/upload");
             }}

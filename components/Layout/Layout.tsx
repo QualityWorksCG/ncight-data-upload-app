@@ -18,6 +18,7 @@ import Sidebar from "./Sidebar";
 import { FiLogOut } from "react-icons/fi";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import useUser from "../../lib/useUser";
+import Router from "next/router";
 
 const Layout = ({ children }: any) => {
   const sidebar = useDisclosure();
@@ -73,8 +74,8 @@ const Layout = ({ children }: any) => {
           bottom={0}
           p={6}
           _hover={{ cursor: "pointer" }}
-          onClick={() => {
-            signOut({ redirect: "/" });
+          onClick={async () => {
+            await signOut();
           }}
         >
           <FiLogOut color="#F09E28" fontSize={"25"} />
@@ -126,13 +127,7 @@ const Layout = ({ children }: any) => {
             />
           </Box>
 
-          <Button
-            marginLeft={"auto"}
-            borderRadius={"full"}
-            bg={"secondary.yellow"}
-            color={"white"}
-            _hover={{ bg: "secondary.yellow_light" }}
-          >
+          <Button marginLeft={"auto"} borderRadius={"full"} variant={"custom"}>
             Check my wallet
           </Button>
         </HStack>

@@ -109,16 +109,8 @@ export default function LoginForm(props: any) {
             <Button
               size="lg"
               isLoading={loading}
-              variant="outline"
+              variant="custom"
               type="submit"
-              borderRadius="3xl"
-              _hover={{
-                bg: "primary.white",
-                borderColor: "secondary.yellow",
-                color: "secondary.yellow",
-              }}
-              bg="secondary.yellow"
-              color="primary.white"
             >
               Login
             </Button>

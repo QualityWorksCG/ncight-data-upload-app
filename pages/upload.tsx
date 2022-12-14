@@ -39,6 +39,7 @@ import useUser from "../lib/useUser";
 import { v4 as uuidv4 } from "uuid";
 import { Select } from "chakra-react-select";
 import Router from "next/router";
+import { AxiosError } from "axios";
 
 const Upload: PageWithLayout = () => {
   const {
@@ -79,17 +80,19 @@ const Upload: PageWithLayout = () => {
       });
     });
 
-    try {
-      await GetUrlsAndUpload(
-        { uploadList: uploadList, patientId: uuidv4() },
-        files,
-        user
-      );
-      onSuccessOpen();
-    } catch (error) {
-      onErrorOpen();
-    }
-    isLoading(false);
+    GetUrlsAndUpload(
+      { uploadList: uploadList, patientId: uuidv4() },
+      files,
+      user
+    )
+      .then((val: any) => {
+        onSuccessOpen();
+        isLoading(false);
+      })
+      .catch((error: AxiosError) => {
+        onErrorOpen();
+        isLoading(false);
+      });
   });
   const [files, setFiles] = useState<FileModule[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
@@ -506,9 +509,7 @@ const Upload: PageWithLayout = () => {
           />
         </FormControl>
         <Button
-          borderRadius={"full"}
-          bg={"secondary.yellow"}
-          _hover={{ bg: "secondary.yellow_light" }}
+          variant={"custom"}
           onClick={() => {
             onSubmit();
           }}
@@ -529,11 +530,8 @@ const Upload: PageWithLayout = () => {
                   Your upload was successful!
                 </Text>
                 <Button
-                  borderRadius={"full"}
-                  bg={"secondary.yellow"}
-                  _hover={{ bg: "secondary.yellow_light" }}
+                  variant={"custom"}
                   w={"full"}
-                  color={"white"}
                   onClick={() => {
                     reset({
                       bodyPart: null,
@@ -549,12 +547,8 @@ const Upload: PageWithLayout = () => {
                   Upload another case
                 </Button>
                 <Button
-                  borderRadius={"full"}
-                  borderColor={"secondary.yellow_light"}
-                  _hover={{ bg: "" }}
+                  variant={"custom_outline"}
                   w={"full"}
-                  variant="outline"
-                  color={"secondary.yellow_light"}
                   onClick={() => {
                     reset({
                       bodyPart: null,
@@ -584,14 +578,7 @@ const Upload: PageWithLayout = () => {
                 <Text fontSize={"larger"} color={"#D8DADA"}>
                   Your upload was unsuccessful! Please try again
                 </Text>
-                <Button
-                  borderRadius={"full"}
-                  bg={"secondary.yellow"}
-                  _hover={{ bg: "secondary.yellow_light" }}
-                  w={"full"}
-                  color={"white"}
-                  onClick={onErrorClose}
-                >
+                <Button variant={"custom"} onClick={onErrorClose}>
                   Try again
                 </Button>
               </VStack>

@@ -25,17 +25,17 @@ import useUser from "../lib/useUser";
 import Router from "next/router";
 
 const Home: NextPage = () => {
-  const { user, loading } = useUser();
+  const { user, loading }: any = useUser();
   const [loginErrorObject, showLoginError] = useState({
     isError: false,
     errorMessage: "",
   });
 
   useEffect(() => {
-    if (user) {
+    if (user && !loading) {
       Router.push("/home");
     }
-  }, [!loading]);
+  }, [!loading && user]);
 
   if (loading) {
     return (
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
   }
   return (
     <>
-      {!user && (
+      {!user && !loading && (
         <Stack
           minH={"100vh"}
           direction={{ base: "column", md: "row" }}

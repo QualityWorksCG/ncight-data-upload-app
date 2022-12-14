@@ -169,9 +169,7 @@ export default function VerificationPageContent(props: any) {
               <Button
                 w={["xs", "md", "lg"]}
                 type="submit"
-                borderRadius="3xl"
-                bg="secondary.yellow"
-                color="primary.white"
+                variant={"custom"}
                 isLoading={loading}
               >
                 Verify

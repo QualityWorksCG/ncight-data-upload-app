@@ -64,9 +64,7 @@ export default function FailedVerificationModalContent(props: any) {
       <Stack spacing={2} pt={"2"}>
         <Button
           isLoading={loading}
-          borderRadius="3xl"
-          bg="secondary.yellow"
-          color="primary.white"
+          variant={"custom"}
           onClick={() =>
             resendConfirmationCode(
               new URLSearchParams(window.location.search).get("email") || ""
