@@ -26,6 +26,7 @@ function Sidebar(props: any) {
         >
           <Box>
             <NavItem
+              onClose={props.onClose()}
               icon={AiFillHome}
               isActive={router.pathname.includes("home") ? true : false}
             >
@@ -42,6 +43,7 @@ function Sidebar(props: any) {
         >
           <Box>
             <NavItem
+              onClose={props.onClose()}
               icon={FaUserAlt}
               isActive={router.pathname.includes("profile") ? true : false}
             >

@@ -5,6 +5,7 @@ const NavItem = (props: any) => {
 
   return (
     <HStack
+      onClick={() => props.onClose()}
       align="center"
       py="3"
       justifyContent={"center"}

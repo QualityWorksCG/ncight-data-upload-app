@@ -260,7 +260,7 @@ const Upload: PageWithLayout = () => {
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
-                    <Radio value="hip-admin" id="radio-2">
+                    <Radio value="hip" id="radio-2">
                       <Text color={"white"}>Hip</Text>
                     </Radio>
                   </Box>

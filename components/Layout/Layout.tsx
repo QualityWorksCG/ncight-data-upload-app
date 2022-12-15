@@ -64,13 +64,6 @@ const Layout = ({ children }: any) => {
         </HStack>
       </Show>
       <Center my={10}>
-        {/* <Image
-          alt="stay safe logo"
-          objectFit="cover"
-          height={"100px"}
-          width={"100px"}
-          src="/images/logo.png"
-        /> */}
         <Box height={"20px"} width={"100px"}></Box>
       </Center>
 
