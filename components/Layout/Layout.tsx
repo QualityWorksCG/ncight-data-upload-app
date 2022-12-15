@@ -9,6 +9,7 @@ import {
   HStack,
   IconButton,
   Image,
+  Show,
   Spinner,
   Text,
   useDisclosure,
@@ -19,6 +20,7 @@ import { FiLogOut } from "react-icons/fi";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import useUser from "../../lib/useUser";
 import Router from "next/router";
+import { AiOutlineClose } from "react-icons/ai";
 
 const Layout = ({ children }: any) => {
   const sidebar = useDisclosure();
@@ -47,6 +49,20 @@ const Layout = ({ children }: any) => {
       w="60"
       {...props}
     >
+      <Show below="md">
+        <HStack p={2}>
+          <AiOutlineClose
+            onClick={() => {
+              props.onClose();
+            }}
+            color="orange"
+            fontSize={30}
+          />
+          <Text pl={20} color={"white"}>
+            Close
+          </Text>
+        </HStack>
+      </Show>
       <Center my={10}>
         <Image
           alt="stay safe logo"
@@ -67,7 +83,7 @@ const Layout = ({ children }: any) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Sidebar />
+          <Sidebar onClose={() => props.onClose()} />
         </Box>
         <HStack
           position={"absolute"}
@@ -94,10 +110,15 @@ const Layout = ({ children }: any) => {
         isOpen={sidebar.isOpen}
         onClose={sidebar.onClose}
         placement="left"
+        size={"xs"}
       >
         <DrawerOverlay />
         <DrawerContent>
-          <SidebarContent w="full" borderRight="none" />
+          <SidebarContent
+            w="full"
+            borderRight="none"
+            onClose={sidebar.onClose}
+          />
         </DrawerContent>
       </Drawer>
       <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
@@ -127,9 +148,9 @@ const Layout = ({ children }: any) => {
             />
           </Box>
 
-          {/* <Button marginLeft={"auto"} borderRadius={"full"} variant={"custom"}>
+          <Button marginLeft={"auto"} borderRadius={"full"} variant={"custom"}>
             Check my wallet
-          </Button> */}
+          </Button>
         </HStack>
         <Box as="main" p="4">
           {children}

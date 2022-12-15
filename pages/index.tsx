@@ -76,7 +76,7 @@ const Home: NextPage = () => {
           bg="background.main"
         >
           <Show above="lg">
-            <Stack w={'4xl'}>
+            <Stack w={"4xl"}>
               <Container
                 height={"50px"}
                 minW={"100%"}

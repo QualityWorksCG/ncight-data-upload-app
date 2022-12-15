@@ -89,6 +89,7 @@ export default function VerificationPageContent(props: any) {
 
         <Image
           alt={"Verify Email Image"}
+          h={"350px"}
           src={
             //'https://drive.google.com/uc?id=1gLWzKn-0r8T-c9jbocRcyNY1A1LJzXEl'
             "/images/Email_Verification_Code_Image.png"

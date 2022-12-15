@@ -1,12 +1,14 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
   HStack,
   IconButton,
   Image,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,7 +31,8 @@ import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
 import DatePicker from "react-datepicker";
 import { useDropzone } from "react-dropzone";
-import { FaFileUpload, FaRegThumbsUp } from "react-icons/fa";
+import { FaRegThumbsUp } from "react-icons/fa";
+import { BsImageFill } from "react-icons/bs";
 import { FileModule } from "../modules/File";
 import { AiFillDelete, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MdHideImage } from "react-icons/md";
@@ -48,12 +51,15 @@ const Upload: PageWithLayout = () => {
     unregister,
     getValues,
     reset,
+    watch,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
       dateOfSurgery: new Date(),
     },
   });
+  const isImplant = watch("isImplant");
+  console.log(isImplant);
   const [loading, isLoading] = useState(false);
   const {
     isOpen: isSuccessOpen,
@@ -75,11 +81,12 @@ const Upload: PageWithLayout = () => {
         imageType: values.bodyPart,
         surgeryDate: values.dateOfSurgery,
         isImplantCase: values.isImplant,
-        implantCount: values.numberOfImplants,
+        implantCount: values.numberOfImplants.value,
         contentType: file.type,
       });
     });
 
+    console.log(uploadList);
     GetUrlsAndUpload(
       { uploadList: uploadList, patientId: uuidv4() },
       files,
@@ -198,7 +205,15 @@ const Upload: PageWithLayout = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Button
+        onClick={() => {
+          Router.push("/home");
+        }}
+        my={4}
+        variant={"custom_outline"}
+      >
+        Cancel
+      </Button>
       <Stack spacing={6} borderRadius={"lg"} p={4} bg={"background.tabs"}>
         <FormControl isInvalid={errors.bodyPart != null} isRequired>
           <FormLabel color={"white"} fontSize={"lg"}>
@@ -218,7 +233,7 @@ const Upload: PageWithLayout = () => {
                 colorScheme={"yellow"}
                 value={value}
               >
-                <Stack spacing={4} direction={["column", "column", "row"]}>
+                <SimpleGrid spacing={4} columns={[2, 2, 3, 4]}>
                   <Box
                     p={2}
                     borderWidth={1}
@@ -259,36 +274,39 @@ const Upload: PageWithLayout = () => {
                       <Text color={"white"}>Elbow</Text>
                     </Radio>
                   </Box>
-                </Stack>
+                </SimpleGrid>
               </RadioGroup>
             )}
           />
           <FormErrorMessage>{errors.bodyPart?.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
-          <FormLabel color={"white"} fontSize={"lg"}>
-            Date of surgery?
-          </FormLabel>
-          <Controller
-            control={control}
-            name="dateOfSurgery"
-            rules={{ required: { value: true, message: "Date is required!" } }}
-            render={({ field: { onChange, value } }) => (
-              <DatePicker
-                maxDate={new Date()}
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                selected={new Date(getValues("dateOfSurgery") as string)}
-                onChange={onChange}
-                dateFormat="MM/d/yyyy"
-              />
-            )}
-          />
-        </FormControl>
-
+        <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
+          <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
+            <FormLabel color={"white"} fontSize={"lg"}>
+              Date of surgery?
+            </FormLabel>
+            <Controller
+              control={control}
+              name="dateOfSurgery"
+              rules={{
+                required: { value: true, message: "Date is required!" },
+              }}
+              render={({ field: { onChange, value } }) => (
+                <DatePicker
+                  maxDate={new Date()}
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  selected={new Date(getValues("dateOfSurgery") as string)}
+                  onChange={onChange}
+                  dateFormat="MM/d/yyyy"
+                />
+              )}
+            />
+          </FormControl>
+        </SimpleGrid>
         <FormControl isInvalid={errors.isImplant != null} isRequired>
           <FormLabel color={"white"} fontSize={"lg"}>
             Is this an implant case?
@@ -307,7 +325,7 @@ const Upload: PageWithLayout = () => {
                 colorScheme={"yellow"}
                 value={value}
               >
-                <Stack spacing={4} direction={["column", "column", "row"]}>
+                <SimpleGrid spacing={4} columns={[2, 2, 3, 4]}>
                   <Box
                     p={2}
                     borderWidth={1}
@@ -328,54 +346,62 @@ const Upload: PageWithLayout = () => {
                       <Text color={"white"}>No</Text>
                     </Radio>
                   </Box>
-                </Stack>
+                </SimpleGrid>
               </RadioGroup>
             )}
           />
           <FormErrorMessage>{errors.isImplant?.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.numberOfImplants != null} isRequired>
-          <FormLabel color={"white"} fontSize={"lg"}>
-            How many implants did you use?
-          </FormLabel>
-          <Controller
-            control={control}
-            name="numberOfImplants"
-            rules={{ required: { value: true, message: "Field is required!" } }}
-            render={({ field: { onChange, value } }) => (
-              // <Input value={value} onChange={onChange} />
-              <Select
-                value={value}
-                onChange={onChange}
-                useBasicStyles
-                options={selectValues}
-                colorScheme={"orange"}
-                chakraStyles={{
-                  menuList: (provided) => ({
-                    ...provided,
-                    bg: "background.tabs",
-                  }),
-                  option: (provided, state) => ({
-                    ...provided,
-                    bg: state.isSelected
-                      ? "secondary.yellow"
-                      : "background.tabs",
-                    color: "white",
-                    _hover: { backgroundColor: "orange" },
-                  }),
-                  placeholder: (provided) => ({
-                    ...provided,
-                    color: "primary.gray",
-                  }),
+        <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
+          {isImplant === "Yes" && (
+            <FormControl isInvalid={errors.numberOfImplants != null} isRequired>
+              <FormLabel color={"white"} fontSize={"lg"}>
+                How many implants did you use?
+              </FormLabel>
+              <Controller
+                control={control}
+                name="numberOfImplants"
+                rules={{
+                  required: { value: true, message: "Field is required!" },
                 }}
-              ></Select>
-            )}
-          />
-          <FormErrorMessage>
-            {errors.numberOfImplants?.message}
-          </FormErrorMessage>
-        </FormControl>
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    value={value}
+                    onChange={onChange}
+                    useBasicStyles
+                    options={selectValues}
+                    colorScheme={"orange"}
+                    chakraStyles={{
+                      input: (provided) => ({
+                        ...provided,
+                      }),
+                      menuList: (provided) => ({
+                        ...provided,
+                        bg: "background.tabs",
+                      }),
+                      option: (provided, state) => ({
+                        ...provided,
+                        bg: state.isSelected
+                          ? "secondary.yellow"
+                          : "background.tabs",
+                        color: "white",
+                        _hover: { backgroundColor: "orange" },
+                      }),
+                      placeholder: (provided) => ({
+                        ...provided,
+                        color: "primary.gray",
+                      }),
+                    }}
+                  ></Select>
+                )}
+              />
+              <FormErrorMessage>
+                {errors.numberOfImplants?.message}
+              </FormErrorMessage>
+            </FormControl>
+          )}
+        </SimpleGrid>
 
         <FormControl isInvalid={errors?.numberOfFiles != null}>
           <FormLabel color={"white"} fontSize={"lg"}>
@@ -400,6 +426,7 @@ const Upload: PageWithLayout = () => {
                 borderRadius={"lg"}
                 borderStyle={"dashed"}
                 textAlign={"center"}
+                backgroundColor={"#707070"}
                 borderColor={errors?.numberOfFiles != null ? "red" : "white"}
                 {...getRootProps({ className: "dropzone" })}
               >
@@ -411,9 +438,10 @@ const Upload: PageWithLayout = () => {
                   value={value}
                   {...getInputProps()}
                 />
-                <FaFileUpload fontSize={60} color="orange" />
+                <BsImageFill fontSize={60} color="#D8DADA" />
                 <Text color={"white"}>
-                  Click to upload or drag and drop files here
+                  <Link color={"orange"}>Click to upload </Link>or drag and drop
+                  files here
                 </Text>
                 <Text color={"white"}>Maximum file size is 50 MB</Text>
               </VStack>
@@ -438,7 +466,7 @@ const Upload: PageWithLayout = () => {
             </Button>
           </HStack>
 
-          <SimpleGrid spacing={2} columns={[2, 2, 3, 4]}>
+          <SimpleGrid spacing={2} columns={[2, 2, 3, 3]}>
             {currentItems.map((file) => {
               return (
                 <Box position={"relative"}>
@@ -481,42 +509,47 @@ const Upload: PageWithLayout = () => {
             })}
           </SimpleGrid>
           <Spacer py={4} />
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel={
-              <IconButton
-                color={"orange"}
-                variant={"unstyled"}
-                icon={<AiOutlineRight />}
-                aria-label={""}
-              />
-            }
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={2}
-            pageCount={pageCount}
-            previousLabel={
-              <IconButton
-                pl={6}
-                color={"orange"}
-                variant={"unstyled"}
-                icon={<AiOutlineLeft />}
-                aria-label={""}
-              />
-            }
-            containerClassName={"pagination"}
-            pageLinkClassName={"page-num"}
-            activeLinkClassName={"active"}
-          />
+          {files.length > 0 && (
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel={
+                <IconButton
+                  color={"orange"}
+                  variant={"unstyled"}
+                  icon={<AiOutlineRight />}
+                  aria-label={""}
+                />
+              }
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={2}
+              pageCount={pageCount}
+              previousLabel={
+                <IconButton
+                  pl={6}
+                  color={"orange"}
+                  variant={"unstyled"}
+                  icon={<AiOutlineLeft />}
+                  aria-label={""}
+                />
+              }
+              containerClassName={"pagination"}
+              pageLinkClassName={"page-num"}
+              activeLinkClassName={"active"}
+            />
+          )}
         </FormControl>
-        <Button
-          variant={"custom"}
-          onClick={() => {
-            onSubmit();
-          }}
-          isLoading={loading}
-        >
-          {loading ? "Upload files, please wait....." : "Confirm"}
-        </Button>
+        <Center w={"full"}>
+          <Button
+            w={["full", "50%", "40%"]}
+            variant={"custom"}
+            onClick={() => {
+              onSubmit();
+            }}
+            isLoading={loading}
+          >
+            {loading ? "Upload files, please wait....." : "Confirm"}
+          </Button>
+        </Center>
 
         <Modal size={"lg"} isOpen={isSuccessOpen} onClose={onSuccessClose}>
           <ModalOverlay />
@@ -526,7 +559,7 @@ const Upload: PageWithLayout = () => {
             <ModalBody>
               <VStack spacing={6}>
                 <FaRegThumbsUp fontSize={150} color={"#F09E28"} />
-                <Text fontSize={"larger"} color={"#D8DADA"}>
+                <Text py={4} fontSize={"larger"} color={"#D8DADA"}>
                   Your upload was successful!
                 </Text>
                 <Button
@@ -563,6 +596,7 @@ const Upload: PageWithLayout = () => {
                 >
                   Go back to home
                 </Button>
+                <Spacer />
               </VStack>
             </ModalBody>
           </ModalContent>

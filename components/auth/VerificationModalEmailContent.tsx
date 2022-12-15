@@ -21,7 +21,7 @@ export default function VerificationModalEmailContent(props: any) {
       <Text align={"center"}>
         Please follow the instructions in your email to continue.
       </Text>
-      <Text pb="1.5rem" pt="0.5rem" align={"center"}>
+      <Text mb={-6} pt="0.5rem" align={"center"}>
         If you didn’t receive an email, please reach out to info@ncight.com
       </Text>
     </>

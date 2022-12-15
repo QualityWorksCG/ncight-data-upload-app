@@ -24,14 +24,10 @@ const Home: PageWithLayout = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container maxW="container.md">
+      <Container maxW="container.md" pt={8}>
         <VStack>
-          <Box boxSize="sm">
-            <Image
-              borderRadius={"lg"}
-              src="https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt="Dan Abramov"
-            />
+          <Box boxSize={["xs", "sm"]} mb={-20}>
+            <Image src="/images/Home_Image.jpeg" alt="Dan Abramov" />
           </Box>
           <Heading size={"lg"} color={"whiteAlpha.700"} textAlign={"center"}>
             nCight is focused on helping independent Orthopedic Surgeons
@@ -42,6 +38,7 @@ const Home: PageWithLayout = () => {
             Get paid to share scope images.
           </Heading>
           <Button
+            w={["60%", "50%"]}
             variant={"custom"}
             onClick={() => {
               Router.push("/upload");
