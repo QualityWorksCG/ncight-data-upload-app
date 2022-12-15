@@ -81,7 +81,8 @@ const Upload: PageWithLayout = () => {
         imageType: values.bodyPart,
         surgeryDate: values.dateOfSurgery,
         isImplantCase: values.isImplant,
-        implantCount: values.numberOfImplants.value,
+        implantCount:
+          values.isImplant === "No" ? null : values.numberOfImplants.value,
         contentType: file.type,
       });
     });
