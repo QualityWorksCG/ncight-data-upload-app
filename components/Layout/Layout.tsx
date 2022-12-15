@@ -10,6 +10,7 @@ import {
   IconButton,
   Image,
   Show,
+  Spacer,
   Spinner,
   Text,
   useDisclosure,
@@ -17,14 +18,14 @@ import {
 
 import Sidebar from "./Sidebar";
 import { FiLogOut } from "react-icons/fi";
-import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import useUser from "../../lib/useUser";
-import Router from "next/router";
 import { AiOutlineClose } from "react-icons/ai";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 
 const Layout = ({ children }: any) => {
   const sidebar = useDisclosure();
-  const { user, loading, loggedOut, signOut } = useUser({ redirect: "/" });
+  const { user, loading, loggedOut, signOut } = useUser();
+
   if (loading || !user) {
     return (
       <Center h={"100vh"}>
@@ -38,7 +39,6 @@ const Layout = ({ children }: any) => {
       pos="fixed"
       top="0"
       left="0"
-      zIndex="sticky"
       h="full"
       pb="10"
       overflowX="hidden"
@@ -64,17 +64,18 @@ const Layout = ({ children }: any) => {
         </HStack>
       </Show>
       <Center my={10}>
-        <Image
+        {/* <Image
           alt="stay safe logo"
           objectFit="cover"
           height={"100px"}
           width={"100px"}
           src="/images/logo.png"
-        />
+        /> */}
+        <Box height={"20px"} width={"100px"}></Box>
       </Center>
 
       <Flex
-        h={"77%"}
+        h={["76%", "90%"]}
         direction="column"
         as="nav"
         fontSize="sm"
@@ -83,12 +84,10 @@ const Layout = ({ children }: any) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Sidebar onClose={() => props.onClose()} />
+          <Sidebar onClose={() => props.onClose} />
         </Box>
         <HStack
-          position={"absolute"}
-          bottom={0}
-          p={6}
+          pl={6}
           _hover={{ cursor: "pointer" }}
           onClick={async () => {
             await signOut();
@@ -105,56 +104,78 @@ const Layout = ({ children }: any) => {
 
   return (
     <Box shadow={"lg"} as="section" bg={"#2B2B2B"} minH="100vh">
-      <SidebarContent display={{ base: "none", md: "unset" }} />
-      <Drawer
-        isOpen={sidebar.isOpen}
-        onClose={sidebar.onClose}
-        placement="left"
-        size={"xs"}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <SidebarContent
-            w="full"
-            borderRight="none"
-            onClose={sidebar.onClose}
-          />
-        </DrawerContent>
-      </Drawer>
-      <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
-        <HStack
-          as="header"
-          align="center"
-          justifyContent={"space-between"}
-          w="full"
-          px="4"
-          bg="#343334"
-          h="14"
+      <Box position={"relative"}>
+        <Box
+          position={"fixed"}
+          top={0}
+          left={0}
+          w={"full"}
+          zIndex={1}
+          ml={{ base: 0, md: 0 }}
+          transition=".3s ease"
         >
-          <IconButton
-            display={{ base: "inline-flex", md: "none" }}
-            aria-label={""}
-            onClick={sidebar.onOpen}
-            variant={"unstyled"}
-            color={"secondary.yellow"}
-            icon={<HiOutlineMenuAlt1 fontSize={30} />}
-          />
-          <Box pt={4}>
-            <Image
-              display={{ base: "inline-flex", md: "none" }}
-              w={"40px"}
-              pb={2}
-              src="/images/logo-only.png"
-            />
-          </Box>
+          <HStack
+            as="header"
+            align="center"
+            justifyContent={"space-between"}
+            w="full"
+            px="4"
+            bg="#343334"
+            shadow={"base"}
+            h="16"
+          >
+            <Show above="md">
+              <Box pt={4}>
+                <Image w={"90px"} pb={2} src="/images/logo.png" />
+              </Box>
+            </Show>
 
-          <Button marginLeft={"auto"} borderRadius={"full"} variant={"custom"}>
-            Check my wallet
-          </Button>
-        </HStack>
-        <Box as="main" p="4">
-          {children}
+            <IconButton
+              display={{ base: "inline-flex", md: "none" }}
+              aria-label={""}
+              onClick={sidebar.onOpen}
+              variant={"unstyled"}
+              color={"secondary.yellow"}
+              icon={<HiOutlineMenuAlt1 fontSize={30} />}
+            />
+            <Box pt={4}>
+              <Image
+                display={{ base: "inline-flex", md: "none" }}
+                w={"90px"}
+                pb={2}
+                src="/images/logo.png"
+              />
+            </Box>
+
+            <Button
+              marginLeft={"auto"}
+              borderRadius={"full"}
+              variant={"custom"}
+            >
+              Check my wallet
+            </Button>
+          </HStack>
         </Box>
+        <SidebarContent display={{ base: "none", md: "unset" }} />
+        <Drawer
+          isOpen={sidebar.isOpen}
+          onClose={sidebar.onClose}
+          placement="left"
+          size={"xs"}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <SidebarContent
+              w="full"
+              borderRight="none"
+              onClose={sidebar.onClose}
+            />
+          </DrawerContent>
+        </Drawer>
+      </Box>
+      <Box ml={{ base: 0, md: 60 }} pt={20} bg={"#2B2B2B"} as="main" p="4">
+        <Spacer pt={20} />
+        {children}
       </Box>
     </Box>
   );
