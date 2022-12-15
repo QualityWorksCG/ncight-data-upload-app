@@ -16,7 +16,7 @@ type Props = {};
 
 const Profile: PageWithLayout = () => {
   const { user } = useUser();
-  console.log(user);
+
   return (
     <Stack>
       <Heading color={"secondary.yellow"}>Profile</Heading>

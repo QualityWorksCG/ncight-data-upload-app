@@ -59,7 +59,7 @@ const Upload: PageWithLayout = () => {
     },
   });
   const isImplant = watch("isImplant");
-  console.log(isImplant);
+
   const [loading, isLoading] = useState(false);
   const {
     isOpen: isSuccessOpen,
@@ -87,7 +87,6 @@ const Upload: PageWithLayout = () => {
       });
     });
 
-    console.log(uploadList);
     GetUrlsAndUpload(
       { uploadList: uploadList, patientId: uuidv4() },
       files,
