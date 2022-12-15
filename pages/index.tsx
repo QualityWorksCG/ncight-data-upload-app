@@ -31,6 +31,7 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 const Home: NextPage = () => {
   const { user, loading }: any = useUser();
+
   const [loginErrorObject, showLoginError] = useState({
     isError: false,
     errorMessage: "",
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
           bg="background.main"
         >
           <Show above="lg">
-            <Stack w={"4xl"}>
+            <Stack w={"2xl"}>
               <Container
                 height={"50px"}
                 minW={"100%"}
@@ -106,7 +107,7 @@ const Home: NextPage = () => {
                   height={"100%"}
                   src={
                     //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
-                    "/images/Welcome_Image.jpeg"
+                    "/images/Welcome_Image.png"
                   }
                 />
               </Flex>
