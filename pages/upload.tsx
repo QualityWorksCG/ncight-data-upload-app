@@ -59,7 +59,6 @@ const Upload: PageWithLayout = () => {
     },
   });
   const isImplant = watch("isImplant");
-
   const [loading, isLoading] = useState(false);
   const {
     isOpen: isSuccessOpen,
@@ -280,7 +279,6 @@ const Upload: PageWithLayout = () => {
           />
           <FormErrorMessage>{errors.bodyPart?.message}</FormErrorMessage>
         </FormControl>
-
         <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
           <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
             <FormLabel color={"white"} fontSize={"lg"}>
@@ -573,13 +571,10 @@ const Upload: PageWithLayout = () => {
                       numberOfImplants: null,
                       numberOfFiles: null,
                     });
-                    unregister("bodyPart");
-                    unregister("dateOfSurgery");
-                    unregister("isImplant");
-                    unregister("numberOfImplants");
-                    unregister("numberOfFiles");
+
                     removeAll();
                     onSuccessClose();
+                    Router.reload();
                   }}
                 >
                   Upload another case
