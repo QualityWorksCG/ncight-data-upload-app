@@ -154,7 +154,7 @@ export default function SignUpForm() {
             id="signup_email"
             isInvalid={Boolean(errors.signup_email)}
           >
-            <FormLabel htmlFor="signup_email">Email address</FormLabel>
+            <FormLabel htmlFor="signup_email">Email Address</FormLabel>
             <Input
               type="email"
               size="lg"

@@ -72,7 +72,7 @@ export default function LoginForm(props: any) {
       <chakra.form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={10} w={"full"} maxW={"lg"} pb={5}>
           <FormControl id="login-email" isInvalid={Boolean(errors.email)}>
-            <FormLabel htmlFor="email">Email address</FormLabel>
+            <FormLabel htmlFor="email">Email Address</FormLabel>
             <Input
               size="lg"
               type="email"
@@ -97,7 +97,7 @@ export default function LoginForm(props: any) {
             <Stack
               direction={{ base: "column", sm: "row" }}
               align={"start"}
-              justify={"space-between"}
+              justify={"end"}
             >
               {/* <Checkbox
                 size="lg"
@@ -106,7 +106,7 @@ export default function LoginForm(props: any) {
               >
                 Remember me
               </Checkbox> */}
-              <Link>Forgot password?</Link>
+              <Link>Forgot Password?</Link>
             </Stack>
             <Button
               size="lg"

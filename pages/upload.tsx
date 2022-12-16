@@ -59,6 +59,7 @@ const Upload: PageWithLayout = () => {
     },
   });
   const isImplant = watch("isImplant");
+
   const [loading, isLoading] = useState(false);
   const {
     isOpen: isSuccessOpen,
@@ -205,6 +206,7 @@ const Upload: PageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Button
+        w={["100%", "20%"]}
         onClick={() => {
           Router.push("/home");
         }}

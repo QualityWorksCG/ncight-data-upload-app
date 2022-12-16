@@ -50,15 +50,14 @@ const Layout = ({ children }: any) => {
       {...props}
     >
       <Show below="md">
-        <HStack p={2}>
-          <AiOutlineClose
-            onClick={() => {
-              props.onClose();
-            }}
-            color="orange"
-            fontSize={30}
-          />
-          <Text pl={20} color={"white"}>
+        <HStack
+          p={6}
+          onClick={() => {
+            props?.onClose();
+          }}
+        >
+          <AiOutlineClose color="orange" fontSize={30} />
+          <Text pl={8} fontSize={25} color={"white"}>
             Close
           </Text>
         </HStack>
@@ -131,7 +130,7 @@ const Layout = ({ children }: any) => {
               color={"secondary.yellow"}
               icon={<HiOutlineMenuAlt1 fontSize={30} />}
             />
-            <Box pt={4}>
+            <Box pl={4} pt={4}>
               <Image
                 display={{ base: "inline-flex", md: "none" }}
                 w={"90px"}
@@ -144,6 +143,7 @@ const Layout = ({ children }: any) => {
               marginLeft={"auto"}
               borderRadius={"full"}
               variant={"custom"}
+              size={"sm"}
             >
               Check my wallet
             </Button>
