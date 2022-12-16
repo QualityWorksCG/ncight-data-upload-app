@@ -240,8 +240,11 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="knee" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="knee" id="radio-2">
                       <Text color={"white"}>Knee</Text>
                     </Radio>
                   </Box>
@@ -251,7 +254,7 @@ const Upload: PageWithLayout = () => {
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
-                    <Radio value="shoulder" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="shoulder" id="radio-2">
                       <Text color={"white"}>Shoulder</Text>
                     </Radio>
                   </Box>
@@ -260,8 +263,11 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="hip" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="hip" id="radio-2">
                       <Text color={"white"}>Hip</Text>
                     </Radio>
                   </Box>
@@ -270,8 +276,11 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="elbow" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="elbow" id="radio-2">
                       <Text color={"white"}>Elbow</Text>
                     </Radio>
                   </Box>
@@ -331,8 +340,11 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.isImplant != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="Yes" id="radio-2">
+                    <Radio h={"100%"} w={"100%"} value="Yes" id="radio-2">
                       <Text color={"white"}>Yes</Text>
                     </Radio>
                   </Box>
@@ -341,8 +353,11 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.isImplant != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="No" id="radio-2">
+                    <Radio h={"100%"} w={"100%"} value="No" id="radio-2">
                       <Text color={"white"}>No</Text>
                     </Radio>
                   </Box>
