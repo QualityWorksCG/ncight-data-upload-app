@@ -33,6 +33,9 @@ const Layout = ({ children }: any) => {
       </Center>
     );
   }
+  const closeMenu = () => {
+    sidebar.onClose();
+  };
   const SidebarContent = (props: any) => (
     <Box
       as="nav"
@@ -53,7 +56,7 @@ const Layout = ({ children }: any) => {
         <HStack
           p={6}
           onClick={() => {
-            props?.onClose();
+            closeMenu();
           }}
         >
           <AiOutlineClose color="orange" fontSize={30} />
@@ -76,7 +79,7 @@ const Layout = ({ children }: any) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Sidebar onClose={() => props.onClose} />
+          <Sidebar onClose={closeMenu} />
         </Box>
         <HStack
           pl={6}
@@ -158,11 +161,7 @@ const Layout = ({ children }: any) => {
         >
           <DrawerOverlay />
           <DrawerContent>
-            <SidebarContent
-              w="full"
-              borderRight="none"
-              onClose={sidebar.onClose}
-            />
+            <SidebarContent w="full" borderRight="none" />
           </DrawerContent>
         </Drawer>
       </Box>
