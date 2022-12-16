@@ -367,11 +367,20 @@ export default function SignUpForm() {
                 I accept the{" "}
                 <Link
                   color="secondary.yellow"
-                  href="https://www.ncight.com"
+                  href="/terms-and-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Terms and Conditions & Privacy Policy
+                  Terms and Conditions
+                </Link>{" "}
+                &{" "}
+                <Link
+                  color="secondary.yellow"
+                  href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
                 </Link>
               </Text>
             </Checkbox>

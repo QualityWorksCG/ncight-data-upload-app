@@ -9,6 +9,8 @@ import {
   Stack,
   Container,
   chakra,
+  Text,
+  HStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
