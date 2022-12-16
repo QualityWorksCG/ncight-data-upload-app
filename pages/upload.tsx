@@ -552,7 +552,7 @@ const Upload: PageWithLayout = () => {
             />
           )}
         </FormControl>
-        <Spacer py={6} />
+
         <Center w={"full"}>
           <Button
             w={["full", "50%", "40%"]}
