@@ -486,7 +486,6 @@ const Upload: PageWithLayout = () => {
               return (
                 <Box position={"relative"}>
                   <IconButton
-                    zIndex={10}
                     position={"absolute"}
                     m={2}
                     size={"sm"}
@@ -553,6 +552,7 @@ const Upload: PageWithLayout = () => {
             />
           )}
         </FormControl>
+        <Spacer py={6} />
         <Center w={"full"}>
           <Button
             w={["full", "50%", "40%"]}
