@@ -1,6 +1,5 @@
 import type { AppProps } from "next/app";
 import { Amplify } from "aws-amplify";
-import useEnv from "../lib/useEnv";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import "@fontsource/roboto-condensed/700.css";
 import { customTheme } from "../styles/theme";
@@ -12,13 +11,11 @@ type AppPropsWithLayout = AppProps & {
   Component: PageWithLayout;
 };
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const { env } = useEnv();
-  if (!env) return <>No Env Loading...</>;
 
   Amplify.configure({
     Auth: {
-      userPoolId: env.cognitoUserPoolId,
-      userPoolWebClientId: env.cognitoUserPoolWebClientId,
+      userPoolId: process.env.NEXT_PUBLIC_AUTH_USER_POOL_ID,
+      userPoolWebClientId: process.env.NEXT_PUBLIC_AUTH_WEB_CLIENT_ID,
     },
   });
   const getLayout = Component.getLayout ?? ((page) => page);

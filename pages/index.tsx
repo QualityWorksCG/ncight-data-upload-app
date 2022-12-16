@@ -115,8 +115,7 @@ const Home: NextPage = () => {
           </Show>
           <Flex p={8} flex={1} justify={"center"} bg="background.main">
             <Stack spacing={4} w={"xl"} maxW={"full"} color="primary.gray">
-              <Hide above="sm">
-                <Show below="md">
+                <Show below="lg">
                   <Center>
                     <Image
                       alt={"nCight Logo"}
@@ -127,7 +126,6 @@ const Home: NextPage = () => {
                     />
                   </Center>
                 </Show>
-              </Hide>
               <Heading pb={6} textAlign={"center"}>
                 Welcome to nCight!
               </Heading>
