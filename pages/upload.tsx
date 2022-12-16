@@ -573,6 +573,11 @@ const Upload: PageWithLayout = () => {
                       numberOfImplants: null,
                       numberOfFiles: null,
                     });
+                    unregister("bodyPart");
+                    unregister("dateOfSurgery");
+                    unregister("isImplant");
+                    unregister("numberOfImplants");
+                    unregister("numberOfFiles");
                     removeAll();
                     onSuccessClose();
                   }}
