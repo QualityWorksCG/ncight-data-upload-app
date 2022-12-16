@@ -65,7 +65,6 @@ export default function VerificationPageContent(props: any) {
     <Flex
       align={"center"}
       justifyContent={"center"}
-      w={['100%','100%','70%','40%']}
       bg={"background.main"}
       overflow={"auto"}
     >
@@ -74,14 +73,14 @@ export default function VerificationPageContent(props: any) {
           direction={{ base: "column" }}
           color={"primary.gray"}
         >
-
-          <Image
-            alt={"Verify Email Image"}
-            src={
-              "/images/Email_Verification_Code_Image.png"
-            }
-            sizes={"sm"}
-          />
+            <Image
+              alt={"Verify Email Image"}
+              src={
+                "/images/Email_Verification_Code_Image.png"
+              }
+              w={['md','2xl']}
+              margin={'auto'}
+            />
 
           <Heading textAlign={"center"} fontSize={{ base: "2xl", md: "3xl" }}>
             Enter Verification Code
