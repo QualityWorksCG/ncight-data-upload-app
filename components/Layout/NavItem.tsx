@@ -1,13 +1,15 @@
-import { Flex, Icon } from "@chakra-ui/react";
+import { Flex, HStack, Icon, Text } from "@chakra-ui/react";
 
 const NavItem = (props: any) => {
   const { icon, children, isActive, ...rest } = props;
 
   return (
-    <Flex
+    <HStack
+      onClick={() => props.onClose()}
       align="center"
-      pl="4"
       py="3"
+      justifyContent={"center"}
+      marginLeft={-16}
       cursor="pointer"
       color={isActive ? "white" : "white"}
       bg={isActive ? "secondary.yellow" : ""}
@@ -23,16 +25,16 @@ const NavItem = (props: any) => {
     >
       {icon && (
         <Icon
-          mx="2"
-          boxSize="4"
+          mx="4"
+          boxSize="6"
           _groupHover={{
             color: props.color,
           }}
           as={icon}
         />
       )}
-      {children}
-    </Flex>
+      <Text fontSize={"md"}> {children}</Text>
+    </HStack>
   );
 };
 

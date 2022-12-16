@@ -1,15 +1,32 @@
-import axios from "axios";
+import axios, { AxiosAdapter, AxiosDefaults, AxiosError } from "axios";
 
-export const GetUrlsAndUpload = async (values: any, files: any) => {
+export const GetUrlsAndUpload = async (
+  uploadList: any,
+  files: any,
+  user: any
+) => {
   let { data } = await axios.post(
-    `https://66eh1rez3i.execute-api.us-east-1.amazonaws.com/dev/uploads/get-signed-url`,
-    values,
+    `${process.env.NEXT_PUBLIC_API_URL}/uploads/get-signed-url`,
+
+    uploadList,
     {
       headers: {
-        "x-api-key": "9akX29Ac7tDpjHGXgz3C5nWS5BjCDWzaggj24eH6",
+        Authorization: `Bearer ${user.signInUserSession.idToken.jwtToken}`,
         "content-type": "application/json",
       },
     }
   );
-  console.log(data);
+
+  let promiseList: any = [];
+
+  data.signedUrlList.forEach((element: any, index: number) => {
+    let putPromise = axios.put(element, files[index], {
+      headers: {
+        "Content-Type": files[index].type,
+      },
+    });
+    promiseList.push(putPromise);
+  });
+
+  return Promise.all(promiseList);
 };

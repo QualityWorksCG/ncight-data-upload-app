@@ -28,20 +28,42 @@ export const customTheme = extendTheme({
     },
     Button: {
       variants: {
-        round: (props: StyleFunctionProps) => ({
-          ...theme.components.Input.variants!.outline(props),
-          field: {
-            ...theme.components.Input.variants!.outline(props).field,
-            borderRadius: "20px",
-            color: "#F09E28",
+        custom: (props: StyleFunctionProps) => ({
+          // ...theme.components.Button.variants!.outline(props),
+          bg: "#F09E28",
+          borderRadius: "20px",
+          color: "white",
+          _hover: {
+            bg: "orange",
+            color: "white",
+          },
+          _active: {
+            bg: "#d88e24",
+            color: "white",
+          },
+        }),
+        custom_outline: (props: StyleFunctionProps) => ({
+          // ...theme.components.Button.variants!.outline(props),
+          // bg: "#F09E28",
+          borderRadius: "20px",
+          borderWidth: "2px",
+          borderColor: "#F09E28",
+          color: "#F09E28",
+          _hover: {
+            bg: "orange",
+            color: "white",
+          },
+          _active: {
+            bg: "#d88e24",
+            color: "white",
           },
         }),
       },
-      defaultProps: {
-        _hover: {
-          bg: "transparent",
-          color: "#F09E28",
-        },
+    },
+    Drawer: {
+      sizes: {
+        ...theme.components.Drawer.sizes,
+        xxs: { dialog: { maxW: "200px" } },
       },
     },
     Heading: {

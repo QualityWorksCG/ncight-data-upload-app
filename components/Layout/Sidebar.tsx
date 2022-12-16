@@ -17,9 +17,16 @@ function Sidebar(props: any) {
   const renderSidebar = () => {
     return (
       <Stack spacing={2}>
-        <Link passHref href={"/home"}>
+        <Link
+          passHref
+          href={"/home"}
+          onClick={() => {
+            props?.onClose();
+          }}
+        >
           <Box>
             <NavItem
+              onClose={props.onClose()}
               icon={AiFillHome}
               isActive={router.pathname.includes("home") ? true : false}
             >
@@ -27,20 +34,16 @@ function Sidebar(props: any) {
             </NavItem>
           </Box>
         </Link>
-
-        <Link passHref href={"/upload"}>
+        <Link
+          onClick={() => {
+            props?.onClose();
+          }}
+          passHref
+          href={"/profile"}
+        >
           <Box>
             <NavItem
-              icon={AiOutlineCloudUpload}
-              isActive={router.pathname.includes("upload") ? true : false}
-            >
-              Upload File
-            </NavItem>
-          </Box>
-        </Link>
-        <Link passHref href={"/profile"}>
-          <Box>
-            <NavItem
+              onClose={props.onClose()}
               icon={FaUserAlt}
               isActive={router.pathname.includes("profile") ? true : false}
             >

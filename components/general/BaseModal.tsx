@@ -6,7 +6,6 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Center,
   Container,
 } from "@chakra-ui/react";
 import React from "react";
@@ -27,7 +26,7 @@ export default function BaseModal(props: any) {
       }}
     >
       <ModalOverlay />
-      <ModalContent w={"100vw"} bg="background.tabs">
+      <ModalContent w={"90vw"} bg="background.tabs">
         <ModalHeader></ModalHeader>
         <ModalCloseButton color="primary.gray" />
         <Container>

@@ -9,6 +9,8 @@ import {
   Stack,
   Container,
   chakra,
+  Text,
+  HStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
@@ -30,7 +32,6 @@ export default function LoginForm(props: any) {
       const user = await Auth.signIn(username, password);
       if (user) {
         Router.push("/home");
-        console.log("Success", user);
       }
     } catch (error: any) {
       if (error.message === "User does not exist.") {
@@ -69,9 +70,9 @@ export default function LoginForm(props: any) {
   return (
     <Container maxW="lg">
       <chakra.form onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={10} w={"full"} maxW={"lg"}>
+        <Stack spacing={10} w={"full"} maxW={"lg"} pb={5}>
           <FormControl id="login-email" isInvalid={Boolean(errors.email)}>
-            <FormLabel htmlFor="email">Email address</FormLabel>
+            <FormLabel htmlFor="email">Email Address</FormLabel>
             <Input
               size="lg"
               type="email"
@@ -96,32 +97,24 @@ export default function LoginForm(props: any) {
             <Stack
               direction={{ base: "column", sm: "row" }}
               align={"start"}
-              justify={"space-between"}
+              justify={"end"}
             >
-              <Checkbox
+              {/* <Checkbox
                 size="lg"
                 colorScheme="secondary.yellow"
                 iconColor="secondary.yellow"
               >
                 Remember me
-              </Checkbox>
-              <Link>Forgot password?</Link>
+              </Checkbox> */}
+              <Link>Forgot Password?</Link>
             </Stack>
             <Button
               size="lg"
               isLoading={loading}
-              variant="outline"
+              variant="custom"
               type="submit"
-              borderRadius="3xl"
-              _hover={{
-                bg: "primary.white",
-                borderColor: "secondary.yellow",
-                color: "secondary.yellow",
-              }}
-              bg="secondary.yellow"
-              color="primary.white"
             >
-              Login in
+              Login
             </Button>
           </Stack>
         </Stack>

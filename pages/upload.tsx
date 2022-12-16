@@ -1,18 +1,27 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   IconButton,
   Image,
-  Input,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Radio,
   RadioGroup,
   SimpleGrid,
   Spacer,
   Stack,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import Head from "next/head";
@@ -22,11 +31,18 @@ import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
 import DatePicker from "react-datepicker";
 import { useDropzone } from "react-dropzone";
-import { FaFileUpload } from "react-icons/fa";
-import { File } from "../modules/File";
+import { FaRegThumbsUp } from "react-icons/fa";
+import { BsImageFill } from "react-icons/bs";
+import { FileModule } from "../modules/File";
 import { AiFillDelete, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { MdHideImage } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import { GetUrlsAndUpload } from "../local-api/Upload";
+import useUser from "../lib/useUser";
+import { v4 as uuidv4 } from "uuid";
+import { Select } from "chakra-react-select";
+import Router from "next/router";
+import { AxiosError } from "axios";
 
 const Upload: PageWithLayout = () => {
   const {
@@ -34,43 +50,83 @@ const Upload: PageWithLayout = () => {
     control,
     unregister,
     getValues,
+    reset,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<any>({
+    defaultValues: {
+      dateOfSurgery: new Date(),
+    },
+  });
+  const isImplant = watch("isImplant");
 
-  const onSubmit = handleSubmit((values) => {
-    values.files = files;
+  const [loading, isLoading] = useState(false);
+  const {
+    isOpen: isSuccessOpen,
+    onOpen: onSuccessOpen,
+    onClose: onSuccessClose,
+  } = useDisclosure();
+  const {
+    isOpen: isErrorOpen,
+    onOpen: onErrorOpen,
+    onClose: onErrorClose,
+  } = useDisclosure();
+  const { user } = useUser();
+  const onSubmit = handleSubmit(async (values) => {
+    isLoading(true);
     let uploadList: any = [];
     files.map((file) => {
       uploadList.push({
-        fileName: file.fileName,
+        fileName: file.name,
         imageType: values.bodyPart,
         surgeryDate: values.dateOfSurgery,
         isImplantCase: values.isImplant,
-        implantCount: values.numberOfImplants,
+        implantCount:
+          values.isImplant === "No" ? null : values.numberOfImplants.value,
         contentType: file.type,
       });
     });
 
-    GetUrlsAndUpload(uploadList, files);
+    GetUrlsAndUpload(
+      { uploadList: uploadList, patientId: uuidv4() },
+      files,
+      user
+    )
+      .then((val: any) => {
+        onSuccessOpen();
+        isLoading(false);
+      })
+      .catch((error: AxiosError) => {
+        onErrorOpen();
+        isLoading(false);
+      });
   });
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileModule[]>([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [],
     },
     onDrop: (acceptedFiles) => {
+      let oldFiles = files;
       setFiles(
-        //@ts-ignore
-        acceptedFiles.map((file, index) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-            fileName: `image-${index}`,
+        oldFiles.concat(
+          //@ts-ignore
+          acceptedFiles.map((file, index) => {
+            const newFile = new File(
+              [file],
+              `${uuidv4()}.${file.type.split("/")[1]}`,
+              { type: file.type }
+            );
+            Object.assign(newFile, {
+              preview: URL.createObjectURL(file),
+            });
+            return newFile;
           })
         )
       );
     },
   });
-  const removeFile = (file: File) => () => {
+  const removeFile = (file: FileModule) => () => {
     const newFiles = [...files];
     newFiles.splice(newFiles.indexOf(file), 1);
     setFiles(newFiles);
@@ -80,6 +136,49 @@ const Upload: PageWithLayout = () => {
     setFiles([]);
   };
 
+  let selectValues = [
+    {
+      label: "1",
+      value: "1",
+      color: "white",
+    },
+    {
+      label: "2",
+      value: "2",
+    },
+    {
+      label: "3",
+      value: "3",
+    },
+    {
+      label: "4",
+      value: "4",
+    },
+    {
+      label: "5",
+      value: "5",
+    },
+    {
+      label: "6",
+      value: "6",
+    },
+    {
+      label: "7",
+      value: "7",
+    },
+    {
+      label: "8",
+      value: "8",
+    },
+    {
+      label: "9",
+      value: "9",
+    },
+    {
+      label: "10",
+      value: "10",
+    },
+  ];
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
@@ -95,9 +194,7 @@ const Upload: PageWithLayout = () => {
   // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % files.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+
     setItemOffset(newOffset);
   };
 
@@ -108,7 +205,16 @@ const Upload: PageWithLayout = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Button
+        w={["100%", "20%"]}
+        onClick={() => {
+          Router.push("/home");
+        }}
+        my={4}
+        variant={"custom_outline"}
+      >
+        Cancel
+      </Button>
       <Stack spacing={6} borderRadius={"lg"} p={4} bg={"background.tabs"}>
         <FormControl isInvalid={errors.bodyPart != null} isRequired>
           <FormLabel color={"white"} fontSize={"lg"}>
@@ -128,14 +234,17 @@ const Upload: PageWithLayout = () => {
                 colorScheme={"yellow"}
                 value={value}
               >
-                <Stack spacing={4} direction={["column", "column", "row"]}>
+                <SimpleGrid spacing={4} columns={[2, 2, 3, 4]}>
                   <Box
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="knee" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="knee" id="radio-2">
                       <Text color={"white"}>Knee</Text>
                     </Radio>
                   </Box>
@@ -143,9 +252,9 @@ const Upload: PageWithLayout = () => {
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
-                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                    borderColor={errors.bodyPart != null ? "red.500" : ""}
                   >
-                    <Radio value="shoulder" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="shoulder" id="radio-2">
                       <Text color={"white"}>Shoulder</Text>
                     </Radio>
                   </Box>
@@ -153,9 +262,12 @@ const Upload: PageWithLayout = () => {
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
-                    borderColor={errors.bodyParts != null ? "red.500" : ""}
+                    borderColor={errors.bodyPart != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="hip-admin" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="hip" id="radio-2">
                       <Text color={"white"}>Hip</Text>
                     </Radio>
                   </Box>
@@ -164,45 +276,46 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.bodyPart != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="elbow" id="radio-2">
+                    <Radio w={"100%"} h={"100%"} value="elbow" id="radio-2">
                       <Text color={"white"}>Elbow</Text>
                     </Radio>
                   </Box>
-                </Stack>
+                </SimpleGrid>
               </RadioGroup>
             )}
           />
           <FormErrorMessage>{errors.bodyPart?.message}</FormErrorMessage>
         </FormControl>
-
-        <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
-          <FormLabel color={"white"} fontSize={"lg"}>
-            Date of surgery?
-          </FormLabel>
-          <Controller
-            control={control}
-            name="dateOfSurgery"
-            rules={{ required: { value: true, message: "Field is required!" } }}
-            render={({ field: { onChange } }) => (
-              <DatePicker
-                maxDate={new Date()}
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                selected={
-                  getValues("dateOfSurgery")
-                    ? new Date(getValues("dateOfSurgery") as string)
-                    : new Date()
-                }
-                onChange={onChange}
-                dateFormat="MM/d/yyyy"
-              />
-            )}
-          />
-        </FormControl>
-
+        <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
+          <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
+            <FormLabel color={"white"} fontSize={"lg"}>
+              Date of surgery?
+            </FormLabel>
+            <Controller
+              control={control}
+              name="dateOfSurgery"
+              rules={{
+                required: { value: true, message: "Date is required!" },
+              }}
+              render={({ field: { onChange, value } }) => (
+                <DatePicker
+                  maxDate={new Date()}
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  selected={new Date(getValues("dateOfSurgery") as string)}
+                  onChange={onChange}
+                  dateFormat="MM/d/yyyy"
+                />
+              )}
+            />
+          </FormControl>
+        </SimpleGrid>
         <FormControl isInvalid={errors.isImplant != null} isRequired>
           <FormLabel color={"white"} fontSize={"lg"}>
             Is this an implant case?
@@ -221,14 +334,17 @@ const Upload: PageWithLayout = () => {
                 colorScheme={"yellow"}
                 value={value}
               >
-                <Stack spacing={4} direction={["column", "column", "row"]}>
+                <SimpleGrid spacing={4} columns={[2, 2, 3, 4]}>
                   <Box
                     p={2}
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.isImplant != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="Yes" id="radio-2">
+                    <Radio h={"100%"} w={"100%"} value="Yes" id="radio-2">
                       <Text color={"white"}>Yes</Text>
                     </Radio>
                   </Box>
@@ -237,34 +353,70 @@ const Upload: PageWithLayout = () => {
                     borderWidth={1}
                     borderRadius={"lg"}
                     borderColor={errors.isImplant != null ? "red.500" : ""}
+                    _hover={{
+                      cursor: "pointer",
+                    }}
                   >
-                    <Radio value="No" id="radio-2">
+                    <Radio h={"100%"} w={"100%"} value="No" id="radio-2">
                       <Text color={"white"}>No</Text>
                     </Radio>
                   </Box>
-                </Stack>
+                </SimpleGrid>
               </RadioGroup>
             )}
           />
           <FormErrorMessage>{errors.isImplant?.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.numberOfImplants != null} isRequired>
-          <FormLabel color={"white"} fontSize={"lg"}>
-            How many implants did you use?
-          </FormLabel>
-          <Controller
-            control={control}
-            name="numberOfImplants"
-            rules={{ required: { value: true, message: "Field is required!" } }}
-            render={({ field: { onChange, value } }) => (
-              <Input value={value} onChange={onChange} />
-            )}
-          />
-          <FormErrorMessage>
-            {errors.numberOfImplants?.message}
-          </FormErrorMessage>
-        </FormControl>
+        <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
+          {isImplant === "Yes" && (
+            <FormControl isInvalid={errors.numberOfImplants != null} isRequired>
+              <FormLabel color={"white"} fontSize={"lg"}>
+                How many implants did you use?
+              </FormLabel>
+              <Controller
+                control={control}
+                name="numberOfImplants"
+                rules={{
+                  required: { value: true, message: "Field is required!" },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    value={value}
+                    onChange={onChange}
+                    useBasicStyles
+                    options={selectValues}
+                    colorScheme={"orange"}
+                    chakraStyles={{
+                      input: (provided) => ({
+                        ...provided,
+                      }),
+                      menuList: (provided) => ({
+                        ...provided,
+                        bg: "background.tabs",
+                      }),
+                      option: (provided, state) => ({
+                        ...provided,
+                        bg: state.isSelected
+                          ? "secondary.yellow"
+                          : "background.tabs",
+                        color: "white",
+                        _hover: { backgroundColor: "orange" },
+                      }),
+                      placeholder: (provided) => ({
+                        ...provided,
+                        color: "primary.gray",
+                      }),
+                    }}
+                  ></Select>
+                )}
+              />
+              <FormErrorMessage>
+                {errors.numberOfImplants?.message}
+              </FormErrorMessage>
+            </FormControl>
+          )}
+        </SimpleGrid>
 
         <FormControl isInvalid={errors?.numberOfFiles != null}>
           <FormLabel color={"white"} fontSize={"lg"}>
@@ -289,6 +441,7 @@ const Upload: PageWithLayout = () => {
                 borderRadius={"lg"}
                 borderStyle={"dashed"}
                 textAlign={"center"}
+                backgroundColor={"#707070"}
                 borderColor={errors?.numberOfFiles != null ? "red" : "white"}
                 {...getRootProps({ className: "dropzone" })}
               >
@@ -300,22 +453,35 @@ const Upload: PageWithLayout = () => {
                   value={value}
                   {...getInputProps()}
                 />
-                <FaFileUpload fontSize={60} color="orange" />
+                <BsImageFill fontSize={60} color="#D8DADA" />
                 <Text color={"white"}>
-                  Click to upload or drag and drop files here
+                  <Link color={"orange"}>Click to upload </Link>or drag and drop
+                  files here
                 </Text>
                 <Text color={"white"}>Maximum file size is 50 MB</Text>
               </VStack>
             )}
           />
-          {console.log(errors.numberOfFiles)}
+
           <FormErrorMessage>{errors?.numberOfFiles?.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
-          <FormLabel color={"white"} fontSize={"lg"}>
-            Attached Files
-          </FormLabel>
-          <SimpleGrid spacing={2} columns={[2, 2, 3, 4]}>
+          <HStack pb={4} justifyContent={"space-between"} alignItems={"center"}>
+            <FormLabel color={"white"} fontSize={"lg"}>
+              Attached Files
+            </FormLabel>
+            <Button
+              onClick={() => {
+                removeAll();
+              }}
+              size={"sm"}
+              colorScheme={"red"}
+            >
+              Delete All
+            </Button>
+          </HStack>
+
+          <SimpleGrid spacing={2} columns={[2, 2, 3, 3]}>
             {currentItems.map((file) => {
               return (
                 <Box position={"relative"}>
@@ -341,7 +507,7 @@ const Upload: PageWithLayout = () => {
                     p={2}
                   >
                     <Text color={"black"} noOfLines={1}>
-                      {file.fileName}
+                      {file.name}
                     </Text>
                     <Text color={"black"} fontSize={"sm"}>
                       {(file.size / (1024 * 1024)).toFixed(2)} mb
@@ -358,43 +524,118 @@ const Upload: PageWithLayout = () => {
             })}
           </SimpleGrid>
           <Spacer py={4} />
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel={
-              <IconButton
-                color={"orange"}
-                variant={"unstyled"}
-                icon={<AiOutlineRight />}
-                aria-label={""}
-              />
-            }
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={2}
-            pageCount={pageCount}
-            previousLabel={
-              <IconButton
-                pl={6}
-                color={"orange"}
-                variant={"unstyled"}
-                icon={<AiOutlineLeft />}
-                aria-label={""}
-              />
-            }
-            containerClassName={"pagination"}
-            pageLinkClassName={"page-num"}
-            activeLinkClassName={"active"}
-          />
+          {files.length > 0 && (
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel={
+                <IconButton
+                  color={"orange"}
+                  variant={"unstyled"}
+                  icon={<AiOutlineRight />}
+                  aria-label={""}
+                />
+              }
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={2}
+              pageCount={pageCount}
+              previousLabel={
+                <IconButton
+                  pl={6}
+                  color={"orange"}
+                  variant={"unstyled"}
+                  icon={<AiOutlineLeft />}
+                  aria-label={""}
+                />
+              }
+              containerClassName={"pagination"}
+              pageLinkClassName={"page-num"}
+              activeLinkClassName={"active"}
+            />
+          )}
         </FormControl>
-        <Button
-          borderRadius={"full"}
-          bg={"secondary.yellow"}
-          _hover={{ bg: "secondary.yellow_light" }}
-          onClick={() => {
-            onSubmit();
-          }}
-        >
-          Confirm
-        </Button>
+        <Center w={"full"}>
+          <Button
+            w={["full", "50%", "40%"]}
+            variant={"custom"}
+            onClick={() => {
+              onSubmit();
+            }}
+            isLoading={loading}
+          >
+            {loading ? "Upload files, please wait....." : "Confirm"}
+          </Button>
+        </Center>
+
+        <Modal size={"lg"} isOpen={isSuccessOpen} onClose={onSuccessClose}>
+          <ModalOverlay />
+          <ModalContent w={"100vw"} bg="background.tabs">
+            <ModalHeader></ModalHeader>
+            <ModalCloseButton color={"#D8DADA"} fontSize={20} />
+            <ModalBody>
+              <VStack spacing={6}>
+                <FaRegThumbsUp fontSize={150} color={"#F09E28"} />
+                <Text py={4} fontSize={"larger"} color={"#D8DADA"}>
+                  Your upload was successful!
+                </Text>
+                <Button
+                  variant={"custom"}
+                  w={"full"}
+                  onClick={() => {
+                    reset({
+                      bodyPart: null,
+                      dateOfSurgery: new Date(),
+                      isImplant: null,
+                      numberOfImplants: null,
+                      numberOfFiles: null,
+                    });
+
+                    removeAll();
+                    onSuccessClose();
+                    Router.reload();
+                  }}
+                >
+                  Upload another case
+                </Button>
+                <Button
+                  variant={"custom_outline"}
+                  w={"full"}
+                  onClick={() => {
+                    reset({
+                      bodyPart: null,
+                      dateOfSurgery: new Date(),
+                      isImplant: null,
+                      numberOfImplants: null,
+                      numberOfFiles: null,
+                    });
+                    removeAll();
+                    Router.push("/home");
+                  }}
+                >
+                  Go back to home
+                </Button>
+                <Spacer />
+              </VStack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal size={"lg"} isOpen={isErrorOpen} onClose={onErrorClose}>
+          <ModalOverlay />
+          <ModalContent w={"100vw"} bg="background.tabs">
+            <ModalHeader></ModalHeader>
+            <ModalCloseButton color={"#D8DADA"} fontSize={20} />
+            <ModalBody>
+              <VStack spacing={6}>
+                <MdHideImage fontSize={150} color={"#F09E28"} />
+                <Text fontSize={"larger"} color={"#D8DADA"}>
+                  Your upload was unsuccessful! Please try again
+                </Text>
+                <Button variant={"custom"} onClick={onErrorClose}>
+                  Try again
+                </Button>
+              </VStack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Stack>
     </>
   );

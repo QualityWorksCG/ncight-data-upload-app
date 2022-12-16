@@ -28,7 +28,6 @@ export default function FailedVerificationModalContent(props: any) {
       });
       props.onClose(false);
     } catch (err) {
-      console.log("error resending code: ", err);
       toast({
         title: "Error",
         description: "We had a problem resending code. Please try again later",
@@ -65,9 +64,7 @@ export default function FailedVerificationModalContent(props: any) {
       <Stack spacing={2} pt={"2"}>
         <Button
           isLoading={loading}
-          borderRadius="3xl"
-          bg="secondary.yellow"
-          color="primary.white"
+          variant={"custom"}
           onClick={() =>
             resendConfirmationCode(
               new URLSearchParams(window.location.search).get("email") || ""

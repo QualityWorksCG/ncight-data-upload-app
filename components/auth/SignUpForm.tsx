@@ -15,6 +15,7 @@ import {
   chakra,
   HStack,
   useToast,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import { InfoOutlineIcon, CheckIcon } from "@chakra-ui/icons";
@@ -81,8 +82,6 @@ export default function SignUpForm() {
         showModal(true);
       }
     } catch (error: any) {
-      console.log(error);
-
       if (error.message === "An account with the given email already exists.") {
         toast({
           title: "Email already in use!",
@@ -93,7 +92,6 @@ export default function SignUpForm() {
           position: "top-right",
         });
       }
-      console.log("error signing up:", error);
     }
     isLoading(false);
   }
@@ -107,7 +105,7 @@ export default function SignUpForm() {
       data.last_name,
       data.first_name,
       data.orthopedic_practice,
-      JSON.parse(`"${data.state.value}"`),
+      data.state.value,
       data.city
     );
   };
@@ -156,11 +154,18 @@ export default function SignUpForm() {
             id="signup_email"
             isInvalid={Boolean(errors.signup_email)}
           >
-            <FormLabel htmlFor="signup_email">Email address</FormLabel>
+            <FormLabel htmlFor="signup_email">Email Address</FormLabel>
             <Input
               type="email"
               size="lg"
-              {...register("signup_email", { required: "Email is required" })}
+              {...register("signup_email", {
+                required: "Email is required",
+                pattern: {
+                  value:
+                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "Email format is incorrect",
+                },
+              })}
             />
             <FormErrorMessage>
               {errors.signup_email && errors.signup_email.message}
@@ -221,7 +226,7 @@ export default function SignUpForm() {
             </FormHelperText>
             <FormHelperText fontWeight="700" color="secondary.yellow">
               <HStack>
-                {!RegExp("(.*d.*)").test(watchPassword) ? (
+                {!RegExp(".*[0-9].*").test(watchPassword) ? (
                   <AiOutlineClose />
                 ) : (
                   <CheckIcon color={"green"} />
@@ -250,75 +255,73 @@ export default function SignUpForm() {
               {errors.orthopedic_practice && errors.orthopedic_practice.message}
             </FormErrorMessage>
           </FormControl>
-          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            <GridItem>
-              <Controller
-                control={control}
-                name="state"
-                rules={{ required: "State is required" }}
-                render={({
-                  field: { onChange, onBlur, value, name, ref },
-                  fieldState: { error },
-                }) => (
-                  <FormControl isInvalid={!!error} id="state">
-                    <FormLabel htmlFor="state">State</FormLabel>
 
-                    <Select
-                      id="long-value-select"
-                      instanceId="long-value-select"
-                      useBasicStyles
-                      size="lg"
-                      name={name}
-                      ref={ref}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      options={stateData}
-                      placeholder="Select a State"
-                      colorScheme={"orange"}
-                      closeMenuOnSelect={true}
-                      chakraStyles={{
-                        menuList: (provided) => ({
-                          ...provided,
-                          bg: "background.tabs",
-                        }),
-                        option: (provided, state) => ({
-                          ...provided,
-                          bg: state.isSelected
-                            ? "secondary.yellow"
-                            : "background.tabs",
-                        }),
-                        placeholder: (provided) => ({
-                          ...provided,
-                          color: "primary.gray",
-                        }),
-                      }}
-                    />
+          <SimpleGrid gap={6} columns={[1, 2]} spacing={[2]}>
+            <Controller
+              control={control}
+              name="state"
+              rules={{ required: "State is required" }}
+              render={({
+                field: { onChange, onBlur, value, name, ref },
+                fieldState: { error },
+              }) => (
+                <FormControl isInvalid={!!error} id="state">
+                  <FormLabel htmlFor="state">State</FormLabel>
 
-                    <FormErrorMessage>
-                      {error && error.message}
-                    </FormErrorMessage>
-                  </FormControl>
-                )}
+                  <Select
+                    id="long-value-select"
+                    instanceId="long-value-select"
+                    useBasicStyles
+                    size="lg"
+                    name={name}
+                    ref={ref}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    options={stateData}
+                    placeholder="Select a State"
+                    colorScheme={"orange"}
+                    closeMenuOnSelect={true}
+                    chakraStyles={{
+                      menuList: (provided) => ({
+                        ...provided,
+                        bg: "background.tabs",
+                      }),
+                      option: (provided, state) => ({
+                        ...provided,
+                        bg: state.isSelected
+                          ? "secondary.yellow"
+                          : "background.tabs",
+                        color: "white",
+                        _hover: { backgroundColor: "orange" },
+                      }),
+                      placeholder: (provided) => ({
+                        ...provided,
+                        color: "primary.gray",
+                      }),
+                    }}
+                  />
+
+                  <FormErrorMessage>{error && error.message}</FormErrorMessage>
+                </FormControl>
+              )}
+            />
+            <FormControl id="city" isInvalid={Boolean(errors.city)}>
+              <FormLabel htmlFor="city">City</FormLabel>
+              <Input
+                type="text"
+                placeholder="Enter a City"
+                color="primary.gray"
+                _placeholder={{ color: "primary.gray" }}
+                size="lg"
+                {...register("city", { required: "City is required" })}
               />
-            </GridItem>
-            <GridItem>
-              <FormControl id="city" isInvalid={Boolean(errors.city)}>
-                <FormLabel htmlFor="city">City</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter a City"
-                  color="primary.gray"
-                  _placeholder={{ color: "primary.gray" }}
-                  size="lg"
-                  {...register("city", { required: "City is required" })}
-                />
-                <FormErrorMessage>
-                  {errors.city && errors.city.message}
-                </FormErrorMessage>
-              </FormControl>
-            </GridItem>
-          </Grid>
+              <FormErrorMessage>
+                {errors.city && errors.city.message}
+              </FormErrorMessage>
+            </FormControl>
+          </SimpleGrid>
+
           <FormControl
             id="mobile_phone_number"
             isInvalid={Boolean(errors.mobile_phone_number)}
@@ -335,11 +338,11 @@ export default function SignUpForm() {
                 required: "Mobile Phone Number is required",
                 minLength: {
                   value: 10,
-                  message: "Phone number can't be less than 10",
+                  message: "Phone number can't be less than 10 digits",
                 },
                 maxLength: {
                   value: 15,
-                  message: "Phone number can't be greater than 15",
+                  message: "Phone number can't be greater than 15 digits",
                 },
               })}
             />
@@ -364,11 +367,20 @@ export default function SignUpForm() {
                 I accept the{" "}
                 <Link
                   color="secondary.yellow"
-                  href="https://www.ncight.com"
+                  href="/terms-and-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Terms and Conditions & Privacy Policy
+                  Terms and Conditions
+                </Link>{" "}
+                &{" "}
+                <Link
+                  color="secondary.yellow"
+                  href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
                 </Link>
               </Text>
             </Checkbox>
@@ -379,19 +391,7 @@ export default function SignUpForm() {
           </FormControl>
 
           {/*<Text color="secondary.yellow" ><InfoOutlineIcon/> <Link href="https://www.ncight.com" target="_blank" rel="noopener noreferrer">Learn More about nCight</Link></Text>*/}
-          <Button
-            variant="outline"
-            isLoading={loading}
-            type="submit"
-            borderRadius="3xl"
-            _hover={{
-              bg: "primary.white",
-              borderColor: "secondary.yellow",
-              color: "secondary.yellow",
-            }}
-            bg="secondary.yellow"
-            color="primary.white"
-          >
+          <Button variant={"custom"} isLoading={loading} type="submit">
             Sign Up
           </Button>
           <BaseModal
