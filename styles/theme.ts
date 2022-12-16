@@ -60,6 +60,12 @@ export const customTheme = extendTheme({
         }),
       },
     },
+    Drawer: {
+      sizes: {
+        ...theme.components.Drawer.sizes,
+        xxs: { dialog: { maxW: "250px" } },
+      },
+    },
     Heading: {
       defaultProps: {
         fontWeight: "700",

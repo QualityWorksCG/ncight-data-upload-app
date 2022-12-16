@@ -154,7 +154,7 @@ const Layout = ({ children }: any) => {
           isOpen={sidebar.isOpen}
           onClose={sidebar.onClose}
           placement="left"
-          size={"xs"}
+          size={"xxs"}
         >
           <DrawerOverlay />
           <DrawerContent>
