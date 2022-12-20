@@ -146,6 +146,7 @@ const Upload: PageWithLayout = () => {
     const newFiles = [...files];
     newFiles.splice(newFiles.indexOf(file), 1);
     setFiles(newFiles);
+    setFileError("");
   };
 
   const removeAll = () => {
@@ -485,106 +486,112 @@ const Upload: PageWithLayout = () => {
 
           <FormErrorMessage>{errors?.numberOfFiles?.message}</FormErrorMessage>
         </FormControl>
-        <FormControl>
-          <HStack pb={4} justifyContent={"space-between"} alignItems={"center"}>
-            <FormLabel color={"white"} fontSize={"lg"}>
-              Attached Files ({files.length > 0 && files.length})
-            </FormLabel>
-            <Button
-              onClick={() => {
-                removeAll();
-              }}
-              size={"sm"}
-              colorScheme={"red"}
+        {files.length > 0 && (
+          <FormControl>
+            <HStack
+              pb={4}
+              justifyContent={"space-between"}
+              alignItems={"center"}
             >
-              Delete All
-            </Button>
-          </HStack>
-          {fileError && (
-            <Text py={4} color={"red.500"}>
-              1 or more of your images have exceeded the 10 mb file limit.
-              Please ensure that your images are not too large
-            </Text>
-          )}
-          <SimpleGrid spacing={2} columns={[2, 2, 3, 3]}>
-            {currentItems.map((file) => {
-              return (
-                <Box position={"relative"}>
-                  <IconButton
-                    position={"absolute"}
-                    m={2}
-                    size={"sm"}
-                    colorScheme={"red"}
-                    aria-label="Search database"
-                    icon={<AiFillDelete />}
-                    onClick={removeFile(file)}
-                  />
+              <FormLabel color={"white"} fontSize={"lg"}>
+                Attached Files ({files.length > 0 && files.length})
+              </FormLabel>
+              <Button
+                onClick={() => {
+                  removeAll();
+                }}
+                size={"sm"}
+                colorScheme={"red"}
+              >
+                Delete All
+              </Button>
+            </HStack>
+            {fileError && (
+              <Text py={4} color={"red.500"}>
+                1 or more of your images have exceeded the 10 mb file limit.
+                Please ensure that your images are not too large
+              </Text>
+            )}
+            <SimpleGrid spacing={2} columns={[2, 2, 3, 3]}>
+              {currentItems.map((file) => {
+                return (
+                  <Box position={"relative"}>
+                    <IconButton
+                      position={"absolute"}
+                      m={2}
+                      size={"sm"}
+                      colorScheme={"red"}
+                      aria-label="Search database"
+                      icon={<AiFillDelete />}
+                      onClick={removeFile(file)}
+                    />
 
-                  <Box
-                    borderTopRadius={"lg"}
-                    opacity={0.6}
-                    w={"100%"}
-                    bg={"white"}
-                    bottom={0}
-                    position={"absolute"}
-                    h={"50px"}
-                    p={2}
-                  >
-                    <Text color={"black"} noOfLines={1}>
-                      {file.name}
-                    </Text>
-                    <Text color={"black"} fontSize={"sm"}>
-                      {(file.size / (1024 * 1024)).toFixed(2)} mb
-                    </Text>
+                    <Box
+                      borderTopRadius={"lg"}
+                      opacity={0.6}
+                      w={"100%"}
+                      bg={"white"}
+                      bottom={0}
+                      position={"absolute"}
+                      h={"50px"}
+                      p={2}
+                    >
+                      <Text color={"black"} noOfLines={1}>
+                        {file.name}
+                      </Text>
+                      <Text color={"black"} fontSize={"sm"}>
+                        {(file.size / (1024 * 1024)).toFixed(2)} mb
+                      </Text>
+                    </Box>
+
+                    <Image
+                      bg={file.type === "image/tiff" ? "gray.300" : ""}
+                      padding={file.type === "image/tiff" ? 8 : ""}
+                      borderRadius={"lg"}
+                      src={file.preview}
+                      fallbackSrc={
+                        file.type === "image/tiff"
+                          ? "https://cdn-icons-png.flaticon.com/512/80/80549.png"
+                          : ""
+                      }
+                      alt="Alt Image"
+                    />
                   </Box>
+                );
+              })}
+            </SimpleGrid>
 
-                  <Image
-                    bg={file.type === "image/tiff" ? "gray.300" : ""}
-                    padding={file.type === "image/tiff" ? 8 : ""}
-                    borderRadius={"lg"}
-                    src={file.preview}
-                    fallbackSrc={
-                      file.type === "image/tiff"
-                        ? "https://cdn-icons-png.flaticon.com/512/80/80549.png"
-                        : ""
-                    }
-                    alt="Alt Image"
+            <Spacer py={4} />
+            {files.length > 0 && (
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel={
+                  <IconButton
+                    color={"orange"}
+                    variant={"unstyled"}
+                    icon={<AiOutlineRight />}
+                    aria-label={""}
                   />
-                </Box>
-              );
-            })}
-          </SimpleGrid>
-
-          <Spacer py={4} />
-          {files.length > 0 && (
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel={
-                <IconButton
-                  color={"orange"}
-                  variant={"unstyled"}
-                  icon={<AiOutlineRight />}
-                  aria-label={""}
-                />
-              }
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={2}
-              pageCount={pageCount}
-              previousLabel={
-                <IconButton
-                  pl={6}
-                  color={"orange"}
-                  variant={"unstyled"}
-                  icon={<AiOutlineLeft />}
-                  aria-label={""}
-                />
-              }
-              containerClassName={"pagination"}
-              pageLinkClassName={"page-num"}
-              activeLinkClassName={"active"}
-            />
-          )}
-        </FormControl>
+                }
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={2}
+                pageCount={pageCount}
+                previousLabel={
+                  <IconButton
+                    pl={6}
+                    color={"orange"}
+                    variant={"unstyled"}
+                    icon={<AiOutlineLeft />}
+                    aria-label={""}
+                  />
+                }
+                containerClassName={"pagination"}
+                pageLinkClassName={"page-num"}
+                activeLinkClassName={"active"}
+              />
+            )}
+          </FormControl>
+        )}
 
         <Center w={"full"}>
           <Button
