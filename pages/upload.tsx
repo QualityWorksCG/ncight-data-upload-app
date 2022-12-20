@@ -82,13 +82,13 @@ const Upload: PageWithLayout = () => {
         surgeryDate: values.dateOfSurgery,
         isImplantCase: values.isImplant,
         implantCount:
-          values.isImplant === "No" ? null : values.numberOfImplants.value,
+          values.isImplant === "No" ? 0 : values.numberOfImplants.value,
         contentType: file.type,
       });
     });
 
     GetUrlsAndUpload(
-      { uploadList: uploadList, patientId: uuidv4() },
+      { uploadList: uploadList, procedureId: uuidv4() },
       files,
       user
     )
@@ -102,12 +102,28 @@ const Upload: PageWithLayout = () => {
       });
   });
   const [files, setFiles] = useState<FileModule[]>([]);
+  const [fileError, setFileError] = useState<string>("");
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/*": [],
+      "image/png": [".png"],
+      "image/jpeg": [".jpeg"],
+      "image/tiff": [".tiff"],
+      "image/bmp": [".bmp"],
     },
-    onDrop: (acceptedFiles) => {
+    maxSize: 1000000,
+    onDrop: (acceptedFiles, fileRejections) => {
+      setFileError("");
       let oldFiles = files;
+      fileRejections.forEach((file) => {
+        file.errors.forEach((err) => {
+          if (err.code === "file-too-large") {
+            setFileError(`Error: ${err.message}`);
+          }
+          if (err.code === "file-invalid-type") {
+            setFileError(`Error: ${err.message}`);
+          }
+        });
+      });
       setFiles(
         oldFiles.concat(
           //@ts-ignore
@@ -134,6 +150,7 @@ const Upload: PageWithLayout = () => {
 
   const removeAll = () => {
     setFiles([]);
+    setFileError("");
   };
 
   let selectValues = [
@@ -458,7 +475,10 @@ const Upload: PageWithLayout = () => {
                   <Link color={"orange"}>Click to upload </Link>or drag and drop
                   files here
                 </Text>
-                <Text color={"white"}>Maximum file size is 50 MB</Text>
+                <Text color={"white"}>Maximum file size is 10 MB</Text>
+                <Text color={"white"}>
+                  Accepted image formats are png, jpeg, bitmap and tiff.
+                </Text>
               </VStack>
             )}
           />
@@ -468,7 +488,7 @@ const Upload: PageWithLayout = () => {
         <FormControl>
           <HStack pb={4} justifyContent={"space-between"} alignItems={"center"}>
             <FormLabel color={"white"} fontSize={"lg"}>
-              Attached Files
+              Attached Files ({files.length > 0 && files.length})
             </FormLabel>
             <Button
               onClick={() => {
@@ -480,7 +500,12 @@ const Upload: PageWithLayout = () => {
               Delete All
             </Button>
           </HStack>
-
+          {fileError && (
+            <Text py={4} color={"red.500"}>
+              1 or more of your images have exceeded the 10 mb file limit.
+              Please ensure that your images are not too large
+            </Text>
+          )}
           <SimpleGrid spacing={2} columns={[2, 2, 3, 3]}>
             {currentItems.map((file) => {
               return (
@@ -514,14 +539,22 @@ const Upload: PageWithLayout = () => {
                   </Box>
 
                   <Image
+                    bg={file.type === "image/tiff" ? "gray.300" : ""}
+                    padding={file.type === "image/tiff" ? 8 : ""}
                     borderRadius={"lg"}
                     src={file.preview}
-                    alt="Dan Abramov"
+                    fallbackSrc={
+                      file.type === "image/tiff"
+                        ? "https://cdn-icons-png.flaticon.com/512/80/80549.png"
+                        : ""
+                    }
+                    alt="Alt Image"
                   />
                 </Box>
               );
             })}
           </SimpleGrid>
+
           <Spacer py={4} />
           {files.length > 0 && (
             <ReactPaginate
@@ -562,7 +595,7 @@ const Upload: PageWithLayout = () => {
             }}
             isLoading={loading}
           >
-            {loading ? "Upload files, please wait....." : "Confirm"}
+            {loading ? "Upload files, please wait....." : "Submit"}
           </Button>
         </Center>
 
