@@ -74,6 +74,7 @@ const Upload: PageWithLayout = () => {
   const { user } = useUser();
   const onSubmit = handleSubmit(async (values) => {
     isLoading(true);
+    setFileError("");
     let uploadList: any = [];
     files.map((file) => {
       uploadList.push({
