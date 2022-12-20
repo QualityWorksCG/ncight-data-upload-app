@@ -42,6 +42,17 @@ export const customTheme = extendTheme({
             color: "white",
           },
         }),
+        secondary: (props: StyleFunctionProps) => ({
+          bg: "#2B2B2B",
+          borderRadius: "20px",
+          borderColor: "#F09E28",
+          color: "#F09E28",
+          borderWidth: "2px",
+          _hover: {
+            bg: "#3B3B3B",
+            color: "#F09E28",
+          },
+        }),
         custom_outline: (props: StyleFunctionProps) => ({
           // ...theme.components.Button.variants!.outline(props),
           // bg: "#F09E28",

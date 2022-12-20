@@ -106,7 +106,7 @@ export default function LoginForm(props: any) {
               >
                 Remember me
               </Checkbox> */}
-              <Link>Forgot Password?</Link>
+              <Link href="/forgotPassword">Forgot Password?</Link>
             </Stack>
             <Button
               size="lg"
