@@ -26,7 +26,7 @@ import Router from "next/router";
 import { CheckIcon } from "@chakra-ui/icons";
 import { AiOutlineClose } from "react-icons/ai";
 import BaseModal from "../general/BaseModal";
-import VerificationModalContent from "./VerificationModalContent";
+import PasswordConfirmationModalContent from "./PasswordConfirmationModalContent";
   
   export default function ConfirmPasswordPageContent(props: any) {
     const {
@@ -80,13 +80,15 @@ import VerificationModalContent from "./VerificationModalContent";
         align={"center"}
         justify={"center"}
         bg={"background.main"}
-        overflow={"auto"}
+        overflow={"scroll"}
+        h={"100vh"}
       >
         <Stack
           maxW={"full"}
           bg={"background.main"}
           direction={{ base: "column" }}
           color={"primary.gray"}
+          overflow={"scroll"}
         >
             {confirmPasswordErrorObject.isError ? (
             <Alert variant="solid" status="error" justifyContent={"center"} maxW={'500px'}>
@@ -233,7 +235,7 @@ import VerificationModalContent from "./VerificationModalContent";
                     Cancel
                 </Button>
                 <BaseModal
-                  ChildComponent={VerificationModalContent}
+                  ChildComponent={PasswordConfirmationModalContent}
                   modal={successModal}
                   showModal={showSuccessModal}
                 />
