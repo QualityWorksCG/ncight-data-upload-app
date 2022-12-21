@@ -50,7 +50,6 @@ import VerificationModalContent from "./VerificationModalContent";
                 new URLSearchParams(window.location.search).get("email") || ""
             )
             const result = await Auth.forgotPasswordSubmit(email,confirmation_code,new_password);
-            console.log(result);
             if(result){
                 showSuccessModal(true)
             }
@@ -74,10 +73,8 @@ import VerificationModalContent from "./VerificationModalContent";
     }
   
     const onSubmit = (data: any) => {
-        console.log(data);
         forgotPasswordSubmit(data.confirmation_code,data.password);
     };
-    console.log(watchPassword);
     return (
       <Flex
         align={"center"}
@@ -117,18 +114,18 @@ import VerificationModalContent from "./VerificationModalContent";
            id="confirmation-code"
            isInvalid={Boolean(errors.confirmation_code)}
           >
-            <FormLabel>Confirmation Code</FormLabel>
+            <FormLabel>Verification Code</FormLabel>
             <Input
                 type=""
                 size="lg"
                 {...register("confirmation_code", {
-                    required: { value: true, message: "Confirmation code is required." },
+                    required: { value: true, message: "Verification code is required." },
                     onChange(event) {
                         showConfirmPasswordError({isError:false, errorMessage:""})
                     },
                   })}
             />
-            <FormErrorMessage>Confirmation code is required.</FormErrorMessage>
+            <FormErrorMessage>Verification code is required.</FormErrorMessage>
           </FormControl>
 
           <FormControl

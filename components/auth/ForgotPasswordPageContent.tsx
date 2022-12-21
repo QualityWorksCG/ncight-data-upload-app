@@ -38,7 +38,6 @@ export default function VerificationPageContent(props: any) {
     isLoading(true);
     try {
       const result = await Auth.forgotPassword(username);
-      console.log(result);
       if (result) {
         Router.push({
           pathname: "/confirmPassword",
@@ -61,13 +60,18 @@ export default function VerificationPageContent(props: any) {
           errorMessage:
             "Too many reset attempts. Your account is now locked for 15 mins. If you still need help, please contact info@ncight.com",
         });
+      } else {
+        showForgotPasswordError({
+          isError: true,
+          errorMessage:
+            "There was a problem resetting your password. Please try again or contact info@ncight.com if the problem persists.",
+        });
       }
     }
     isLoading(false);
   }
 
   const onSubmit = (data: any) => {
-    console.log(data);
     forgotPassword(data.email);
   };
 
@@ -86,7 +90,7 @@ export default function VerificationPageContent(props: any) {
         color={"primary.gray"}
       >
         {forgotPasswordErrorObject.isError ? (
-          <Alert variant="solid" status="error" justifyContent={"center"}>
+          <Alert variant="solid" status="error" justifyContent={"center"} maxW={'500px'}>
             <AlertIcon />
             <AlertTitle flexWrap={"wrap"}>
               {forgotPasswordErrorObject.errorMessage}
