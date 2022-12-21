@@ -1,27 +1,29 @@
-import Router from 'next/router'
-import useSWR, { useSWRConfig } from 'swr'
-import { Auth } from 'aws-amplify'
+import Router from "next/router";
+import useSWR, { useSWRConfig } from "swr";
+import { Auth } from "aws-amplify";
+import { CognitoUser } from "../modules/CognitoUser";
 
 const fetcher = async () => {
-  return Auth.currentAuthenticatedUser()
-}
+  return Auth.currentAuthenticatedUser();
+};
 
-export default function useUser({ redirect = '' } = {}) {
-  const { cache } = useSWRConfig()
-  const { data: user, error } = useSWR('user', fetcher)
+export default function useUser({ redirect = "" } = {}) {
+  const { cache } = useSWRConfig();
+  const { data, error } = useSWR("user", fetcher);
 
-  const loading = !user && !error
-  const loggedOut = error && error === 'The user is not authenticated'
+  const user: CognitoUser = data;
+  const loading = !user && !error;
+  const loggedOut = error && error === "The user is not authenticated";
 
   if (loggedOut && redirect) {
-    Router.push({ pathname: redirect, query: { redirect: Router.asPath } })
+    Router.push("/home");
   }
 
-  const signOut = async ({ redirect = '/' }) => {
-    cache.delete('user')
-    await Router.push(redirect)
-    await Auth.signOut()
-  }
+  const signOut = async () => {
+    cache.delete("user");
+    await Auth.signOut();
+    await Router.push("/");
+  };
 
-  return { loading, loggedOut, user, signOut }
+  return { loading, loggedOut, user, signOut };
 }

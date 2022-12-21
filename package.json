@@ -3,24 +3,51 @@
   "scripts": {
     "dev": "npm run build:config && next dev",
     "build": "npm run build:config && next build && next export",
+    "build:qa": "env-cmd -f .env.qa.local yarn build",
+    "build:development": "env-cmd -f .env.development.local yarn build",
+    "build:staging": "env-cmd -f .env.staging.local yarn build",
     "build:config": "esbuild next.config.ts --bundle --outfile=next.config.js --platform=node --target=es2020",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "^2.6.1",
-    "aws-amplify": "^4.3.14",
-    "next": "12.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "swr": "^1.2.2"
+    "@aws-amplify/ui-react": "^4.1.0",
+    "@chakra-ui/icons": "^2.0.12",
+    "@chakra-ui/react": "^2.4.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@fontsource/roboto-condensed": "^4.5.9",
+    "@next/font": "^13.0.4",
+    "aws-amplify": "^5.0.5",
+    "axios": "^1.2.1",
+    "chakra-react-select": "^4.4.0",
+    "dayjs": "^1.11.7",
+    "env-cmd": "^10.1.0",
+    "framer-motion": "^7.6.19",
+    "next": "^13.0.5",
+    "react": "^18.0.0",
+    "react-datepicker": "^4.8.0",
+    "react-dom": "^18.0.0",
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.39.5",
+    "react-icons": "^4.7.1",
+    "react-paginate": "^8.1.4",
+    "swr": "^1.2.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "17.0.19",
     "@types/react": "17.0.39",
+    "@types/react-datepicker": "^4.8.0",
+    "@types/react-dom": "17.0.15",
+    "@types/uuid": "^9.0.0",
     "esbuild": "^0.14.27",
     "eslint": "8.9.0",
     "eslint-config-next": "12.1.0",
     "typescript": "4.5.5"
+  },
+  "resolutions": {
+    "@types/react": "<18.0.0",
+    "@types/react-dom": "<18.0.0"
   }
 }
