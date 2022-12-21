@@ -89,7 +89,7 @@ import VerificationModalContent from "./VerificationModalContent";
           color={"primary.gray"}
         >
             {confirmPasswordErrorObject.isError ? (
-            <Alert variant="solid" status="error" justifyContent={"center"} maxW={'600px'}>
+            <Alert variant="solid" status="error" justifyContent={"center"} maxW={'500px'}>
               <AlertIcon />
               <AlertTitle flexWrap={'wrap'}>{confirmPasswordErrorObject.errorMessage}</AlertTitle>
               <AlertDescription></AlertDescription>
@@ -100,7 +100,7 @@ import VerificationModalContent from "./VerificationModalContent";
             src={
               "/images/Confirm_Password_Image.jpeg"
             }
-            w={'600px'}
+            w={'500px'}
           />
   
           <Center>
