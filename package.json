@@ -6,6 +6,7 @@
     "build:qa": "env-cmd -f .env.qa.local yarn build",
     "build:development": "env-cmd -f .env.development.local yarn build",
     "build:staging": "env-cmd -f .env.staging.local yarn build",
+    "build:production": "env-cmd -f .env.production.local yarn build",
     "build:config": "esbuild next.config.ts --bundle --outfile=next.config.js --platform=node --target=es2020",
     "start": "next start",
     "lint": "next lint"
