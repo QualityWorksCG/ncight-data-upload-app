@@ -242,7 +242,9 @@ const Upload: PageWithLayout = () => {
           <Controller
             control={control}
             name="bodyPart"
-            rules={{ required: true }}
+            rules={{
+              required: { value: true, message: "Please select an option" },
+            }}
             render={({ field: { onChange, value } }) => (
               <RadioGroup
                 defaultValue="text"
@@ -342,7 +344,9 @@ const Upload: PageWithLayout = () => {
           <Controller
             control={control}
             name="isImplant"
-            rules={{ required: { value: true, message: "Field is required!" } }}
+            rules={{
+              required: { value: true, message: " Please select an option" },
+            }}
             render={({ field: { onChange, value } }) => (
               <RadioGroup
                 defaultValue="text"
