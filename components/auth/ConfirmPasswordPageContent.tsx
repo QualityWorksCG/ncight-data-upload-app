@@ -80,7 +80,7 @@ import PasswordConfirmationModalContent from "./PasswordConfirmationModalContent
         align={"center"}
         justify={"center"}
         bg={"background.main"}
-        overflow={"scroll"}
+        overflow={"auto"}
         h={"100vh"}
       >
         <Stack
@@ -88,7 +88,7 @@ import PasswordConfirmationModalContent from "./PasswordConfirmationModalContent
           bg={"background.main"}
           direction={{ base: "column" }}
           color={"primary.gray"}
-          overflow={"scroll"}
+          overflow={"auto"}
         >
             {confirmPasswordErrorObject.isError ? (
             <Alert variant="solid" status="error" justifyContent={"center"} maxW={'500px'}>
