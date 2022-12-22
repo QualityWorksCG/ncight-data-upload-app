@@ -437,7 +437,7 @@ const Upload: PageWithLayout = () => {
           )}
         </SimpleGrid>
 
-        <FormControl isInvalid={errors?.numberOfFiles != null}>
+        <FormControl isInvalid={errors?.numberOfFiles != null} isRequired>
           <FormLabel color={"white"} fontSize={"xl"}>
             Upload and attach images
           </FormLabel>
