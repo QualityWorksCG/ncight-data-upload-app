@@ -236,7 +236,7 @@ const Upload: PageWithLayout = () => {
       </Button>
       <Stack spacing={6} borderRadius={"lg"} p={4} bg={"background.tabs"}>
         <FormControl isInvalid={errors.bodyPart != null} isRequired>
-          <FormLabel color={"white"} fontSize={"lg"}>
+          <FormLabel color={"white"} fontSize={"xl"}>
             What body part are you uploading images for?
           </FormLabel>
           <Controller
@@ -311,7 +311,7 @@ const Upload: PageWithLayout = () => {
         </FormControl>
         <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
           <FormControl isInvalid={errors.dateOfSurgery != null} isRequired>
-            <FormLabel color={"white"} fontSize={"lg"}>
+            <FormLabel color={"white"} fontSize={"xl"}>
               Date of surgery?
             </FormLabel>
             <Controller
@@ -336,7 +336,7 @@ const Upload: PageWithLayout = () => {
           </FormControl>
         </SimpleGrid>
         <FormControl isInvalid={errors.isImplant != null} isRequired>
-          <FormLabel color={"white"} fontSize={"lg"}>
+          <FormLabel color={"white"} fontSize={"xl"}>
             Is this an implant case?
           </FormLabel>
           <Controller
@@ -390,7 +390,7 @@ const Upload: PageWithLayout = () => {
         <SimpleGrid spacing={4} columns={[1, 2, 3, 4]}>
           {isImplant === "Yes" && (
             <FormControl isInvalid={errors.numberOfImplants != null} isRequired>
-              <FormLabel color={"white"} fontSize={"lg"}>
+              <FormLabel color={"white"} fontSize={"xl"}>
                 How many implants did you use?
               </FormLabel>
               <Controller
@@ -437,8 +437,8 @@ const Upload: PageWithLayout = () => {
           )}
         </SimpleGrid>
 
-        <FormControl isInvalid={errors?.numberOfFiles != null}>
-          <FormLabel color={"white"} fontSize={"lg"}>
+        <FormControl isInvalid={errors?.numberOfFiles != null} isRequired>
+          <FormLabel color={"white"} fontSize={"xl"}>
             Upload and attach images
           </FormLabel>
           <Controller
@@ -494,7 +494,7 @@ const Upload: PageWithLayout = () => {
               justifyContent={"space-between"}
               alignItems={"center"}
             >
-              <FormLabel color={"white"} fontSize={"lg"}>
+              <FormLabel color={"white"} fontSize={"xl"}>
                 Attached Files ({files.length > 0 && files.length})
               </FormLabel>
               <Button
