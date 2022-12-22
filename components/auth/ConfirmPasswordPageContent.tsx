@@ -81,7 +81,6 @@ import PasswordConfirmationModalContent from "./PasswordConfirmationModalContent
         justify={"center"}
         bg={"background.main"}
         overflow={"auto"}
-        h={"100vh"}
       >
         <Stack
           maxW={"full"}
