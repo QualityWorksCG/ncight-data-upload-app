@@ -111,14 +111,16 @@ const Upload: PageWithLayout = () => {
       "image/tiff": [".tiff"],
       "image/bmp": [".bmp"],
     },
-    maxSize: 1000000,
+    maxSize: 10000000,
     onDrop: (acceptedFiles, fileRejections) => {
       setFileError("");
       let oldFiles = files;
       fileRejections.forEach((file) => {
         file.errors.forEach((err) => {
           if (err.code === "file-too-large") {
-            setFileError(`Error: ${err.message}`);
+            setFileError(
+              `Error: 1 or more files weren't selected as they exceeded 10 mb. Please ensure that your files are not too large`
+            );
           }
           if (err.code === "file-invalid-type") {
             setFileError(`Error: ${err.message}`);
@@ -491,6 +493,10 @@ const Upload: PageWithLayout = () => {
 
           <FormErrorMessage>{errors?.numberOfFiles?.message}</FormErrorMessage>
         </FormControl>
+        <Text py={4} color={"red.500"}>
+          {fileError.toString()}
+        </Text>
+
         {files.length > 0 && (
           <FormControl>
             <HStack
@@ -511,12 +517,7 @@ const Upload: PageWithLayout = () => {
                 Delete All
               </Button>
             </HStack>
-            {fileError && (
-              <Text py={4} color={"red.500"}>
-                1 or more of your images have exceeded the 10 mb file limit.
-                Please ensure that your images are not too large
-              </Text>
-            )}
+
             <SimpleGrid spacing={2} columns={[2, 2, 3, 3]}>
               {currentItems.map((file) => {
                 return (
