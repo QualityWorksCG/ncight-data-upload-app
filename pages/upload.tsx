@@ -123,7 +123,9 @@ const Upload: PageWithLayout = () => {
             );
           }
           if (err.code === "file-invalid-type") {
-            setFileError(`Error: ${err.message}`);
+            setFileError(
+              `Error: Invalid file type selected. File type must be .png .jpeg .tiff or .bmp`
+            );
           }
         });
       });
