@@ -76,7 +76,7 @@ const Layout = ({ children }: any) => {
         justifyContent={"space-between"}
       >
         <Box>
-          <Sidebar onClose={() => props.onClose} />
+          <Sidebar onClose={() => sidebar.onClose()} />
         </Box>
         <HStack
           pl={6}
@@ -130,7 +130,7 @@ const Layout = ({ children }: any) => {
               color={"secondary.yellow"}
               icon={<HiOutlineMenuAlt1 fontSize={30} />}
             />
-            <Box pl={4} pt={4}>
+            <Box pl={20} pt={4}>
               <Image
                 display={{ base: "inline-flex", md: "none" }}
                 w={"90px"}

@@ -5,14 +5,13 @@ import {
   Heading,
   Image,
   Spacer,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import { withSSRContext } from "aws-amplify";
 import Router from "next/router";
 type Props = {};
 
@@ -25,18 +24,39 @@ const Home: PageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container maxW="container.md" pt={8}>
-        <VStack>
+        <VStack spacing={4}>
           <Box boxSize={["xs", "sm"]} mb={-20}>
             <Image src="/images/Home_Image.jpeg" alt="Dan Abramov" />
           </Box>
-          <Heading size={"lg"} color={"whiteAlpha.700"} textAlign={"center"}>
-            nCight is focused on helping independent Orthopedic Surgeons
-            maintain their autonomy.
+          <Heading color={"whiteAlpha.700"} textAlign={"center"}>
+            Welcome to nCight!
           </Heading>
+          <Text
+            fontSize={["", "lg"]}
+            color={"whiteAlpha.700"}
+            textAlign={"center"}
+          >
+            We’re excited to have you on this journey to activate your data from
+            a dormant liability into a revenue generating asset.
+          </Text>
+          <Text
+            fontSize={["", "lg"]}
+            color={"whiteAlpha.700"}
+            textAlign={"center"}
+          >
+            You can now upload patient data to the nCight database, where we
+            will store a de-identified copy of this data to provide insights
+            previously unavailable to the market.
+          </Text>
+          <Text
+            fontSize={["", "lg"]}
+            color={"whiteAlpha.700"}
+            textAlign={"center"}
+          >
+            Let’s continue!
+          </Text>
           <Spacer />
-          <Heading color={"secondary.yellow"} size={"lg"} textAlign={"center"}>
-            Get paid to share scope images.
-          </Heading>
+
           <Button
             w={["60%", "50%"]}
             variant={"custom"}
@@ -44,7 +64,10 @@ const Home: PageWithLayout = () => {
               Router.push("/upload");
             }}
           >
-            Upload Images
+            Add New Data
+          </Button>
+          <Button w={["60%", "50%"]} variant={"custom"} onClick={() => {}}>
+            Data Upload Review
           </Button>
         </VStack>
       </Container>

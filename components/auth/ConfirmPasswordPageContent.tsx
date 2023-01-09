@@ -149,7 +149,7 @@ import PasswordConfirmationModalContent from "./PasswordConfirmationModalContent
                 ) : (
                   <CheckIcon color={"green"} />
                 )}
-                <Text>8 characters</Text>
+                <Text>at least 8 characters</Text>
               </HStack>
             </FormHelperText>
             <FormHelperText fontWeight="700" color="secondary.yellow">

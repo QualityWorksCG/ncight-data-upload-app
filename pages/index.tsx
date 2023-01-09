@@ -63,7 +63,6 @@ const Home: NextPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {" "}
               <InfoOutlineIcon color="white" marginRight={"2.5"} /> Learn More
               About nCight
             </Link>
@@ -105,27 +104,24 @@ const Home: NextPage = () => {
                   alt={"Sign up Image"}
                   objectFit={"cover"}
                   height={"100%"}
-                  src={
-                    //'https://drive.google.com/uc?id=10o5dt6LjNRdlLkjepmKK9ALU4Y1epgHs'
-                    "/images/Welcome_Image.png"
-                  }
+                  src={"/images/Welcome_Image.png"}
                 />
               </Flex>
             </Stack>
           </Show>
           <Flex p={8} flex={1} justify={"center"} bg="background.main">
             <Stack spacing={4} w={"xl"} maxW={"full"} color="primary.gray">
-                <Show below="lg">
-                  <Center>
-                    <Image
-                      alt={"nCight Logo"}
-                      src={
-                        "https://drive.google.com/uc?id=1KhpLDZ7pTBmUh2_h3TWkvA1mkrI4OXwL"
-                      }
-                      boxSize="100px"
-                    />
-                  </Center>
-                </Show>
+              <Show below="lg">
+                <Center>
+                  <Image
+                    alt={"nCight Logo"}
+                    src={
+                      "https://drive.google.com/uc?id=1KhpLDZ7pTBmUh2_h3TWkvA1mkrI4OXwL"
+                    }
+                    boxSize="100px"
+                  />
+                </Center>
+              </Show>
               <Heading pb={6} textAlign={"center"}>
                 Welcome to nCight!
               </Heading>
