@@ -10,7 +10,7 @@ export default function VerificationModalEmailContent(props: any) {
           alt={"Verification Success Image"}
           src={
             //'https://drive.google.com/uc?id=19rAQF9rH3J-NwuC6AJWi7W9k33eLePiN'
-            "/images/Email_Verification_Modal_Image.png"
+            "/images/Email_Verification_Modal_Image.jpg"
           }
           sizes={"sm"}
         />

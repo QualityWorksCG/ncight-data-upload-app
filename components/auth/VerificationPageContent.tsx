@@ -76,7 +76,7 @@ export default function VerificationPageContent(props: any) {
             <Image
               alt={"Verify Email Image"}
               src={
-                "/images/Email_Verification_Code_Image.png"
+                "/images/Email_Verification_Code_Image.jpg"
               }
               w={['md','2xl']}
               margin={'auto'}
