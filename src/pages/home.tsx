@@ -14,7 +14,6 @@ import Layout from "../components/Layout/Layout";
 import { PageWithLayout } from "../modules/Layout";
 import Router from "next/router";
 import { AuthenticateUser } from "../lib/ProtectedRoute";
-type Props = {};
 
 const Home: PageWithLayout = () => {
   return (

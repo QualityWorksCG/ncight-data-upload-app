@@ -62,35 +62,34 @@ export default function VerificationPageContent(props: any) {
 
   return (
     <Center>
-    <Flex
-      align={"center"}
-      justifyContent={"center"}
-      bg={"background.main"}
-      overflow={"auto"}
-    >
+      <Flex
+        align={"center"}
+        justifyContent={"center"}
+        bg={"background.main"}
+        overflow={"auto"}
+      >
         <Stack
           bg={"background.main"}
           direction={{ base: "column" }}
           color={"primary.gray"}
         >
-            <Image
-              alt={"Verify Email Image"}
-              src={
-                "/images/Email_Verification_Code_Image.jpg"
-              }
-              w={['md','2xl']}
-              margin={'auto'}
-            />
+          <Image
+            alt={"Verify Email Image"}
+            src={"/images/Email_Verification_Code_Image.jpg"}
+            w={["md", "2xl"]}
+            margin={"auto"}
+          />
 
           <Heading textAlign={"center"} fontSize={{ base: "2xl", md: "3xl" }}>
             Enter Verification Code
           </Heading>
 
-
           <Text textAlign={"center"}>
-            We've sent a verification code to your email, {email}.
+            {`We've sent a verification code to your email, ${email}.`}
           </Text>
-          <Text textAlign={"center"}> Please check your email for the code.</Text>
+          <Text textAlign={"center"}>
+            Please check your email for the code.
+          </Text>
 
           <chakra.form onSubmit={handleSubmit(onSubmit)}>
             <Controller
@@ -142,7 +141,7 @@ export default function VerificationPageContent(props: any) {
                   </Center>
                   <Center>
                     <FormErrorMessage>
-                      {errors.confirmation_code?.message}
+                      <>{errors.confirmation_code?.message}</>
                     </FormErrorMessage>
                   </Center>
                 </FormControl>
@@ -173,7 +172,7 @@ export default function VerificationPageContent(props: any) {
             </Center>
           </chakra.form>
         </Stack>
-    </Flex>
+      </Flex>
     </Center>
   );
 }

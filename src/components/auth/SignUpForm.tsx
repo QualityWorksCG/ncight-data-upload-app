@@ -33,8 +33,8 @@ interface StateObject {
 }
 
 function formatPhoneNumber(phone_number: string) {
-  var cleanPhoneNumber = phone_number.replaceAll("-", "");
-  var finalPhoneNumber = "+1" + cleanPhoneNumber;
+  const cleanPhoneNumber = phone_number.replaceAll("-", "");
+  const finalPhoneNumber = "+1" + cleanPhoneNumber;
   return finalPhoneNumber;
 }
 

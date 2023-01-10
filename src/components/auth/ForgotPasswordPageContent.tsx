@@ -90,7 +90,12 @@ export default function VerificationPageContent(props: any) {
         color={"primary.gray"}
       >
         {forgotPasswordErrorObject.isError ? (
-          <Alert variant="solid" status="error" justifyContent={"center"} maxW={'500px'}>
+          <Alert
+            variant="solid"
+            status="error"
+            justifyContent={"center"}
+            maxW={"500px"}
+          >
             <AlertIcon />
             <AlertTitle flexWrap={"wrap"}>
               {forgotPasswordErrorObject.errorMessage}
@@ -135,7 +140,7 @@ export default function VerificationPageContent(props: any) {
                 })}
               />
               <FormErrorMessage>
-                {errors.email && errors.email.message}
+                <>{errors.email && errors.email.message}</>
               </FormErrorMessage>
             </FormControl>
 
