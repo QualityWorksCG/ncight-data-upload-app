@@ -7,7 +7,11 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "build:qa": "env-cmd -f .env.qa yarn build",
+    "build:development": "env-cmd -f .env.development.local yarn build",
+    "build:staging": "env-cmd -f .env.staging.local yarn build",
+    "build:production": "env-cmd -f .env.production.local yarn build"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.2.1",
@@ -25,6 +29,7 @@
     "@trpc/react-query": "^10.0.0",
     "@trpc/server": "^10.0.0",
     "aws-amplify": "^5.0.8",
+    "env-cmd": "^10.1.0",
     "axios": "^1.2.1",
     "chakra-react-select": "^4.4.3",
     "express": "^4.18.2",
