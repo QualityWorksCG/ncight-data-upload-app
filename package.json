@@ -8,7 +8,7 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "build:qa": "env-cmd -f .env.qa yarn build",
+    "build:qa": "env-cmd -f .env.qa.local yarn build",
     "build:development": "env-cmd -f .env.development.local yarn build",
     "build:staging": "env-cmd -f .env.staging.local yarn build",
     "build:production": "env-cmd -f .env.production.local yarn build"
